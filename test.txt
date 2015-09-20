@@ -1,1 +1,0 @@
-/usr/lib/gvfs/gvfsd-fuse /run/user/1000/gvfs -f -o big_writes 
