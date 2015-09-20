@@ -1,0 +1,200 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Tony George (teejee2008@gmail.com)
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: aptik-bmon 1.6\n"
+"Report-Msgid-Bugs-To: teejee2008@gmail.com\n"
+"POT-Creation-Date: 2015-09-20 17:43-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: BatteryStatsWindow.vala:173
+msgid " A Battery Monitoring Utility for Laptops"
+msgstr ""
+
+#: BatteryStatsWindow.vala:467
+msgid "17.58%, 6200 mAh, 57.14 Wh"
+msgstr ""
+
+#: BatteryStatsWindow.vala:485
+msgid "17.58%/hr, 8:10 hrs"
+msgstr ""
+
+#: BatteryStatsWindow.vala:492
+msgid "2%"
+msgstr ""
+
+#: BatteryStatsWindow.vala:460
+msgid "25 Aug 2015, 10:35:16 PM"
+msgstr ""
+
+#: BatteryStatsWindow.vala:474
+msgid "8700 mV"
+msgstr ""
+
+#: Main.vala:187
+msgid "App config loaded"
+msgstr ""
+
+#: Main.vala:167
+msgid "App config saved"
+msgstr ""
+
+#: BatteryStatsWindow.vala:144
+msgid "Application Info"
+msgstr ""
+
+#: AboutWindow.vala:330
+#, c-format
+msgid "Artists"
+msgstr ""
+
+#: AboutWindow.vala:314
+#, c-format
+msgid "Authors"
+msgstr ""
+
+#: AboutWindow.vala:285
+msgid "Back"
+msgstr ""
+
+#: AboutWindow.vala:295
+msgid "Close"
+msgstr ""
+
+#: Main.vala:132
+msgid "Commands listed below are not available on this system"
+msgstr ""
+
+#: AboutWindow.vala:272 AboutWindow.vala:289
+msgid "Credits"
+msgstr ""
+
+#: DonationWindow.vala:54
+msgid ""
+"Did you find this software useful?\n"
+"\n"
+"You can buy me a coffee or make a donation via PayPal to show your support. "
+"Or just drop me an email and say Hi.\n"
+"\n"
+"This application is completely free and will continue to remain that way. "
+"Your contributions will help in keeping this project alive and to develop it "
+"further.\n"
+"\n"
+"Feel free to drop me an email if you find any issues or if you have "
+"suggestions for improvement.\n"
+"\n"
+"Regards,\n"
+"Tony George\n"
+"teejeetech@gmail.com"
+msgstr ""
+
+#: AboutWindow.vala:346
+#, c-format
+msgid "Documenters"
+msgstr ""
+
+#: BatteryStatsWindow.vala:124 BatteryStatsWindow.vala:126
+#: DonationWindow.vala:36
+msgid "Donate"
+msgstr ""
+
+#: DonationWindow.vala:67
+msgid "Donate via PayPal"
+msgstr ""
+
+#: AboutWindow.vala:354
+#, c-format
+msgid "Donations"
+msgstr ""
+
+#: BatteryStatsWindow.vala:108
+msgid "Enable logging"
+msgstr ""
+
+#: Utility.vala:100
+msgid "Error"
+msgstr ""
+
+#: Utility.vala:1527
+msgid "Failed to set ownership"
+msgstr ""
+
+#: BatteryStatsWindow.vala:142
+msgid "Info"
+msgstr ""
+
+#: Main.vala:87
+msgid "Missing Dependencies"
+msgstr ""
+
+#: Utility.vala:1108
+msgid "Missing Icon"
+msgstr ""
+
+#: DonationWindow.vala:88
+msgid "OK"
+msgstr ""
+
+#: AptikBatteryStats.vala:78 AptikBatteryStatsGtk.vala:108
+msgid "Options"
+msgstr ""
+
+#: Main.vala:133
+msgid "Please install required packages and try running Aptik again"
+msgstr ""
+
+#: AptikBatteryStatsGtk.vala:110
+msgid "Print debug information"
+msgstr ""
+
+#: AptikBatteryStats.vala:80
+msgid "Print stats to standard output"
+msgstr ""
+
+#: DonationWindow.vala:74
+msgid "Send Email"
+msgstr ""
+
+#: AptikBatteryStats.vala:81 AptikBatteryStatsGtk.vala:111
+msgid "Show all options"
+msgstr ""
+
+#: Utility.vala:837
+msgid "Stopped"
+msgstr ""
+
+#: AptikBatteryStats.vala:76 AptikBatteryStatsGtk.vala:106
+msgid "Syntax"
+msgstr ""
+
+#: AboutWindow.vala:322
+#, c-format
+msgid "Third Party Tools"
+msgstr ""
+
+#: AboutWindow.vala:338
+#, c-format
+msgid "Translators"
+msgstr ""
+
+#: AptikBatteryStatsGtk.vala:93
+msgid "Unknown option"
+msgstr ""
+
+#: DonationWindow.vala:81
+msgid "Visit Website"
+msgstr ""
+
+#: Utility.vala:100
+msgid "Warning"
+msgstr ""
