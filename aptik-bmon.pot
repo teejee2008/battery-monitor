@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aptik-bmon 1.6\n"
 "Report-Msgid-Bugs-To: teejee2008@gmail.com\n"
-"POT-Creation-Date: 2015-09-20 22:36-0400\n"
+"POT-Creation-Date: 2015-09-20 23:16-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,6 +41,10 @@ msgstr ""
 msgid "8700 mV"
 msgstr ""
 
+#: AptikBatteryStatsGtk.vala:50
+msgid "Admin Access Required"
+msgstr ""
+
 #: Main.vala:187
 msgid "App config loaded"
 msgstr ""
@@ -51,6 +55,10 @@ msgstr ""
 
 #: BatteryStatsWindow.vala:144
 msgid "Application Info"
+msgstr ""
+
+#: AptikBatteryStatsGtk.vala:48
+msgid "Aptik Battery Monitor needs admin access to function properly."
 msgstr ""
 
 #: AboutWindow.vala:330
@@ -89,14 +97,15 @@ msgid ""
 "and improving it further.\n"
 "\n"
 "If you want to buy me a coffee, you can send me $2 using the Google Wallet "
-"app on your phone. You can even send it through GMail. GMail has a new "
+"app on your phone. You can even send it through email. GMail has a new "
 "feature to attach money to emails from your Google Wallet.\n"
 "\n"
 "Feel free to send me an email if you find any issues in this application or "
 "if you need any changes. Suggestions and feedback are always welcome.\n"
 "\n"
 "Thanks,\n"
-"Tony George"
+"Tony George\n"
+"(teejeetech@gmail.com)"
 msgstr ""
 
 #: AboutWindow.vala:346
@@ -148,6 +157,10 @@ msgstr ""
 
 #: Main.vala:133
 msgid "Please install required packages and try running Aptik again"
+msgstr ""
+
+#: AptikBatteryStatsGtk.vala:49
+msgid "Please run the application as admin ('gksu aptik-bmon-gtk')"
 msgstr ""
 
 #: AptikBatteryStatsGtk.vala:110

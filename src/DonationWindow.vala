@@ -52,7 +52,7 @@ public class DonationWindow : Dialog {
 
 		//lbl_message
 		Label lbl_message = new Gtk.Label("");
-		string msg = _("Did you find this software useful?\n\nYou can buy me a cup of coffee to show your support. Or just drop me an email and say Hi. This application is completely free and will continue to remain that way. Your contributions will help in keeping this project alive and improving it further.\n\nIf you want to buy me a coffee, you can send me $2 using the Google Wallet app on your phone. You can even send it through GMail. GMail has a new feature to attach money to emails from your Google Wallet.\n\nFeel free to send me an email if you find any issues in this application or if you need any changes. Suggestions and feedback are always welcome.\n\nThanks,\nTony George");
+		string msg = _("Did you find this software useful?\n\nYou can buy me a cup of coffee to show your support. Or just drop me an email and say Hi. This application is completely free and will continue to remain that way. Your contributions will help in keeping this project alive and improving it further.\n\nIf you want to buy me a coffee, you can send me $2 using the Google Wallet app on your phone. You can even send it through email. GMail has a new feature to attach money to emails from your Google Wallet.\n\nFeel free to send me an email if you find any issues in this application or if you need any changes. Suggestions and feedback are always welcome.\n\nThanks,\nTony George\n(teejeetech@gmail.com)");
 		lbl_message.label = msg;
 		lbl_message.wrap = true;
 		vbox_main.pack_start(lbl_message,true,true,0);
