@@ -35,59 +35,6 @@ using TeeJee.Multimedia;
 using TeeJee.System;
 using TeeJee.Misc;
 
-
-public class Package : GLib.Object {
-	public string name = "";
-	public string description = "";
-	public string server = "";
-	public string repo = "";
-	public string repo_section = "";
-	public string arch = "";
-	public string status = "";
-	public string section = "";
-	public string version_installed = "";
-	public string version_available = "";
-	public bool is_selected = false;
-	public bool is_available = false;
-	public bool is_installed = false;
-	public bool is_default = false;
-	public bool is_automatic = false;
-	public bool is_manual = false;
-
-	public Package(string _name){
-		name = _name;
-	}
-}
-
-public struct Package2 {
-	public string name;
-	public string description;
-	public string server;
-	public string repo;
-	public bool is_selected;
-	public bool is_available;
-	public bool is_installed;
-	public bool is_top;
-	public bool is_default;
-	public bool is_manual;
-
-	public Package2(string _name){
-		name = _name;
-	}
-}
-
-public class Ppa : GLib.Object{
-	public string name = "";
-	public string description = "";
-	public string all_packages = "";
-	public bool is_selected = false;
-	public bool is_installed = false;
-
-	public Ppa(string _name){
-		name = _name;
-	}
-}
-
 public class BatteryStat : GLib.Object{
 	public DateTime date;
 	public long charge_now = 0;
@@ -197,46 +144,5 @@ public class BatteryStat : GLib.Object{
 		}
 
 		return "";
-	}
-}
-
-public class Theme : GLib.Object{
-	public string name = "";
-	public string description = "";
-	public string system_path = "";
-	public string zip_file_path = "";
-	public bool is_selected = false;
-	public bool is_installed = false;
-	public string type = "";
-
-	public Theme(string _name, string _type){
-		name = _name;
-		type = _type;
-		system_path = "/usr/share/%ss/%s".printf(type, name);
-	}
-}
-
-public class AppConfig : GLib.Object{
-	public string name = "";
-	public string description = "";
-	public bool is_selected = false;
-	public string size = "";
-
-	public AppConfig(string dir_name){
-		name = dir_name;
-	}
-
-	public string path{
-		owned get{
-			string str = name.replace("~",App.user_home);
-			return str.strip();
-		}
-	}
-
-	public string pattern{
-		owned get{
-			string str = path + "/**";
-			return str.strip();
-		}
 	}
 }
