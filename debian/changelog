@@ -1,7 +1,5 @@
-aptik-bmon (1.0.1) trusty; urgency=low
+aptik-bmon (1.0.2) trusty; urgency=low
 
-  * Updated donation message and un-installer
+  * Minor changes
 
-  * Added check for admin access to the Gtk application
-
- -- Tony George <tony.george.kol@gmail.com>  Sun, 20 Sep 2015 10:00:00 +0530
+ -- Tony George <tony.george.kol@gmail.com>  Wed, 21 Oct 2015 10:00:00 +0530
