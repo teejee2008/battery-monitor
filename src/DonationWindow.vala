@@ -33,18 +33,17 @@ using TeeJee.Misc;
 
 public class DonationWindow : Dialog {
 	public DonationWindow() {
-		title = _("Donate");
+		set_title(_("Donate"));
 		window_position = WindowPosition.CENTER_ON_PARENT;
-    destroy_with_parent = true;
-    skip_taskbar_hint = true;
-		modal = true;
-		deletable = true;
-
-    set_default_size (400, 20);
+		set_destroy_with_parent (true);
+		set_modal (true);
+		set_deletable(true);
+		set_skip_taskbar_hint(false);
+		set_default_size (400, 20);
 		icon = get_app_icon(16);
 
 		//vbox_main
-	  Box vbox_main = get_content_area();
+		Box vbox_main = get_content_area();
 		vbox_main.margin = 6;
 		vbox_main.homogeneous = false;
 
@@ -52,27 +51,34 @@ public class DonationWindow : Dialog {
 
 		//lbl_message
 		Label lbl_message = new Gtk.Label("");
-		string msg = _("Did you find this software useful?\n\nYou can buy me a cup of coffee to show your support. Or just drop me an email and say Hi. This application is completely free and will continue to remain that way. Your contributions will help in keeping this project alive and improving it further.\n\nIf you want to buy me a coffee, you can send me $2 using the Google Wallet app on your phone. You can even send it through email. GMail has a new feature to attach money to emails from your Google Wallet.\n\nFeel free to send me an email if you find any issues in this application or if you need any changes. Suggestions and feedback are always welcome.\n\nThanks,\nTony George\n(teejeetech@gmail.com)");
+		string msg = _("Did you find this software useful?\n\nYou can buy me a coffee or make a donation via PayPal to show your support. Or just drop me an email and say Hi. This application is completely free and will continue to remain that way. Your contributions will help in keeping this project alive and improving it further.\n\nFeel free to send me an email if you find any issues in this application or if you need any changes. Suggestions and feedback are always welcome.\n\nThanks,\nTony George\n(teejeetech@gmail.com)");
 		lbl_message.label = msg;
 		lbl_message.wrap = true;
 		vbox_main.pack_start(lbl_message,true,true,0);
 
 		//vbox_actions
-    Box vbox_actions = new Box (Orientation.VERTICAL, 6);
+		Box vbox_actions = new Box (Orientation.VERTICAL, 6);
 		vbox_actions.margin_left = 50;
 		vbox_actions.margin_right = 50;
 		vbox_actions.margin_top = 20;
 		vbox_main.pack_start(vbox_actions,false,false,0);
 
-		//btn_donate
-		Button btn_donate = new Button.with_label("   " + _("Sending Money with Google Wallet") + "   ");
-		vbox_actions.add(btn_donate);
-		btn_donate.clicked.connect(()=>{
-			xdg_open("https://support.google.com/mail/answer/3141103?hl=en");
+		//btn_donate_paypal
+		Button btn_donate_paypal = new Button.with_label("   " + _("Donate with PayPal") + "   ");
+		vbox_actions.add(btn_donate_paypal);
+		btn_donate_paypal.clicked.connect(()=>{
+			xdg_open("https://www.paypal.com/cgi-bin/webscr?business=teejeetech@gmail.com&cmd=_xclick&currency_code=USD&amount=10&item_name=AptikBatteryMonitor%20Donation");
 		});
 
+		//btn_donate_wallet
+		Button btn_donate_wallet = new Button.with_label("   " + _("Donate with Google Wallet") + "   ");
+		vbox_actions.add(btn_donate_wallet);
+		btn_donate_wallet.clicked.connect(()=>{
+			xdg_open("https://support.google.com/mail/answer/3141103?hl=en");
+		});
+		
 		//btn_send_email
-		Button btn_send_email = new Button.with_label("   " + _("Send Email (teejeetech@gmail.com)") + "   ");
+		Button btn_send_email = new Button.with_label("   " + _("Send Email") + "   ");
 		vbox_actions.add(btn_send_email);
 		btn_send_email.clicked.connect(()=>{
 			xdg_open("mailto:teejeetech@gmail.com");
