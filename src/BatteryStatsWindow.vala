@@ -256,7 +256,7 @@ public class BatteryStatsWindow : Window {
 
 			int stat_count = (App.battery_stats_list.size > 2880) ? 2880 : App.battery_stats_list.size;
 
-			int w = drawing_area.get_allocated_width();
+			//int w = drawing_area.get_allocated_width();
 			int h = drawing_area.get_allocated_height();
 
 			//int w_eff = w - X_OFFSET;

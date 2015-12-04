@@ -1,6 +1,6 @@
 #!/bin/bash
 
-app_name='aptik-bmon'
+app_name='aptik-battery-monitor'
 app_fullname='Aptik Battery Monitor'
 tgz="../../pbuilder/"
 dsc="../../builds/${app_name}*.dsc"

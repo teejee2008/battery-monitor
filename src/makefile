@@ -7,17 +7,17 @@ launcherdir=$(sharedir)/applications
 mandir=$(sharedir)/man
 man1dir=$(mandir)/man1
 CFLAGS=--std=c99
-app_name=aptik-bmon
-app_fullname='Aptik Battery Monitor'
+app_name=aptik-battery-monitor
+app_name_full='Aptik Battery Monitor'
 
 all:
 	#build binaries
 
-	#aptik-bmon
-	valac -X -D'GETTEXT_PACKAGE="${app_name}"' --Xcc="-lm" -X -Wl,-rpath,/usr/share/${app_name}/libs --thread "Main.vala" "Classes.vala" "Utility.vala" "AptikBatteryStats.vala" "DonationWindow.vala" "AboutWindow.vala" -o "aptik-bmon" --pkg glib-2.0 --pkg gio-unix-2.0 --pkg posix --pkg gtk+-3.0 --pkg gee-0.8 --pkg libsoup-2.4 --pkg json-glib-1.0
+	#aptik-battery-monitor
+	valac -X -D'GETTEXT_PACKAGE="${app_name}"' --Xcc="-lm" -X -Wl,-rpath,/usr/share/${app_name}/libs --thread "Main.vala" "Classes.vala" "Utility.vala" "AptikBatteryStats.vala" "DonationWindow.vala" "AboutWindow.vala" -o "aptik-battery-monitor" --pkg glib-2.0 --pkg gio-unix-2.0 --pkg posix --pkg gtk+-3.0 --pkg gee-0.8 --pkg libsoup-2.4 --pkg json-glib-1.0
 
-	#aptik-bmon-gtk
-	valac -X -D'GETTEXT_PACKAGE="${app_name}"' --Xcc="-lm" -X -Wl,-rpath,/usr/share/${app_name}/libs --thread "Main.vala" "Classes.vala" "Utility.vala" "AptikBatteryStatsGtk.vala" "BatteryStatsWindow.vala" "DonationWindow.vala" "AboutWindow.vala" -o "aptik-bmon-gtk" --pkg glib-2.0 --pkg gio-unix-2.0 --pkg posix --pkg gtk+-3.0 --pkg gee-0.8 --pkg libsoup-2.4 --pkg json-glib-1.0
+	#aptik-battery-monitor-gtk
+	valac -X -D'GETTEXT_PACKAGE="${app_name}"' --Xcc="-lm" -X -Wl,-rpath,/usr/share/${app_name}/libs --thread "Main.vala" "Classes.vala" "Utility.vala" "AptikBatteryStatsGtk.vala" "BatteryStatsWindow.vala" "DonationWindow.vala" "AboutWindow.vala" -o "aptik-battery-monitor-gtk" --pkg glib-2.0 --pkg gio-unix-2.0 --pkg posix --pkg gtk+-3.0 --pkg gee-0.8 --pkg libsoup-2.4 --pkg json-glib-1.0
 
 	#aptik-battery-bar
 	valac -X -D'GETTEXT_PACKAGE="${app_name}"' --Xcc="-lm" -X -Wl,-rpath,/usr/share/${app_name}/libs --thread "Main.vala" "Classes.vala" "Utility.vala" "BatteryBar.vala" -o "aptik-battery-bar" --pkg glib-2.0 --pkg gio-unix-2.0 --pkg posix --pkg gtk+-3.0 --pkg gee-0.8 --pkg libsoup-2.4 --pkg json-glib-1.0

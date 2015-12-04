@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: aptik-bmon 1.6\n"
+"Project-Id-Version: aptik-battery-monitor 1.6\n"
 "Report-Msgid-Bugs-To: teejee2008@gmail.com\n"
-"POT-Creation-Date: 2015-12-04 22:05+0530\n"
+"POT-Creation-Date: 2015-12-04 22:23+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,11 +41,11 @@ msgstr ""
 msgid "8700 mV"
 msgstr ""
 
-#: Main.vala:191
+#: Main.vala:190
 msgid "App config loaded"
 msgstr ""
 
-#: Main.vala:169
+#: Main.vala:168
 msgid "App config saved"
 msgstr ""
 
@@ -71,7 +71,7 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: Main.vala:134
+#: Main.vala:133
 msgid "Commands listed below are not available on this system"
 msgstr ""
 
@@ -139,7 +139,7 @@ msgstr ""
 msgid "Info"
 msgstr ""
 
-#: Main.vala:89
+#: Main.vala:88
 msgid "Missing Dependencies"
 msgstr ""
 
@@ -155,7 +155,7 @@ msgstr ""
 msgid "Options"
 msgstr ""
 
-#: Main.vala:135
+#: Main.vala:134
 msgid "Please install required packages and try running Aptik again"
 msgstr ""
 

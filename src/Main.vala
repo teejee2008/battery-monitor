@@ -37,7 +37,7 @@ using TeeJee.Misc;
 
 public Main App;
 public const string AppName = "Aptik Battery Monitor";
-public const string AppShortName = "aptik-bmon";
+public const string AppShortName = "aptik-battery-monitor";
 public const string AppVersion = "1.0.2";
 public const string AppAuthor = "Tony George";
 public const string AppAuthorEmail = "teejeetech@gmail.com";
@@ -49,8 +49,7 @@ extern void exit(int exit_code);
 
 public class Main : GLib.Object {
 	public static string BATT_STATS_CACHE_FILE = "/var/log/aptik-battery-monitor/stats.log";
-	public static string RC_LOCAL_FILE = "/etc/rc.local";
-	public static string RC_BMON_LINE = "/usr/bin/aptik-bmon &";
+	public static string STARTUP_COMMAND_LINE = "/usr/bin/aptik-battery-monitor &";
 	public static int BATT_STATS_LOG_INTERVAL = 30;
 	public static double BATT_STATS_ARCHIVE_LEVEL = 99.00;
 
@@ -75,7 +74,7 @@ public class Main : GLib.Object {
 
 		//config file
 		string home = Environment.get_home_dir();
-		app_conf_path = home + "/.config/aptik-bmon.json";
+		app_conf_path = home + "/.config/aptik-battery-monitor.json";
 
 		//load settings if GUI mode
 		if (gui_mode) {
@@ -326,30 +325,7 @@ public class Main : GLib.Object {
 	}
 
 	public bool is_logging_enabled() {
-		bool enabled = false;
-
-		try {
-			var file = File.new_for_path (RC_LOCAL_FILE);
-			if (file.query_exists ()) {
-				var dis = new DataInputStream (file.read());
-
-				string line;
-				while ((line = dis.read_line (null)) != null) {
-					if (line.contains("aptik-bmon")) {
-						enabled = true;
-						break;
-					}
-				}
-			}
-			else {
-				log_error ("File not found: %s".printf(RC_LOCAL_FILE));
-			}
-		}
-		catch (Error e) {
-			log_error (e.message);
-		}
-
-		return enabled;
+		return (crontab_search(STARTUP_COMMAND_LINE).length > 0);
 	}
 
 	public void set_battery_monitoring_status_cron(bool enabled) {
@@ -358,12 +334,12 @@ public class Main : GLib.Object {
 				return;
 			}
 
-			if (crontab_search(RC_BMON_LINE).length == 0){
-				crontab_add(RC_BMON_LINE);
+			if (crontab_search(STARTUP_COMMAND_LINE).length == 0){
+				crontab_add(STARTUP_COMMAND_LINE);
 			}
 			
 			if (!process_is_running_by_name(AppShortName)) {
-				execute_command_script_async(RC_BMON_LINE);
+				execute_command_script_async(STARTUP_COMMAND_LINE);
 			}
 		}
 		else {
@@ -371,8 +347,8 @@ public class Main : GLib.Object {
 				return;
 			}
 
-			if (crontab_search(RC_BMON_LINE).length > 0){
-				crontab_remove(RC_BMON_LINE);
+			if (crontab_search(STARTUP_COMMAND_LINE).length > 0){
+				crontab_remove(STARTUP_COMMAND_LINE);
 			}
 
 			if (process_is_running_by_name(AppShortName)) {
@@ -388,10 +364,10 @@ public class Main : GLib.Object {
 				return;
 			}
 
-			rc_local_add(RC_BMON_LINE);
+			rc_local_add(STARTUP_COMMAND_LINE);
 				
 			if (!process_is_running_by_name(AppShortName)) {
-				execute_command_script_async(RC_BMON_LINE);
+				execute_command_script_async(STARTUP_COMMAND_LINE);
 			}
 		}
 		else {
@@ -399,7 +375,7 @@ public class Main : GLib.Object {
 				return;
 			}
 
-			rc_local_remove(RC_BMON_LINE);
+			rc_local_remove(STARTUP_COMMAND_LINE);
 
 			if (process_is_running_by_name(AppShortName)) {
 				command_kill(AppShortName, AppShortName);

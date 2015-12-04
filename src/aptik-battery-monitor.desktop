@@ -1,12 +1,12 @@
 [Desktop Entry]
 Name=Aptik Battery Monitor
 MimeType=
-Exec=aptik-bmon-launcher
+Exec=aptik-battery-monitor-gtk
 Type=Application
 GenericName=Battery Monitor
 Terminal=false
-Icon=aptik-bmon
+Icon=aptik-battery-monitor
 Caption=Battery Monitor
 X-KDE-StartupNotify=false
 Categories=System;
-Name[en_US]=Aptik Battery Monitor
+Name[en_US]=aptik-battery-monitor
