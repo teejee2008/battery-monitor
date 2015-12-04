@@ -46,7 +46,6 @@ install:
 	install -m 0755 ${app_name} "$(DESTDIR)$(bindir)"
 	install -m 0755 ${app_name}-gtk "$(DESTDIR)$(bindir)"
 	install -m 0755 ${app_name}-uninstall "$(DESTDIR)$(bindir)"
-	install -m 0755 ${app_name}-launcher "$(DESTDIR)$(bindir)"
 
 	#shared files
 	cp -dpr --no-preserve=ownership -t "$(DESTDIR)$(sharedir)/${app_name}" ./share/${app_name}/*
@@ -73,7 +72,6 @@ uninstall:
 	rm -f "$(DESTDIR)$(bindir)/${app_name}"
 	rm -f "$(DESTDIR)$(bindir)/${app_name}-gtk"
 	rm -f "$(DESTDIR)$(bindir)/${app_name}-uninstall"
-	rm -f "$(DESTDIR)$(bindir)/${app_name}-launcher"
 
 	#shared files
 	rm -rf "$(DESTDIR)$(sharedir)/${app_name}"
