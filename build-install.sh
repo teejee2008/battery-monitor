@@ -13,7 +13,7 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
-sudo gdebi --non-interactive ../builds/aptik-bmon*.deb
+sudo gdebi --non-interactive ../builds/aptik-battery-monitor*.deb
 
 #check for errors
 if [ $? -ne 0 ]; then

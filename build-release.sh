@@ -15,8 +15,8 @@ fi
 cd installer
 for arch in i386 amd64
 do
-  cp -p --no-preserve=ownership -t /home/teejee/Dropbox/Public/linux ./aptik-bmon-latest-${arch}.run
-  cp -p --no-preserve=ownership -t /home/teejee/Dropbox/Public/linux ./aptik-bmon-latest-${arch}.deb
+  cp -p --no-preserve=ownership -t /home/teejee/Dropbox/Public/linux ./aptik-battery-monitor-latest-${arch}.run
+  cp -p --no-preserve=ownership -t /home/teejee/Dropbox/Public/linux ./aptik-battery-monitor-latest-${arch}.deb
 done
 cd ..
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aptik-bmon 1.6\n"
 "Report-Msgid-Bugs-To: teejee2008@gmail.com\n"
-"POT-Creation-Date: 2015-12-04 21:48+0530\n"
+"POT-Creation-Date: 2015-12-04 22:05+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,20 +41,16 @@ msgstr ""
 msgid "8700 mV"
 msgstr ""
 
-#: Main.vala:193
+#: Main.vala:191
 msgid "App config loaded"
 msgstr ""
 
-#: Main.vala:171
+#: Main.vala:169
 msgid "App config saved"
 msgstr ""
 
 #: BatteryStatsWindow.vala:144
 msgid "Application Info"
-msgstr ""
-
-#: AptikBatteryStats.vala:49
-msgid "Aptik Battery Monitor needs admin access to function correctly."
 msgstr ""
 
 #: AboutWindow.vala:330
@@ -75,7 +71,7 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: Main.vala:136
+#: Main.vala:134
 msgid "Commands listed below are not available on this system"
 msgstr ""
 
@@ -155,23 +151,19 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: AptikBatteryStats.vala:88 AptikBatteryStatsGtk.vala:108
+#: AptikBatteryStats.vala:81 AptikBatteryStatsGtk.vala:100
 msgid "Options"
 msgstr ""
 
-#: Main.vala:137
+#: Main.vala:135
 msgid "Please install required packages and try running Aptik again"
 msgstr ""
 
-#: AptikBatteryStats.vala:50
-msgid "Please run the application as admin ('sudo aptik-bmon')"
-msgstr ""
-
-#: AptikBatteryStatsGtk.vala:110
+#: AptikBatteryStatsGtk.vala:102
 msgid "Print debug information"
 msgstr ""
 
-#: AptikBatteryStats.vala:90
+#: AptikBatteryStats.vala:83
 msgid "Print stats to standard output"
 msgstr ""
 
@@ -179,7 +171,7 @@ msgstr ""
 msgid "Send Email"
 msgstr ""
 
-#: AptikBatteryStats.vala:91 AptikBatteryStatsGtk.vala:111
+#: AptikBatteryStats.vala:84 AptikBatteryStatsGtk.vala:103
 msgid "Show all options"
 msgstr ""
 
@@ -187,7 +179,7 @@ msgstr ""
 msgid "Stopped"
 msgstr ""
 
-#: AptikBatteryStats.vala:86 AptikBatteryStatsGtk.vala:106
+#: AptikBatteryStats.vala:79 AptikBatteryStatsGtk.vala:98
 msgid "Syntax"
 msgstr ""
 
@@ -201,7 +193,7 @@ msgstr ""
 msgid "Translators"
 msgstr ""
 
-#: AptikBatteryStatsGtk.vala:93
+#: AptikBatteryStatsGtk.vala:85
 msgid "Unknown option"
 msgstr ""
 

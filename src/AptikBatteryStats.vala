@@ -45,13 +45,6 @@ public class AptikBatteryStats : GLib.Object{
 
 		LOG_TIMESTAMP = false;
 
-		if (!user_is_admin()){
-			string msg = _("Aptik Battery Monitor needs admin access to function correctly.") + "\n";
-			msg += _("Please run the application as admin ('sudo aptik-bmon')");
-			log_msg(msg);
-			exit(0);
-		}
-
 		init_tmp();
 
 		App = new Main(args,false);

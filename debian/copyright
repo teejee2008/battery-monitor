@@ -1,5 +1,5 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: aptik-bmon
+Upstream-Name: aptik-battery-monitor
 Source: <http://teejeetech.blogspot.com>
 
 Files: *
