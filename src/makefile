@@ -57,9 +57,6 @@ install:
 	#app icon
 	install -m 0755 ./share/pixmaps/${app_name}.svg "$(DESTDIR)$(sharedir)/pixmaps/"
 
-	#log dir permissions
-	chmod a+rw "$(DESTDIR)$(logdir)/aptik-battery-monitor"
-	
 	#translations
 	#msgfmt --check --verbose -o "$(DESTDIR)$(localedir)/it_IT/LC_MESSAGES/${app_name}.mo" ../po/${app_name}-it.po
 	#msgfmt --check --verbose -o "$(DESTDIR)$(localedir)/pt_BR/LC_MESSAGES/${app_name}.mo" ../po/${app_name}-pt.po
