@@ -17,7 +17,9 @@ long_line_behaviour=1
 long_line_column=80
 
 [files]
-current_page=0
+current_page=1
+FILE_NAME_0=8514;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FMain.vala;0;4
+FILE_NAME_1=33372;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FUtility.vala;0;4
 
 [VTE]
 last_dir=/media/teejee/f0d933c0-b510-470e-a0ad-a4d42db19453/Dropbox/projects/linux
@@ -34,7 +36,7 @@ NF_03_LB=Clean
 NF_03_CM=make clean
 NF_03_WD=
 EX_00_LB=Exec Monitor
-EX_00_CM=./aptik-bmon-gtk
+EX_00_CM=./aptik-battery-monitor-gtk
 EX_00_WD=
 EX_01_LB=Exec Bar
 EX_01_CM=./aptik-battery-bar

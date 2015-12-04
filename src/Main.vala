@@ -49,7 +49,8 @@ extern void exit(int exit_code);
 
 public class Main : GLib.Object {
 	public static string BATT_STATS_CACHE_FILE = "/var/log/aptik-battery-monitor/stats.log";
-	public static string STARTUP_COMMAND_LINE = "@reboot /usr/bin/aptik-battery-monitor &";
+	public static string STARTUP_COMMAND_LINE = "/usr/bin/aptik-battery-monitor &";
+	public static string STARTUP_COMMAND_LINE_CRON = "@reboot /usr/bin/aptik-battery-monitor &";
 	public static int BATT_STATS_LOG_INTERVAL = 30;
 	public static double BATT_STATS_ARCHIVE_LEVEL = 99.00;
 
@@ -114,6 +115,8 @@ public class Main : GLib.Object {
 		user_login = get_user_login();
 		user_home = "/home/" + user_login;
 		user_uid = get_user_id(user_login);
+
+		//BATT_STATS_CACHE_FILE = "%s/.local/log/aptik-battery-monitor/stats.log".printf(user_home);
 	}
 
 	public bool check_dependencies(out string msg) {
@@ -325,7 +328,7 @@ public class Main : GLib.Object {
 	}
 
 	public bool is_logging_enabled() {
-		return (crontab_search(STARTUP_COMMAND_LINE).length > 0);
+		return (crontab_search(STARTUP_COMMAND_LINE_CRON).length > 0);
 	}
 
 	public void set_battery_monitoring_status_cron(bool enabled) {
@@ -334,8 +337,8 @@ public class Main : GLib.Object {
 				return;
 			}
 
-			if (crontab_search(STARTUP_COMMAND_LINE).length == 0){
-				crontab_add(STARTUP_COMMAND_LINE);
+			if (crontab_search(STARTUP_COMMAND_LINE_CRON).length == 0){
+				crontab_add(STARTUP_COMMAND_LINE_CRON);
 			}
 			
 			if (!process_is_running_by_name(AppShortName)) {
@@ -347,35 +350,9 @@ public class Main : GLib.Object {
 				return;
 			}
 
-			if (crontab_search(STARTUP_COMMAND_LINE).length > 0){
-				crontab_remove(STARTUP_COMMAND_LINE);
+			if (crontab_search(STARTUP_COMMAND_LINE_CRON).length > 0){
+				crontab_remove(AppShortName); //user short name as search string for removal
 			}
-
-			if (process_is_running_by_name(AppShortName)) {
-				command_kill(AppShortName, AppShortName);
-			}
-		}
-	}
-
-	//not used
-	public void set_battery_monitoring_status_rc_local(bool enabled) {
-		if (enabled) {
-			if (is_logging_enabled()) {
-				return;
-			}
-
-			rc_local_add(STARTUP_COMMAND_LINE);
-				
-			if (!process_is_running_by_name(AppShortName)) {
-				execute_command_script_async(STARTUP_COMMAND_LINE);
-			}
-		}
-		else {
-			if (!is_logging_enabled()) {
-				return;
-			}
-
-			rc_local_remove(STARTUP_COMMAND_LINE);
 
 			if (process_is_running_by_name(AppShortName)) {
 				command_kill(AppShortName, AppShortName);

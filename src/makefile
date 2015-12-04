@@ -1,6 +1,6 @@
 prefix=/usr
 bindir=$(prefix)/bin
-logdir=$(prefix)/var/log
+logdir=/var/log
 sharedir=$(prefix)/share
 localedir=$(sharedir)/locale
 launcherdir=$(sharedir)/applications

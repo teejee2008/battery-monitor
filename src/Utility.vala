@@ -1477,13 +1477,13 @@ namespace TeeJee.System{
 		log_msg("%s %lu\n".printf(seconds.to_string(), microseconds));
 	}
 
-	public bool crontab_remove(string line){
+	public bool crontab_remove(string search_string){
 		string cmd = "";
 		string std_out;
 		string std_err;
 		int ret_val;
 
-		cmd = "crontab -l | sed '/%s/d' | crontab -".printf(line);
+		cmd = "crontab -l | sed '/%s/d' | crontab -".printf(search_string);
 		ret_val = execute_command_script_sync(cmd, out std_out, out std_err);
 
 		if (ret_val != 0){
