@@ -1,5 +1,6 @@
 prefix=/usr
 bindir=$(prefix)/bin
+logdir=$(prefix)/var/log
 sharedir=$(prefix)/share
 localedir=$(sharedir)/locale
 launcherdir=$(sharedir)/applications
@@ -18,6 +19,9 @@ all:
 	#aptik-bmon-gtk
 	valac -X -D'GETTEXT_PACKAGE="${app_name}"' --Xcc="-lm" -X -Wl,-rpath,/usr/share/${app_name}/libs --thread "Main.vala" "Classes.vala" "Utility.vala" "AptikBatteryStatsGtk.vala" "BatteryStatsWindow.vala" "DonationWindow.vala" "AboutWindow.vala" -o "aptik-bmon-gtk" --pkg glib-2.0 --pkg gio-unix-2.0 --pkg posix --pkg gtk+-3.0 --pkg gee-0.8 --pkg libsoup-2.4 --pkg json-glib-1.0
 
+	#aptik-battery-bar
+	valac -X -D'GETTEXT_PACKAGE="${app_name}"' --Xcc="-lm" -X -Wl,-rpath,/usr/share/${app_name}/libs --thread "Main.vala" "Classes.vala" "Utility.vala" "BatteryBar.vala" -o "aptik-battery-bar" --pkg glib-2.0 --pkg gio-unix-2.0 --pkg posix --pkg gtk+-3.0 --pkg gee-0.8 --pkg libsoup-2.4 --pkg json-glib-1.0
+	
 	#update translation template
 	xgettext --language=C --keyword=_ --copyright-holder='Tony George (teejee2008@gmail.com)' --package-name='${app_name}' --package-version='1.6' --msgid-bugs-address='teejee2008@gmail.com' --escape --sort-output -o ../${app_name}.pot *.vala
 
@@ -32,7 +36,7 @@ install:
 	mkdir -p "$(DESTDIR)$(launcherdir)"
 	mkdir -p "$(DESTDIR)$(sharedir)/${app_name}"
 	mkdir -p "$(DESTDIR)$(sharedir)/pixmaps"
-	mkdir -p "$(DESTDIR)/var/log/aptik-bmon"
+	mkdir -p "$(DESTDIR)$(logdir)/aptik-bmon"
 	#mkdir -p "$(DESTDIR)$(localedir)/it_IT/LC_MESSAGES"
 	#mkdir -p "$(DESTDIR)$(localedir)/ru_RU/LC_MESSAGES"
 	#mkdir -p "$(DESTDIR)$(localedir)/ko_KO/LC_MESSAGES"
@@ -54,6 +58,9 @@ install:
 	#app icon
 	install -m 0755 ./share/pixmaps/${app_name}.svg "$(DESTDIR)$(sharedir)/pixmaps/"
 
+	#log dir permissions
+	chmod a+rw "$(DESTDIR)$(logdir)/aptik-bmon"
+	
 	#translations
 	#msgfmt --check --verbose -o "$(DESTDIR)$(localedir)/it_IT/LC_MESSAGES/${app_name}.mo" ../po/${app_name}-it.po
 	#msgfmt --check --verbose -o "$(DESTDIR)$(localedir)/pt_BR/LC_MESSAGES/${app_name}.mo" ../po/${app_name}-pt.po

@@ -59,6 +59,15 @@ public class AptikBatteryStats : GLib.Object{
 		var console =  new AptikBatteryStats();
 		bool is_success = console.parse_arguments(args);
 
+		if (console.print_stats){
+			stdout.printf("Logging stats to file: '%s'\n\n".printf(Main.BATT_STATS_CACHE_FILE));
+		}
+		
+		while(true){
+			App.log_battery_stats(console.print_stats);
+			sleep(Main.BATT_STATS_LOG_INTERVAL * 1000);
+		}
+		
 		App.exit_app();
 
 		return (is_success) ? 0 : 1;
@@ -105,11 +114,6 @@ public class AptikBatteryStats : GLib.Object{
 					//unknown option - ignore, no errors
 					return false;
 			}
-		}
-
-		while(true){
-			App.log_battery_stats(print_stats);
-			sleep(Main.BATT_STATS_LOG_INTERVAL * 1000);
 		}
 
 		return true;

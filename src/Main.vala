@@ -47,7 +47,7 @@ const string LOCALE_DIR = "/usr/share/locale";
 
 extern void exit(int exit_code);
 
-public class Main : GLib.Object{
+public class Main : GLib.Object {
 	public static string BATT_STATS_CACHE_FILE = "/var/log/aptik-bmon/stats.log";
 	public static string RC_LOCAL_FILE = "/etc/rc.local";
 	public static string RC_BMON_LINE = "/usr/bin/aptik-bmon &";
@@ -66,8 +66,10 @@ public class Main : GLib.Object{
 
 	public Gee.ArrayList<BatteryStat> battery_stats_list;
 	public BatteryStat stat_prev;
+	public BatteryStat stat_prev2;
+	public BatteryStat stat_prev3;
 
-	public Main(string[] args, bool _gui_mode){
+	public Main(string[] args, bool _gui_mode) {
 
 		gui_mode = _gui_mode;
 
@@ -76,14 +78,14 @@ public class Main : GLib.Object{
 		app_conf_path = home + "/.config/aptik-bmon.json";
 
 		//load settings if GUI mode
-		if (gui_mode){
+		if (gui_mode) {
 			load_app_config();
 		}
 
 		//check dependencies
 		string message;
-		if (!check_dependencies(out message)){
-			if (gui_mode){
+		if (!check_dependencies(out message)) {
+			if (gui_mode) {
 				string title = _("Missing Dependencies");
 				gtk_messagebox(title, message, null, true);
 			}
@@ -91,16 +93,16 @@ public class Main : GLib.Object{
 		}
 
 		//initialize backup_dir as current directory for CLI mode
-		if (!gui_mode){
+		if (!gui_mode) {
 			backup_dir = Environment.get_current_dir() + "/";
 		}
 
-		try{
+		try {
 			//create temp dir
 			temp_dir = get_temp_file_path();
 
 			var f = File.new_for_path(temp_dir);
-			if (f.query_exists()){
+			if (f.query_exists()) {
 				Posix.system("rm -rf %s".printf(temp_dir));
 			}
 			f.make_directory_with_parents();
@@ -115,39 +117,39 @@ public class Main : GLib.Object{
 		user_uid = get_user_id(user_login);
 	}
 
-	public bool check_dependencies(out string msg){
+	public bool check_dependencies(out string msg) {
 		msg = "";
 
-		string[] dependencies = { "grep","find" };
+		string[] dependencies = { "grep", "find" };
 
 		string path;
-		foreach(string cmd_tool in dependencies){
+		foreach(string cmd_tool in dependencies) {
 			path = get_cmd_path (cmd_tool);
-			if ((path == null) || (path.length == 0)){
+			if ((path == null) || (path.length == 0)) {
 				msg += " * " + cmd_tool + "\n";
 			}
 		}
 
-		if (msg.length > 0){
+		if (msg.length > 0) {
 			msg = _("Commands listed below are not available on this system") + ":\n\n" + msg + "\n";
 			msg += _("Please install required packages and try running Aptik again");
 			log_msg(msg);
 			return false;
 		}
-		else{
+		else {
 			return true;
 		}
 	}
 
 	/* Common */
 
-	public string create_log_dir(){
+	public string create_log_dir() {
 		string log_dir = backup_dir + "logs/" + timestamp3();
 		create_dir(log_dir);
 		return log_dir;
 	}
 
-	public void save_app_config(){
+	public void save_app_config() {
 		var config = new Json.Object();
 
 		var json = new Json.Generator();
@@ -157,45 +159,47 @@ public class Main : GLib.Object{
 		node.set_object(config);
 		json.set_root(node);
 
-		try{
+		try {
 			json.to_file(this.app_conf_path);
 		} catch (Error e) {
-	        log_error (e.message);
-	    }
+			log_error (e.message);
+		}
 
-	    if (gui_mode){
+		if (gui_mode) {
 			log_msg(_("App config saved") + ": '%s'".printf(app_conf_path));
 		}
 	}
 
-	public void load_app_config(){
+	public void load_app_config() {
 		var f = File.new_for_path(app_conf_path);
-		if (!f.query_exists()) { return; }
+		if (!f.query_exists()) {
+			return;
+		}
 
 		var parser = new Json.Parser();
-		try{
+		try {
 			parser.load_from_file(this.app_conf_path);
 		}
 		catch (Error e) {
-		  log_error (e.message);
+			log_error (e.message);
 		}
 
 		//var node = parser.get_root();
 		//var config = node.get_object();
 
-		if (gui_mode){
+		if (gui_mode) {
 			log_msg(_("App config loaded") + ": '%s'".printf(this.app_conf_path));
 		}
 	}
 
-	public void exit_app(){
+	public void exit_app() {
 
 		save_app_config();
 
-		try{
+		try {
 			//delete temporary files
 			var f = File.new_for_path(temp_dir);
-			if (f.query_exists()){
+			if (f.query_exists()) {
 				f.delete();
 			}
 		}
@@ -206,66 +210,98 @@ public class Main : GLib.Object{
 
 	/* Battery Stats */
 
-	public void log_battery_stats(bool print_stats){
+	public void log_battery_stats(bool print_stats) {
 		try {
+			// get stats ----------------------
+			
+			var stat = new BatteryStat.read_from_sys();
+
+			// create or open log file -------------
+
 			var file = File.new_for_path(BATT_STATS_CACHE_FILE);
-			if (!file.query_exists()){
+			if (!file.query_exists()) {
 				create_empty_log_file();
 			}
+			
+			// archive log file when battery drops after removing from charger ----------------------
 
-			var fos = file.append_to (FileCreateFlags.NONE);
-			var dos = new DataOutputStream (fos);
-			var stat = new BatteryStat.read_from_sys();
-			dos.put_string(stat.to_delimited_string());
-			if (print_stats){
-				stdout.printf(stat.to_delimited_string());
-			}
+			if ((stat_prev != null) && (stat_prev2 != null)) {
 
-			// Archive log file at 100% battery ----------------------
+				//check if charge levels for [stat_prev2, stat_prev, stat] are like
+				//[ 79.80,  80.00, 79.50] - increase and then decrease, or like
+				//[100.00, 100.00, 99.70] - same values and then decrease
 
-			if (stat_prev != null){
-				if ((stat_prev.charge_percent() >= BATT_STATS_ARCHIVE_LEVEL)
-				&& (stat.charge_percent() < BATT_STATS_ARCHIVE_LEVEL)){
-
+				if((stat.charge_percent() < stat_prev.charge_percent())
+				        && 	(   (stat_prev.charge_percent() > stat_prev2.charge_percent())
+				                || (stat_prev2.charge_percent() == stat_prev.charge_percent())
+				            )
+				) {
 					var date_label = (new DateTime.now_local()).format("%F_%H-%M-%S");
 					var archive = File.new_for_path(BATT_STATS_CACHE_FILE + "." + date_label);
-					file.move(archive,FileCopyFlags.NONE);
+					file.move(archive, FileCopyFlags.NONE);
 					create_empty_log_file();
+
+					if (print_stats) {
+						stdout.printf("\n[Removed from charger]\nLevels: %5.2f%%, %5.2f%%, %5.2f%%\n".printf(stat_prev2.charge_percent(),stat_prev.charge_percent(),stat.charge_percent()));
+						stdout.printf("Archived: '%s'\n".printf(archive.get_path()));
+						
+						stdout.printf("Logging stats to file: '%s'\n\n".printf(BATT_STATS_CACHE_FILE));
+					}
+				}
+
+				if ((stat.charge_percent() > stat_prev.charge_percent())
+					&& (stat_prev.charge_percent() < stat_prev2.charge_percent()))
+				{
+					if (print_stats) {
+						stdout.printf("\n[Charging]\n\n");
+					}
 				}
 			}
 
+			// log stats ---------------------------------
+
+			var fos = file.append_to (FileCreateFlags.NONE);
+			var dos = new DataOutputStream (fos);
+			dos.put_string(stat.to_delimited_string());
+			if (print_stats) {
+				stdout.printf(stat.to_friendly_string());
+			}
+
+			// rotate references to previous stats ----------------
+			
+			stat_prev2 = stat_prev;
 			stat_prev = stat;
 		}
-		catch (Error e){
+		catch (Error e) {
 			log_error (e.message);
 		}
 	}
 
-	private void create_empty_log_file(){
+	private void create_empty_log_file() {
 		try {
 			var file = File.new_for_path(BATT_STATS_CACHE_FILE);
 			var parent_dir = file.get_parent();
 
-			if(!parent_dir.query_exists()){
+			if (!parent_dir.query_exists()) {
 				parent_dir.make_directory_with_parents();
 				Posix.system("chmod a+rwx '%s'".printf(parent_dir.get_path()));
 			}
 
-			if(!file.query_exists()){
+			if (!file.query_exists()) {
 				Posix.system("touch '%s'".printf(file.get_path()));
 				Posix.system("chmod a+rwx '%s'".printf(file.get_path()));
 			}
 		}
-		catch (Error e){
+		catch (Error e) {
 			log_error (e.message);
 		}
 	}
 
-	public void read_battery_stats(){
+	public void read_battery_stats() {
 		log_debug("call: read_battery_stats");
 		var timer = timer_start();
 
-		try{
+		try {
 			battery_stats_list = new Gee.ArrayList<BatteryStat>();
 
 			var file = File.new_for_path (BATT_STATS_CACHE_FILE);
@@ -285,134 +321,94 @@ public class Main : GLib.Object{
 
 				log_debug("read_battery_stats: %s".printf(timer_elapsed_string(timer)));
 			}
-			else{
+			else {
 				log_error ("File not found: %s".printf(BATT_STATS_CACHE_FILE));
 			}
 		}
-		catch (Error e){
+		catch (Error e) {
 			log_error (e.message);
 		}
 	}
 
-	public bool is_logging_enabled(){
+	public bool is_logging_enabled() {
 		bool enabled = false;
 
-		try{
+		try {
 			var file = File.new_for_path (RC_LOCAL_FILE);
 			if (file.query_exists ()) {
 				var dis = new DataInputStream (file.read());
 
 				string line;
 				while ((line = dis.read_line (null)) != null) {
-					if (line.contains("aptik-bmon")){
+					if (line.contains("aptik-bmon")) {
 						enabled = true;
 						break;
 					}
 				}
 			}
-			else{
+			else {
 				log_error ("File not found: %s".printf(RC_LOCAL_FILE));
 			}
 		}
-		catch (Error e){
+		catch (Error e) {
 			log_error (e.message);
 		}
 
 		return enabled;
 	}
 
-	public void set_battery_monitoring_status(bool enabled){
-		if (enabled){
-
-			if (is_logging_enabled()){ return; }
-
-			try{
-				/*var file = File.new_for_path (RC_LOCAL_FILE);
-				if (!file.query_exists ()) {
-					log_error ("File not found: %s".printf(RC_LOCAL_FILE));
-					return;
-				}*/
-
-				if (!file_exists(RC_LOCAL_FILE)) {
-					log_error ("File not found: %s".printf(RC_LOCAL_FILE));
-					return;
-				}
-
-				var txt = read_file(RC_LOCAL_FILE);
-				var lines = new Gee.ArrayList<string>();
-				foreach (string line in txt.split("\n")) {
-					lines.add(line);
-				}
-
-				Regex rex_exit_line = new Regex("""^[ \t]*exit[ \t\(]*0[ \t\)]*$""");
-				MatchInfo match;
-
-				for(int i = 0; i < lines.size; i++){
-					string line = lines[i];
-					if (rex_exit_line.match (line, 0, out match)){
-						lines.insert(i, RC_BMON_LINE);
-						break;
-					}
-				}
-
-				txt = "";
-				for(int i = 0; i < lines.size; i++){
-					string line = lines[i];
-					bool is_last_line = (i == lines.size - 1);
-					if ((line.length == 0) && is_last_line){ continue; }
-					txt += line + "\n";
-				}
-				write_file(RC_LOCAL_FILE,txt);
-				Posix.system("chmod a+x %s".printf(RC_LOCAL_FILE));
-
-				if (!process_is_running_by_name(AppShortName)){
-					execute_command_script_async(RC_BMON_LINE);
-				}
+	public void set_battery_monitoring_status_cron(bool enabled) {
+		if (enabled) {
+			if (is_logging_enabled()) {
+				return;
 			}
-			catch (Error e){
-				log_error (e.message);
+
+			if (crontab_search(RC_BMON_LINE).length == 0){
+				crontab_add(RC_BMON_LINE);
+			}
+			
+			if (!process_is_running_by_name(AppShortName)) {
+				execute_command_script_async(RC_BMON_LINE);
 			}
 		}
-		else{
-			if (!is_logging_enabled()){ return; }
-
-			try{
-				if (!file_exists(RC_LOCAL_FILE)) {
-					log_error ("File not found: %s".printf(RC_LOCAL_FILE));
-					return;
-				}
-
-				var txt = read_file(RC_LOCAL_FILE);
-				var lines = new Gee.ArrayList<string>();
-				foreach (string line in txt.split("\n")) {
-					lines.add(line);
-				}
-
-				for(int i = 0; i < lines.size; i++){
-					string line = lines[i];
-					if (line == RC_BMON_LINE){
-						lines.remove(line);
-						break;
-					}
-				}
-
-				txt = "";
-				for(int i = 0; i < lines.size; i++){
-					string line = lines[i];
-					bool is_last_line = (i == lines.size - 1);
-					if ((line.length == 0) && is_last_line){ continue; }
-					txt += line + "\n";
-				}
-				write_file(RC_LOCAL_FILE,txt);
-				Posix.system("chmod a+x %s".printf(RC_LOCAL_FILE));
-
-				if (process_is_running_by_name(AppShortName)){
-					command_kill(AppShortName,AppShortName);
-				}
+		else {
+			if (!is_logging_enabled()) {
+				return;
 			}
-			catch (Error e){
-				log_error (e.message);
+
+			if (crontab_search(RC_BMON_LINE).length > 0){
+				crontab_remove(RC_BMON_LINE);
+			}
+
+			if (process_is_running_by_name(AppShortName)) {
+				command_kill(AppShortName, AppShortName);
+			}
+		}
+	}
+
+	public void set_battery_monitoring_status_rc_local(bool enabled) {
+		if (enabled) {
+			if (is_logging_enabled()) {
+				return;
+			}
+
+			rc_local_add(RC_BMON_LINE);
+				
+			if (!process_is_running_by_name(AppShortName)) {
+				execute_command_script_async(RC_BMON_LINE);
+			}
+		}
+		else {
+			if (!is_logging_enabled()) {
+				return;
+			}
+
+			rc_local_remove(RC_BMON_LINE);
+
+			if (process_is_running_by_name(AppShortName)) {
+				command_kill(AppShortName, AppShortName);
 			}
 		}
 	}
 }
+

@@ -1477,6 +1477,212 @@ namespace TeeJee.System{
 		log_msg("%s %lu\n".printf(seconds.to_string(), microseconds));
 	}
 
+	public bool crontab_remove(string line){
+		string cmd = "";
+		string std_out;
+		string std_err;
+		int ret_val;
+
+		cmd = "crontab -l | sed '/%s/d' | crontab -".printf(line);
+		ret_val = execute_command_script_sync(cmd, out std_out, out std_err);
+
+		if (ret_val != 0){
+			log_error(std_err);
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+
+	public bool crontab_add(string entry){
+		string cmd = "";
+		string std_out;
+		string std_err;
+		int ret_val;
+
+		try{
+			string crontab = crontab_read();
+			crontab += crontab.has_suffix("\n") ? "" : "\n";
+			crontab += entry + "\n";
+
+			//remove empty lines
+			crontab = crontab.replace("\n\n","\n"); //remove empty lines in middle
+			crontab = crontab.has_prefix("\n") ? crontab[1:crontab.length] : crontab; //remove empty lines in beginning
+
+			string temp_file = get_temp_file_path();
+			write_file(temp_file, crontab);
+
+			cmd = "crontab \"%s\"".printf(temp_file);
+			Process.spawn_command_line_sync(cmd, out std_out, out std_err, out ret_val);
+
+			if (ret_val != 0){
+				log_error(std_err);
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
+		catch(Error e){
+			log_error (e.message);
+			return false;
+		}
+	}
+
+	public string crontab_read(){
+		string cmd = "";
+		string std_out;
+		string std_err;
+		int ret_val;
+
+		try {
+			cmd = "crontab -l";
+			Process.spawn_command_line_sync(cmd, out std_out, out std_err, out ret_val);
+			if (ret_val != 0){
+				log_debug(_("Crontab is empty"));
+				return "";
+			}
+			else{
+				return std_out;
+			}
+		}
+		catch (Error e){
+			log_error (e.message);
+			return "";
+		}
+	}
+
+	public string crontab_search(string search_string, bool use_regex_matching = false){
+		string cmd = "";
+		string std_out;
+		string std_err;
+		int ret_val;
+
+		try{
+			Regex rex = null;
+			MatchInfo match;
+			if (use_regex_matching){
+				rex = new Regex(search_string);
+			}
+
+			cmd = "crontab -l";
+			Process.spawn_command_line_sync(cmd, out std_out, out std_err, out ret_val);
+			if (ret_val != 0){
+				log_debug(_("Crontab is empty"));
+			}
+			else{
+				foreach(string line in std_out.split("\n")){
+					if (use_regex_matching && (rex != null)){
+						if (rex.match (line, 0, out match)){
+							return line.strip();
+						}
+					}
+					else {
+						if (line.contains(search_string)){
+							return line.strip();
+						}
+					}
+				}
+			}
+
+			return "";
+		}
+		catch(Error e){
+			log_error (e.message);
+			return "";
+		}
+	}
+
+	public const string RC_LOCAL_FILE = "/etc/rc.local";
+
+	//admin access needed
+	public bool rc_local_add(string line_to_add){
+		try {
+			if (!file_exists(RC_LOCAL_FILE)) {
+				log_error ("File not found: %s".printf(RC_LOCAL_FILE));
+				return false;
+			}
+
+			var txt = read_file(RC_LOCAL_FILE);
+			var lines = new Gee.ArrayList<string>();
+			foreach (string line in txt.split("\n")) {
+				lines.add(line);
+			}
+
+			Regex rex_exit_line = new Regex("""^[ \t]*exit[ \t\(]*0[ \t\)]*$""");
+			MatchInfo match;
+
+			for (int i = 0; i < lines.size; i++) {
+				string line = lines[i];
+				if (rex_exit_line.match (line, 0, out match)) {
+					lines.insert(i, line_to_add);
+					break;
+				}
+			}
+
+			txt = "";
+			for (int i = 0; i < lines.size; i++) {
+				string line = lines[i];
+				bool is_last_line = (i == lines.size - 1);
+				if ((line.length == 0) && is_last_line) {
+					continue;
+				}
+				txt += line + "\n";
+			}
+			write_file(RC_LOCAL_FILE, txt);
+			Posix.system("chmod a+x %s".printf(RC_LOCAL_FILE));
+
+			return true;
+		}
+		catch (Error e) {
+			log_error (e.message);
+			return false;
+		}
+	}
+
+	//admin access needed
+	public bool rc_local_remove(string line_to_remove){
+		try {
+			if (!file_exists(RC_LOCAL_FILE)) {
+				log_error ("File not found: %s".printf(RC_LOCAL_FILE));
+				return false;
+			}
+
+			var txt = read_file(RC_LOCAL_FILE);
+			var lines = new Gee.ArrayList<string>();
+			foreach (string line in txt.split("\n")) {
+				lines.add(line);
+			}
+
+			for (int i = 0; i < lines.size; i++) {
+				string line = lines[i];
+				if (line == line_to_remove) {
+					lines.remove(line);
+					break;
+				}
+			}
+
+			txt = "";
+			for (int i = 0; i < lines.size; i++) {
+				string line = lines[i];
+				bool is_last_line = (i == lines.size - 1);
+				if ((line.length == 0) && is_last_line) {
+					continue;
+				}
+				txt += line + "\n";
+			}
+			write_file(RC_LOCAL_FILE, txt);
+			Posix.system("chmod a+x %s".printf(RC_LOCAL_FILE));
+			
+			return true;
+		}
+		catch (Error e) {
+			log_error (e.message);
+			return false;
+		}
+	}
+	
 	private DateTime dt_last_notification = null;
 	private const int NOTIFICATION_INTERVAL = 3;
 

@@ -1,5 +1,5 @@
 /*
- * PackageManagerWindow.vala
+ * BatteryStatsWindow.vala
  *
  * Copyright 2015 Tony George <teejee2008@gmail.com>
  *
@@ -73,14 +73,14 @@ public class BatteryStatsWindow : Window {
 
 	public void init_window () {
 		title = "Aptik Battery Monitor" + " v" + AppVersion;
-    window_position = WindowPosition.CENTER;
-    resizable = true;
-    set_default_size (def_width, def_height);
+		window_position = WindowPosition.CENTER;
+		resizable = true;
+		set_default_size (def_width, def_height);
 
 		//vbox_main
-    vbox_main = new Box (Orientation.VERTICAL, 6);
-    vbox_main.margin = 6;
-    add (vbox_main);
+		vbox_main = new Box (Orientation.VERTICAL, 6);
+		vbox_main.margin = 6;
+		add (vbox_main);
 
 		init_header();
 
@@ -95,12 +95,12 @@ public class BatteryStatsWindow : Window {
 		timer_refresh = Timeout.add(30 * 1000, timer_refresh_graph);
 	}
 
-	public void init_window_for_parent(){
+	public void init_window_for_parent() {
 		//btn_actions.hide();
 		//btn_selections.hide();
 	}
 
-	public void init_header(){
+	public void init_header() {
 		hbox_top_line1 = new Box (Orientation.HORIZONTAL, 6);
 		//hbox_stats_line1.margin = 6;
 		vbox_main.add (hbox_top_line1);
@@ -112,7 +112,7 @@ public class BatteryStatsWindow : Window {
 		chk_enable.active = (App.is_logging_enabled());
 
 		chk_enable.clicked.connect (() => {
-			App.set_battery_monitoring_status(chk_enable.active);
+			App.set_battery_monitoring_status_cron(chk_enable.active);
 		});
 
 		var lbl_spacer = new Label("");
@@ -120,37 +120,37 @@ public class BatteryStatsWindow : Window {
 		hbox_top_line1.add(lbl_spacer);
 
 		//btn_donate
-    var btn_donate = new Gtk.Button.from_stock ("gtk-missing-image");
+		var btn_donate = new Gtk.Button.from_stock ("gtk-missing-image");
 		btn_donate.label = _("Donate");
 		//btn_donate.label = "";
 		btn_donate.set_tooltip_text (_("Donate"));
 		//btn_donate.image = get_shared_icon("donate","donate.svg",16);
 		//btn_donate.always_show_image = true;
 		//btn_donate.image_position = PositionType.RIGHT;
-    hbox_top_line1.add(btn_donate);
+		hbox_top_line1.add(btn_donate);
 
-		btn_donate.clicked.connect(()=>{
+		btn_donate.clicked.connect(() => {
 			var dialog = new DonationWindow();
 			dialog.set_transient_for(this);
 			dialog.show_all();
 			dialog.run();
 			dialog.destroy();
-			});
+		});
 
 		//btn_about
-    var btn_about = new Gtk.Button.from_stock ("gtk-about");
+		var btn_about = new Gtk.Button.from_stock ("gtk-about");
 		btn_about.label = _("Info");
 		//btn_about.label = "";
 		btn_about.set_tooltip_text (_("Application Info"));
 		//btn_about.image = get_shared_icon("gtk-about","help-info.svg",16);
 		//btn_about.always_show_image = true;
 		//btn_about.image_position = PositionType.RIGHT;
-    hbox_top_line1.add(btn_about);
+		hbox_top_line1.add(btn_about);
 
-    btn_about.clicked.connect (btn_about_clicked);
+		btn_about.clicked.connect (btn_about_clicked);
 	}
 
-	private void btn_about_clicked (){
+	private void btn_about_clicked () {
 		var dialog = new AboutWindow();
 		dialog.set_transient_for (this);
 
@@ -183,9 +183,9 @@ public class BatteryStatsWindow : Window {
 		dialog.show_all();
 	}
 
-	public void init_graph(){
+	public void init_graph() {
 		drawing_area = new Gtk.DrawingArea();
-		drawing_area.set_size_request(400,200);
+		drawing_area.set_size_request(400, 200);
 		drawing_area.margin = 10;
 
 		var sw_graph = new ScrolledWindow(null, null);
@@ -199,26 +199,28 @@ public class BatteryStatsWindow : Window {
 
 		drawing_area.add_events(Gdk.EventMask.BUTTON_PRESS_MASK);
 
-		drawing_area.button_press_event.connect((event)=> {
+		drawing_area.button_press_event.connect((event) => {
 			BatteryStat stat_prev = null;
-			foreach(var stat in App.battery_stats_list){
-				if (stat.date == null) { continue; }
+			foreach(var stat in App.battery_stats_list) {
+				if (stat.date == null) {
+					continue;
+				}
 
-				if (Math.fabsf((float)(stat.graph_x - event.x)) < X_INTERVAL){
+				if (Math.fabsf((float)(stat.graph_x - event.x)) < X_INTERVAL) {
 					stat_current = stat;
 					lbl_date_val.label = stat.date.format("%d %b %Y, %I:%M %p"); //%F %H:%M:%S
 					//lbl_charge_val.label = "%ld, %ld".printf(stat.charge_now, BatteryStat.batt_charge_full());
 					lbl_charge_val.label = "%0.2f%%, %0.0f mAh, %0.2f Wh".printf(
-						stat.charge_percent(),
-						stat.charge_in_mah(),
-						stat.charge_in_wh()
-						);
+					                           stat.charge_percent(),
+					                           stat.charge_in_mah(),
+					                           stat.charge_in_wh()
+					                       );
 					lbl_voltage_val.label = "%0.2f V".printf(stat.voltage());
 					lbl_cpu_val.label = "%0.2f %%".printf(stat.cpu_percent());
-					if (stat_prev != null){
+					if (stat_prev != null) {
 						double rate = (stat_prev.charge_percent() - stat.charge_percent()) * 2 * 60;
-						double estimated = 100/rate;
-						lbl_discharge_val.label = "%0.2f%/hr, %0.1f hrs".printf(rate,estimated);
+						double estimated = 100 / rate;
+						lbl_discharge_val.label = "%0.2f%/hr, %0.1f hrs".printf(rate, estimated);
 					}
 				}
 				stat_prev = stat;
@@ -227,29 +229,27 @@ public class BatteryStatsWindow : Window {
 			return true;
 		});
 
+		var color_white = Gdk.RGBA();
+		color_white.parse("white");
+		color_white.alpha = 1.0;
+
+		var color_black = Gdk.RGBA();
+		color_black.parse("black");
+		color_black.alpha = 1.0;
+
+		var color_red = Gdk.RGBA();
+		color_red.parse("red");
+		color_red.alpha = 1.0;
+
+		var color_blue = Gdk.RGBA();
+		color_blue.parse("blue");
+		color_blue.alpha = 1.0;
+			
 		drawing_area.draw.connect ((context) => {
-			// Get necessary data:
-			weak Gtk.StyleContext style_context = drawing_area.get_style_context ();
-
-			var color_default = style_context.get_color (0);
-
-			var color_white = Gdk.RGBA();
-			color_white.parse("white");
-			color_white.alpha = 1.0;
-
-			var color_black = Gdk.RGBA();
-			color_black.parse("black");
-			color_black.alpha = 1.0;
-
-			var color_red = Gdk.RGBA();
-			color_red.parse("red");
-			color_red.alpha = 1.0;
-
-			var color_blue = Gdk.RGBA();
-			color_blue.parse("blue");
-			color_blue.alpha = 1.0;
-
-			color_default = color_black;
+			//weak Gtk.StyleContext style_context = drawing_area.get_style_context ();
+			//var color_default = style_context.get_color (0);
+			
+			var color_default = color_black;
 
 			Gdk.cairo_set_source_rgba (context, color_default);
 			context.set_line_width (1);
@@ -278,11 +278,13 @@ public class BatteryStatsWindow : Window {
 			BatteryStat stat_prev = null;
 			int count_24_hours = 2880;
 
-			foreach(var stat in App.battery_stats_list){
-				if (stat.date == null) { continue; }
+			foreach(var stat in App.battery_stats_list) {
+				if (stat.date == null) {
+					continue;
+				}
 				count++;
 
-				if (App.battery_stats_list.size > count_24_hours){
+				if (App.battery_stats_list.size > count_24_hours) {
 					if (count < (App.battery_stats_list.size - 2880)) {
 						//ignore entries older than latest 2880 records
 						continue;
@@ -294,14 +296,14 @@ public class BatteryStatsWindow : Window {
 
 				//------ BEGIN CONTEXT -------------------------------------------------
 				context.set_line_width (1);
-				Gdk.cairo_set_source_rgba (context,color_default);
+				Gdk.cairo_set_source_rgba (context, color_default);
 
 				//draw X-axis marker and label for stat -----------------
 
-				if (((stat.date.get_minute() % 10) == 0)&&(stat.date.get_second() < 30)){
+				if (((stat.date.get_minute() % 10) == 0) && (stat.date.get_second() < 30)) {
 					//draw X-axis markers
-					context.move_to(x, y0-2);
-					context.line_to(x, y0+2);
+					context.move_to(x, y0 - 2);
+					context.line_to(x, y0 + 2);
 					//draw X-axis labels
 					context.move_to (x - 15, h - Y_OFFSET + 20);
 					context.show_text(stat.date.format("%I:%M %p"));
@@ -310,12 +312,12 @@ public class BatteryStatsWindow : Window {
 				context.stroke ();
 				//------ END CONTEXT ---------------------------------------------------
 
-				if (stat_prev != null){
-					if (stat_prev.date.add_seconds(Main.BATT_STATS_LOG_INTERVAL + 1).compare(stat.date) < 0){
+				if (stat_prev != null) {
+					if (stat_prev.date.add_seconds(Main.BATT_STATS_LOG_INTERVAL + 1).compare(stat.date) < 0) {
 
 						//------ BEGIN CONTEXT -------------------------------------------
 						context.set_line_width (0.5);
-						Gdk.cairo_set_source_rgba (context,color_default);
+						Gdk.cairo_set_source_rgba (context, color_default);
 
 						//draw a vertical line
 						context.move_to(x_prev, y0);
@@ -328,12 +330,12 @@ public class BatteryStatsWindow : Window {
 						context.stroke ();
 						//------ END CONTEXT -----------------------------------------
 					}
-					else{
+					else {
 						//------ BEGIN CONTEXT -------------------------------------------
 						context.set_line_width (0.5);
-						Gdk.cairo_set_source_rgba (context,color_default);
+						Gdk.cairo_set_source_rgba (context, color_default);
 
-						for(int p = 10; p <= 100; p+=10){
+						for (int p = 10; p <= 100; p += 10) {
 							long y_interval = (long) (h - Y_OFFSET - (p * pxh));
 							//draw Y-axis lines
 							context.move_to(x_prev, y_interval);
@@ -345,7 +347,7 @@ public class BatteryStatsWindow : Window {
 
 						//------ BEGIN CONTEXT -------------------------------------------
 						context.set_line_width (1);
-						Gdk.cairo_set_source_rgba (context,color_default);
+						Gdk.cairo_set_source_rgba (context, color_default);
 
 						//draw battery line for stat ---------------------------
 
@@ -361,7 +363,7 @@ public class BatteryStatsWindow : Window {
 
 						//------ BEGIN CONTEXT -------------------------------------------
 						context.set_line_width (1);
-						Gdk.cairo_set_source_rgba (context,color_red);
+						Gdk.cairo_set_source_rgba (context, color_red);
 
 						//draw cpu line for stat ----------------
 
@@ -378,19 +380,19 @@ public class BatteryStatsWindow : Window {
 					}
 				}
 
-				if ((stat_current != null) && (stat_current.date == stat.date)){
-						//------ BEGIN CONTEXT -------------------------------------------
+				if ((stat_current != null) && (stat_current.date == stat.date)) {
+					//------ BEGIN CONTEXT -------------------------------------------
 					context.set_line_width (0.5);
 					Gdk.cairo_set_source_rgba (context, color_blue);
 					//draw a vertical line for selected stat
 					context.move_to(x, y0);
 					context.line_to(x, y100);
 					context.stroke ();
-						//------ END CONTEXT ---------------------------------------------
+					//------ END CONTEXT ---------------------------------------------
 				}
 
 				stat_prev = stat;
-				if (stat_current == null){
+				if (stat_current == null) {
 					stat_current = stat;
 				}
 				x_prev = x;
@@ -400,7 +402,7 @@ public class BatteryStatsWindow : Window {
 			//------ BEGIN CONTEXT -------------------------------------------------
 
 			context.set_line_width (1);
-			Gdk.cairo_set_source_rgba (context,color_default);
+			Gdk.cairo_set_source_rgba (context, color_default);
 
 			//draw axis lines -----------------------------
 
@@ -421,12 +423,12 @@ public class BatteryStatsWindow : Window {
 
 			//draw Y-axis markers and labels ------------------------
 
-			for(int p = 10; p <= 100; p+=10){
+			for (int p = 10; p <= 100; p += 10) {
 				y = (long) (h - Y_OFFSET - (p * pxh));
 
 				//draw Y-axis markers
-				context.move_to(x0+2, y);
-				context.line_to(x0-2, y);
+				context.move_to(x0 + 2, y);
+				context.line_to(x0 - 2, y);
 
 				/*
 				//draw Y-axis lines
@@ -442,18 +444,18 @@ public class BatteryStatsWindow : Window {
 			context.stroke ();
 			//------ END CONTEXT ---------------------------------------------------
 
-			drawing_area.set_size_request((X_INTERVAL * stat_count) + (2 * X_OFFSET),-1);
+			drawing_area.set_size_request((X_INTERVAL * stat_count) + (2 * X_OFFSET), -1);
 
 			return true;
 		});
 	}
 
-	public void init_stats(){
+	public void init_stats() {
 		hbox_stats_line1 = new Box (Orientation.HORIZONTAL, 6);
-    //hbox_stats_line1.margin = 6;
-    vbox_main.add (hbox_stats_line1);
+		//hbox_stats_line1.margin = 6;
+		vbox_main.add (hbox_stats_line1);
 
-	 	var lbl_date = new Label("<b>" + ("Date") + ":</b>");
+		var lbl_date = new Label("<b>" + ("Date") + ":</b>");
 		lbl_date.set_use_markup(true);
 		hbox_stats_line1.add(lbl_date);
 
@@ -475,8 +477,8 @@ public class BatteryStatsWindow : Window {
 		hbox_stats_line1.add(lbl_voltage_val);
 
 		hbox_stats_line2 = new Box (Orientation.HORIZONTAL, 6);
-    //hbox_stats_line2.margin = 6;
-    vbox_main.add (hbox_stats_line2);
+		//hbox_stats_line2.margin = 6;
+		vbox_main.add (hbox_stats_line2);
 
 		var lbl_discharge = new Label("<b>" + ("Discharge Rate") + ":</b>");
 		lbl_discharge.set_use_markup(true);
@@ -497,19 +499,19 @@ public class BatteryStatsWindow : Window {
 
 		//show empty values
 		lbl_date_val.label = (new DateTime.now_local()).format("%d %b %Y, %I:%M %p"); //%F %H:%M:%S
-		lbl_charge_val.label = "%0.2f%%, %0.0f mAh, %0.2f Wh".printf(0.0,0.0,0.0);
+		lbl_charge_val.label = "%0.2f%%, %0.0f mAh, %0.2f Wh".printf(0.0, 0.0, 0.0);
 		lbl_voltage_val.label = "%0.2f V".printf(0.0);
 		lbl_cpu_val.label = "%0.2f %%".printf(0.0);
 		lbl_discharge_val.label = "00.00%/hr, 0.0 hrs";
 	}
 
-	public bool timer_refresh_graph(){
+	public bool timer_refresh_graph() {
 		//if (timer_pkg_info > 0){
 		//	Source.remove(timer_pkg_info);
 		//	timer_pkg_info = 0;
 		//}
 
-		if (chk_enable.active){
+		if (chk_enable.active) {
 			App.read_battery_stats();
 			redraw_graph_area();
 		}
@@ -517,9 +519,10 @@ public class BatteryStatsWindow : Window {
 		return true;
 	}
 
-	private void redraw_graph_area(){
-		drawing_area.queue_draw_area(0,0,
-			drawing_area.get_allocated_width(),
-			drawing_area.get_allocated_height());
+	private void redraw_graph_area() {
+		drawing_area.queue_draw_area(0, 0,
+		                             drawing_area.get_allocated_width(),
+		                             drawing_area.get_allocated_height());
 	}
 }
+

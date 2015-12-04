@@ -44,13 +44,13 @@ public class AptikBatteryStatsGtk : GLib.Object{
 
 		init_tmp();
 
-	  if (!user_is_admin()){
+		/*if (!user_is_admin()){
 			string msg = _("Aptik Battery Monitor needs admin access to function correctly.") + "\n";
 			msg += _("Please run the application as admin ('gksu aptik-bmon-gtk')");
 			string title = _("Admin Access Required");
 			gtk_messagebox(title, msg, null, true);
 			exit(0);
-		}
+		}*/
 
 		App = new Main(args, true);
 		parse_arguments(args);

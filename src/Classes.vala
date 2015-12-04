@@ -84,6 +84,20 @@ public class BatteryStat : GLib.Object{
 		return txt;
 	}
 
+	public string to_friendly_string(){
+		var txt = "";
+		txt += date.format("%F %H:%M:%S"); //%d %b %Y, %I:%M %p
+		txt += ", %6.2f%%, %5.0f mAh, %6.2f Wh".printf(
+					                           charge_percent(),
+					                           charge_in_mah(),
+					                           charge_in_wh()
+					                       );
+		txt += ", %6.2f V".printf(voltage());
+		txt += ", %6.2f %% CPU".printf(cpu_percent());
+		txt += "\n";
+		return txt;
+	}
+	
 	public double voltage(){
 		return (voltage_now / 1000000.00);
 	}

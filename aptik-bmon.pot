@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aptik-bmon 1.6\n"
 "Report-Msgid-Bugs-To: teejee2008@gmail.com\n"
-"POT-Creation-Date: 2015-10-21 18:36+0530\n"
+"POT-Creation-Date: 2015-12-04 21:48+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,35 +21,31 @@ msgstr ""
 msgid " A Battery Monitoring Utility for Laptops"
 msgstr ""
 
-#: BatteryStatsWindow.vala:467
+#: BatteryStatsWindow.vala:469
 msgid "17.58%, 6200 mAh, 57.14 Wh"
 msgstr ""
 
-#: BatteryStatsWindow.vala:485
+#: BatteryStatsWindow.vala:487
 msgid "17.58%/hr, 8:10 hrs"
 msgstr ""
 
-#: BatteryStatsWindow.vala:492
+#: BatteryStatsWindow.vala:494
 msgid "2%"
 msgstr ""
 
-#: BatteryStatsWindow.vala:460
+#: BatteryStatsWindow.vala:462
 msgid "25 Aug 2015, 10:35:16 PM"
 msgstr ""
 
-#: BatteryStatsWindow.vala:474
+#: BatteryStatsWindow.vala:476
 msgid "8700 mV"
 msgstr ""
 
-#: AptikBatteryStatsGtk.vala:50
-msgid "Admin Access Required"
-msgstr ""
-
-#: Main.vala:187
+#: Main.vala:193
 msgid "App config loaded"
 msgstr ""
 
-#: Main.vala:167
+#: Main.vala:171
 msgid "App config saved"
 msgstr ""
 
@@ -57,7 +53,7 @@ msgstr ""
 msgid "Application Info"
 msgstr ""
 
-#: AptikBatteryStats.vala:49 AptikBatteryStatsGtk.vala:48
+#: AptikBatteryStats.vala:49
 msgid "Aptik Battery Monitor needs admin access to function correctly."
 msgstr ""
 
@@ -79,12 +75,16 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: Main.vala:132
+#: Main.vala:136
 msgid "Commands listed below are not available on this system"
 msgstr ""
 
 #: AboutWindow.vala:272 AboutWindow.vala:289
 msgid "Credits"
+msgstr ""
+
+#: Utility.vala:1543 Utility.vala:1572
+msgid "Crontab is empty"
 msgstr ""
 
 #: DonationWindow.vala:54
@@ -135,7 +135,7 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: Utility.vala:1527
+#: Utility.vala:1733
 msgid "Failed to set ownership"
 msgstr ""
 
@@ -143,7 +143,7 @@ msgstr ""
 msgid "Info"
 msgstr ""
 
-#: Main.vala:87
+#: Main.vala:89
 msgid "Missing Dependencies"
 msgstr ""
 
@@ -155,16 +155,12 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: AptikBatteryStats.vala:79 AptikBatteryStatsGtk.vala:108
+#: AptikBatteryStats.vala:88 AptikBatteryStatsGtk.vala:108
 msgid "Options"
 msgstr ""
 
-#: Main.vala:133
+#: Main.vala:137
 msgid "Please install required packages and try running Aptik again"
-msgstr ""
-
-#: AptikBatteryStatsGtk.vala:49
-msgid "Please run the application as admin ('gksu aptik-bmon-gtk')"
 msgstr ""
 
 #: AptikBatteryStats.vala:50
@@ -175,7 +171,7 @@ msgstr ""
 msgid "Print debug information"
 msgstr ""
 
-#: AptikBatteryStats.vala:81
+#: AptikBatteryStats.vala:90
 msgid "Print stats to standard output"
 msgstr ""
 
@@ -183,7 +179,7 @@ msgstr ""
 msgid "Send Email"
 msgstr ""
 
-#: AptikBatteryStats.vala:82 AptikBatteryStatsGtk.vala:111
+#: AptikBatteryStats.vala:91 AptikBatteryStatsGtk.vala:111
 msgid "Show all options"
 msgstr ""
 
@@ -191,7 +187,7 @@ msgstr ""
 msgid "Stopped"
 msgstr ""
 
-#: AptikBatteryStats.vala:77 AptikBatteryStatsGtk.vala:106
+#: AptikBatteryStats.vala:86 AptikBatteryStatsGtk.vala:106
 msgid "Syntax"
 msgstr ""
 
