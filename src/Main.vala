@@ -49,7 +49,7 @@ extern void exit(int exit_code);
 
 public class Main : GLib.Object {
 	public static string BATT_STATS_CACHE_FILE = "/var/log/aptik-battery-monitor/stats.log";
-	public static string STARTUP_COMMAND_LINE = "/usr/bin/aptik-battery-monitor &";
+	public static string STARTUP_COMMAND_LINE = "@reboot /usr/bin/aptik-battery-monitor &";
 	public static int BATT_STATS_LOG_INTERVAL = 30;
 	public static double BATT_STATS_ARCHIVE_LEVEL = 99.00;
 
