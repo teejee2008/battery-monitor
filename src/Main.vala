@@ -48,7 +48,7 @@ const string LOCALE_DIR = "/usr/share/locale";
 extern void exit(int exit_code);
 
 public class Main : GLib.Object {
-	public static string BATT_STATS_CACHE_FILE = "/var/log/aptik-bmon/stats.log";
+	public static string BATT_STATS_CACHE_FILE = "/var/log/aptik-battery-monitor/stats.log";
 	public static string RC_LOCAL_FILE = "/etc/rc.local";
 	public static string RC_BMON_LINE = "/usr/bin/aptik-bmon &";
 	public static int BATT_STATS_LOG_INTERVAL = 30;
@@ -314,11 +314,6 @@ public class Main : GLib.Object {
 					battery_stats_list.add(stat);
 				}
 
-				/*CompareDataFunc<string> func = (a, b) => {
-					return strcmp(a,b);
-				};
-				sections.sort((owned)func);*/
-
 				log_debug("read_battery_stats: %s".printf(timer_elapsed_string(timer)));
 			}
 			else {
@@ -386,6 +381,7 @@ public class Main : GLib.Object {
 		}
 	}
 
+	//not used
 	public void set_battery_monitoring_status_rc_local(bool enabled) {
 		if (enabled) {
 			if (is_logging_enabled()) {

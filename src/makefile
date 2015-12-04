@@ -36,7 +36,7 @@ install:
 	mkdir -p "$(DESTDIR)$(launcherdir)"
 	mkdir -p "$(DESTDIR)$(sharedir)/${app_name}"
 	mkdir -p "$(DESTDIR)$(sharedir)/pixmaps"
-	mkdir -p "$(DESTDIR)$(logdir)/aptik-bmon"
+	mkdir -p "$(DESTDIR)$(logdir)/aptik-battery-monitor"
 	#mkdir -p "$(DESTDIR)$(localedir)/it_IT/LC_MESSAGES"
 	#mkdir -p "$(DESTDIR)$(localedir)/ru_RU/LC_MESSAGES"
 	#mkdir -p "$(DESTDIR)$(localedir)/ko_KO/LC_MESSAGES"
@@ -59,7 +59,7 @@ install:
 	install -m 0755 ./share/pixmaps/${app_name}.svg "$(DESTDIR)$(sharedir)/pixmaps/"
 
 	#log dir permissions
-	chmod a+rw "$(DESTDIR)$(logdir)/aptik-bmon"
+	chmod a+rw "$(DESTDIR)$(logdir)/aptik-battery-monitor"
 	
 	#translations
 	#msgfmt --check --verbose -o "$(DESTDIR)$(localedir)/it_IT/LC_MESSAGES/${app_name}.mo" ../po/${app_name}-it.po
