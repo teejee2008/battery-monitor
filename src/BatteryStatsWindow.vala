@@ -517,7 +517,7 @@ public class BatteryStatsWindow : Window {
 		hbox_stats_line2 = new Box (Orientation.HORIZONTAL, 6);
 		vbox_stats_selected.add (hbox_stats_line2);
 
-		var lbl_discharge = new Label("<b>" + ("Discharge Rate") + ":</b>");
+		var lbl_discharge = new Label("<b>" + ("Usage") + ":</b>");
 		lbl_discharge.set_use_markup(true);
 		hbox_stats_line2.add(lbl_discharge);
 
@@ -621,24 +621,17 @@ public class BatteryStatsWindow : Window {
 	}
 	
 	private void update_info_current_cycle(){
+		var cycle = new BatteryCycle();
+		cycle.calculate_stats(App.battery_stats_list);
+			
 		var stat_first = App.battery_stats_list[0];
 		var stat_current = App.battery_stats_list[App.battery_stats_list.size - 1];
 		var drop = stat_first.charge_percent() - stat_current.charge_percent();
 		int mins = (int)(App.battery_stats_list.size * 0.5);
 		
-		lbl_cycle_summary_val.label = "%0.2f %% in %dh %dm @ %0.1f %% per hour".printf(
-			drop,
-			mins / 60,
-			mins % 60,
-			drop / (mins / 60.0)
-		);
-
-		double drop_per_min = drop / (mins * 1.0);
-		int total_mins = (int) (100.0 / drop_per_min);
-		int remaining_mins = (int) (stat_current.charge_percent() / drop_per_min);
-		
-		lbl_cycle_summary_life_val.label = "%dh %dm".printf(total_mins / 60, total_mins % 60);
-		lbl_cycle_summary_remaining_val.label = "%dh %dm".printf(remaining_mins / 60, remaining_mins % 60);
+		lbl_cycle_summary_val.label = cycle.used_string();
+		lbl_cycle_summary_life_val.label = cycle.battery_life_string();
+		lbl_cycle_summary_remaining_val.label = cycle.remaining_time_string();
 	}
 
 	private void update_battery_status_icon(){
@@ -646,6 +639,7 @@ public class BatteryStatsWindow : Window {
 
 		var stat = new BatteryStat.read_from_sys();
 		double percent = stat.charge_percent();
+
 		if (percent == 100){
 			icon_name += "-100";
 		}
@@ -665,11 +659,14 @@ public class BatteryStatsWindow : Window {
 			icon_name += "-000";
 		}
 		
-		if (stat.is_charging()){
+		if (BatteryStat.is_charging()){
 			icon_name += "-plugged";
 		}
-		
-		img_battery_status = get_shared_icon(icon_name, "%s.png".printf(icon_name), 48);
+
+		var img = get_shared_icon(icon_name, "%s.png".printf(icon_name), 48);
+		if (img != null){
+			img_battery_status.set_from_pixbuf(img.pixbuf);
+		}
 	}
 }
 

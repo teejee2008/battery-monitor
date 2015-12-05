@@ -166,3 +166,91 @@ public class BatteryStat : GLib.Object{
 		return "";
 	}
 }
+
+
+public class BatteryCycle : GLib.Object{
+	public DateTime date;
+	public double total_drop = 0.0;
+	public double total_mins = 0.0;
+	public double drop_per_min = 0.0;
+	public double average_battery_life_in_mins = 0.0;
+	public double remaining_mins = 0.0;
+	
+	public BatteryCycle(){
+
+	}
+	
+	public void calculate_stats(Gee.ArrayList<BatteryStat> list){
+		BatteryStat stat_last = null;
+		total_drop = 0.0;
+		total_mins = 0.0;
+		drop_per_min = 0.0;
+		foreach(BatteryStat stat in list){
+			if ((stat_last != null)
+				&& (stat.charge_percent() < stat_last.charge_percent())
+				&& (stat_last.date.add_seconds(Main.BATT_STATS_LOG_INTERVAL + 1).compare(stat.date) > 0))
+			{
+				total_drop += (stat_last.charge_percent() - stat.charge_percent());
+				total_mins += 0.5;
+			}
+			stat_last = stat;
+			
+		}
+
+		if (stat_last != null){
+			date = stat_last.date;
+		}
+		
+		if (total_mins > 0){
+			drop_per_min = (total_drop / total_mins);
+		}
+
+		if (drop_per_min > 0){
+			average_battery_life_in_mins = (100.0 / drop_per_min);
+
+			if (stat_last != null){
+				remaining_mins = (stat_last.charge_percent() / drop_per_min);
+			}
+		}
+	}
+
+	public string to_delimited_string(){
+		var txt = date.to_utc().to_unix().to_string() + "|";
+		txt += total_drop.to_string() + "|";
+		txt += total_mins.to_string() + "|";
+		txt += "\n";
+		return txt;
+	}
+
+	public string to_friendly_string(){
+		var txt = "";
+		txt += date.format("%F %H:%M:%S");
+		txt += ", Used %0.2f %% in %.0fh %.0fm @ %0.1f %% per hour".printf(
+			total_drop,
+			(total_mins / 60.0),
+			(total_mins % 60.0),
+			(drop_per_min * 60.0)
+		);
+		txt += "\n";
+		return txt;
+	}
+
+	public string used_string(){
+		return "%0.2f %% in %.0fh %.0fm @ %0.1f %% per hour".printf(
+			total_drop,
+			(total_mins / 60.0),
+			(total_mins % 60.0),
+			(drop_per_min * 60.0)
+		);
+	}
+
+	public string battery_life_string(){
+		return "%.0fh %.0fm".printf(average_battery_life_in_mins / 60, average_battery_life_in_mins % 60);
+	}
+
+	public string remaining_time_string(){
+		return "%.0fh %.0fm".printf(remaining_mins / 60, remaining_mins % 60);
+	}
+}
+
+

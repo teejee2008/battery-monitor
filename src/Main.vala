@@ -49,6 +49,7 @@ extern void exit(int exit_code);
 
 public class Main : GLib.Object {
 	public static string BATT_STATS_CACHE_FILE = "/var/log/aptik-battery-monitor/stats.log";
+	public static string BATT_STATS_HIST_FILE = "/var/log/aptik-battery-monitor/history.log";
 	public static string STARTUP_COMMAND_LINE = "/usr/bin/aptik-battery-monitor &";
 	public static string STARTUP_COMMAND_LINE_CRON = "@reboot /usr/bin/aptik-battery-monitor &";
 	public static int BATT_STATS_LOG_INTERVAL = 30;
@@ -226,7 +227,7 @@ public class Main : GLib.Object {
 			//create or open log
 			var file = File.new_for_path(BATT_STATS_CACHE_FILE);
 			if (!file.query_exists()) {
-				create_empty_log_file();
+				create_empty_log_file(BATT_STATS_CACHE_FILE);
 			}
 			
 			check_and_rotate_log(true);
@@ -248,6 +249,30 @@ public class Main : GLib.Object {
 		}
 	}
 
+	public void log_battery_cycle_summary(){
+		try {
+			//create or open hist log
+			var file = File.new_for_path(BATT_STATS_HIST_FILE);
+			if (!file.query_exists()) {
+				create_empty_log_file(BATT_STATS_HIST_FILE);
+			}
+
+			var cycle = new BatteryCycle();
+			cycle.calculate_stats(App.battery_stats_list);
+			
+			//log cycle summary
+			var fos = file.append_to (FileCreateFlags.NONE);
+			var dos = new DataOutputStream (fos);
+			dos.put_string(cycle.to_delimited_string());
+			if (print_stats) {
+				stdout.printf(cycle.to_friendly_string());
+			}
+		}
+		catch (Error e) {
+			log_error (e.message);
+		}
+	}
+	
 	public bool check_and_rotate_log(bool show_messages = true){
 		// rotates log file when battery drops after removing from charger
 		
@@ -264,17 +289,20 @@ public class Main : GLib.Object {
 							|| (stat_prev2.charge_percent() == stat_prev.charge_percent())
 						))
 			{
+
+				log_battery_cycle_summary();
+				
 				// create or open log ------------
 				var file = File.new_for_path(BATT_STATS_CACHE_FILE);
 				if (!file.query_exists()) {
-					create_empty_log_file();
+					create_empty_log_file(BATT_STATS_CACHE_FILE);
 				}
 				var date_label = (new DateTime.now_local()).format("%F_%H-%M-%S");
 				var archive = File.new_for_path(BATT_STATS_CACHE_FILE + "." + date_label);
 					
 				try{
 					file.move(archive, FileCopyFlags.NONE);
-					create_empty_log_file();
+					create_empty_log_file(BATT_STATS_CACHE_FILE);
 					rotated = true;
 				}
 				catch(Error e){
@@ -300,9 +328,9 @@ public class Main : GLib.Object {
 		return rotated;
 	}
 	
-	private void create_empty_log_file() {
+	private void create_empty_log_file(string file_path) {
 		try {
-			var file = File.new_for_path(BATT_STATS_CACHE_FILE);
+			var file = File.new_for_path(file_path);
 			var parent_dir = file.get_parent();
 
 			if (!parent_dir.query_exists()) {
