@@ -61,7 +61,7 @@ public class BatteryStatsWindow : Window {
 	uint timer_refresh = 0;
 
 	int def_width = 400;
-	int def_height = 400;
+	int def_height = 500;
 
 	private Gdk.RGBA color_white;
 	private Gdk.RGBA color_black;
