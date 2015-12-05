@@ -51,6 +51,7 @@ public class BatteryStatsWindow : Window {
 	private Label lbl_cycle_summary_val;
 	private Label lbl_cycle_summary_life_val;
 	private Label lbl_cycle_summary_remaining_val;
+	private Gtk.Image img_battery_status;
 	
 	BatteryStat stat_current;
 	int X_INTERVAL = 5;
@@ -62,6 +63,12 @@ public class BatteryStatsWindow : Window {
 	int def_width = 400;
 	int def_height = 400;
 
+	private Gdk.RGBA color_white;
+	private Gdk.RGBA color_black;
+	private Gdk.RGBA color_red;
+	private Gdk.RGBA color_blue;
+	private Gdk.RGBA color_red_100;
+		
 	public BatteryStatsWindow() {
 		destroy.connect(Gtk.main_quit);
 		init_window();
@@ -80,6 +87,8 @@ public class BatteryStatsWindow : Window {
 			gtk_messagebox("System Issue",msg,this,true);
 			exit(1);
 		}
+
+		define_colors();
 		
 		title = "Aptik Battery Monitor" + " v" + AppVersion;
 		window_position = WindowPosition.CENTER;
@@ -106,6 +115,28 @@ public class BatteryStatsWindow : Window {
 		timer_refresh = Timeout.add(30 * 1000, timer_refresh_graph);
 	}
 
+	public void define_colors(){
+		color_white = Gdk.RGBA();
+		color_white.parse("white");
+		color_white.alpha = 1.0;
+
+		color_black = Gdk.RGBA();
+		color_black.parse("black");
+		color_black.alpha = 1.0;
+
+		color_red = Gdk.RGBA();
+		color_red.parse("red");
+		color_red.alpha = 1.0;
+
+		color_blue = Gdk.RGBA();
+		color_blue.parse("blue");
+		color_blue.alpha = 1.0;
+		
+		color_red_100 = Gdk.RGBA();
+		color_red_100.parse("#FFCDD2");
+		color_red_100.alpha = 1.0;
+	}
+	
 	public void init_window_for_parent() {
 		//btn_actions.hide();
 		//btn_selections.hide();
@@ -227,22 +258,6 @@ public class BatteryStatsWindow : Window {
 			redraw_graph_area();
 			return true;
 		});
-
-		var color_white = Gdk.RGBA();
-		color_white.parse("white");
-		color_white.alpha = 1.0;
-
-		var color_black = Gdk.RGBA();
-		color_black.parse("black");
-		color_black.alpha = 1.0;
-
-		var color_red = Gdk.RGBA();
-		color_red.parse("red");
-		color_red.alpha = 1.0;
-
-		var color_blue = Gdk.RGBA();
-		color_blue.parse("blue");
-		color_blue.alpha = 1.0;
 			
 		drawing_area.draw.connect ((context) => {
 			//weak Gtk.StyleContext style_context = drawing_area.get_style_context ();
@@ -449,18 +464,39 @@ public class BatteryStatsWindow : Window {
 		});
 	}
 
-
 	public void init_stats() {
-		hbox_stats_line1 = new Box (Orientation.HORIZONTAL, 6);
-		//hbox_stats_line1.margin = 6;
-		vbox_main.add (hbox_stats_line1);
+		Gtk.Frame frame_selected = new Gtk.Frame ("<b>Selected:</b>");
+		(frame_selected.label_widget as Gtk.Label).use_markup = true;
+		vbox_main.add (frame_selected);
+
+		var hbox_stats_and_icon = new Box (Orientation.HORIZONTAL, 6);
+		frame_selected.add (hbox_stats_and_icon);
+		
+		var vbox_stats_selected = new Box (Orientation.VERTICAL, 6);
+		vbox_stats_selected.margin = 6;
+		vbox_stats_selected.hexpand = true;
+		hbox_stats_and_icon.add (vbox_stats_selected);
+
+		img_battery_status = get_shared_icon("notification-battery-060", "notification-battery-060.png", 80);
+		img_battery_status.margin_right = 5;
+		hbox_stats_and_icon.add (img_battery_status);
+		
+		// date -------------------------------------------------
+		
+		var hbox_stats_date = new Box (Orientation.HORIZONTAL, 6);
+		vbox_stats_selected.add (hbox_stats_date);
 
 		var lbl_date = new Label("<b>" + ("Date") + ":</b>");
 		lbl_date.set_use_markup(true);
-		hbox_stats_line1.add(lbl_date);
+		hbox_stats_date.add(lbl_date);
 
 		lbl_date_val = new Label(_("25 Aug 2015, 10:35:16 PM"));
-		hbox_stats_line1.add(lbl_date_val);
+		hbox_stats_date.add(lbl_date_val);
+
+		// line1 ------------------------------------------------
+		
+		hbox_stats_line1 = new Box (Orientation.HORIZONTAL, 6);
+		vbox_stats_selected.add (hbox_stats_line1);
 
 		var lbl_charge = new Label("<b>" + ("Charge") + ":</b>");
 		lbl_charge.set_use_markup(true);
@@ -476,9 +512,10 @@ public class BatteryStatsWindow : Window {
 		lbl_voltage_val = new Label(_("8700 mV"));
 		hbox_stats_line1.add(lbl_voltage_val);
 
+		// line2 ------------------------------------------------
+		
 		hbox_stats_line2 = new Box (Orientation.HORIZONTAL, 6);
-		//hbox_stats_line2.margin = 6;
-		vbox_main.add (hbox_stats_line2);
+		vbox_stats_selected.add (hbox_stats_line2);
 
 		var lbl_discharge = new Label("<b>" + ("Discharge Rate") + ":</b>");
 		lbl_discharge.set_use_markup(true);
@@ -504,12 +541,18 @@ public class BatteryStatsWindow : Window {
 		lbl_cpu_val.label = "%0.2f %%".printf(0.0);
 		lbl_discharge_val.label = "00.00%/hr, 0.0 hrs";
 
-
+		// line3 ------------------------------------------------
+				
+		Gtk.Frame frame_averages = new Gtk.Frame ("<b>Averages:</b>");
+		(frame_averages.label_widget as Gtk.Label).use_markup = true;
+		vbox_main.add (frame_averages);
+		
 		var hbox_stats_line3 = new Box (Orientation.HORIZONTAL, 6);
-		//hbox_stats_line3.margin = 6;
-		vbox_main.add (hbox_stats_line3);
+		hbox_stats_line3.margin = 6;
+		//hbox_stats_line3.override_background_color(StateFlags.NORMAL,color_red_100);
+		frame_averages.add (hbox_stats_line3);
 
-		var lbl_cycle_summary = new Label("<b>" + ("[This Cycle] Used") + ":</b>");
+		var lbl_cycle_summary = new Label("<b>" + ("Used") + ":</b>");
 		lbl_cycle_summary.set_use_markup(true);
 		hbox_stats_line3.add(lbl_cycle_summary);
 
@@ -541,6 +584,7 @@ public class BatteryStatsWindow : Window {
 			App.read_battery_stats();
 			select_latest_stat();
 			update_info_current_cycle();
+			update_battery_status_icon();
 		}
 
 		return true;
@@ -595,6 +639,37 @@ public class BatteryStatsWindow : Window {
 		
 		lbl_cycle_summary_life_val.label = "%dh %dm".printf(total_mins / 60, total_mins % 60);
 		lbl_cycle_summary_remaining_val.label = "%dh %dm".printf(remaining_mins / 60, remaining_mins % 60);
+	}
+
+	private void update_battery_status_icon(){
+		var icon_name = "notification-battery";
+
+		var stat = new BatteryStat.read_from_sys();
+		double percent = stat.charge_percent();
+		if (percent == 100){
+			icon_name += "-100";
+		}
+		else if (percent >= 80){
+			icon_name += "-080";
+		}
+		else if (percent >= 60){
+			icon_name += "-060";
+		}
+		else if (percent >= 40){
+			icon_name += "-040";
+		}
+		else if (percent >= 20){
+			icon_name += "-020";
+		}
+		else if (percent >= 0){
+			icon_name += "-000";
+		}
+		
+		if (stat.is_charging()){
+			icon_name += "-plugged";
+		}
+		
+		img_battery_status = get_shared_icon(icon_name, "%s.png".printf(icon_name), 48);
 	}
 }
 

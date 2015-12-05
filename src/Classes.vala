@@ -50,6 +50,7 @@ public class BatteryStat : GLib.Object{
 	public static string BATT_STATS_CHARGE_FULL        = "/sys/class/power_supply/BAT0/charge_full";
 	public static string BATT_STATS_CHARGE_FULL_DESIGN = "/sys/class/power_supply/BAT0/charge_full_design";
 	public static string BATT_STATS_VOLTAGE_NOW        = "/sys/class/power_supply/BAT0/voltage_now";
+	public static string BATT_STATS_STATUS             = "/sys/class/power_supply/BAT0/status";
 
 	public BatteryStat.read_from_sys(){
 		this.date = new DateTime.now_local();
@@ -142,6 +143,11 @@ public class BatteryStat : GLib.Object{
 		return long.parse(val);
 	}
 
+	public static bool is_charging(){
+		string val = read_sys_stat_file(BATT_STATS_STATUS);
+		return (val == "Charging");
+	}
+	
 	public static string read_sys_stat_file(string statFile){
 		try{
 			var file = File.new_for_path(statFile);
