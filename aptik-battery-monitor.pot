@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aptik-battery-monitor 1.6\n"
 "Report-Msgid-Bugs-To: teejee2008@gmail.com\n"
-"POT-Creation-Date: 2015-12-04 23:01+0530\n"
+"POT-Creation-Date: 2015-12-05 13:21+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,37 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: BatteryStatsWindow.vala:173
+#: BatteryStatsWindow.vala:179
 msgid " A Battery Monitoring Utility for Laptops"
 msgstr ""
 
-#: BatteryStatsWindow.vala:469
+#: BatteryStatsWindow.vala:76
+msgid ""
+"/var/spool on your system is mounted in memory (tempfs)!!\n"
+"\n"
+"/var/spool should never be mounted in tempfs as the user's cron jobs are "
+"stored here along with other system files. If you have done this to reduce "
+"writes to your SSD, please undo it by editing your /etc/fstab file. This "
+"application will not work till this is corrected."
+msgstr ""
+
+#: BatteryStatsWindow.vala:475
 msgid "17.58%, 6200 mAh, 57.14 Wh"
 msgstr ""
 
-#: BatteryStatsWindow.vala:487
+#: BatteryStatsWindow.vala:493
 msgid "17.58%/hr, 8:10 hrs"
 msgstr ""
 
-#: BatteryStatsWindow.vala:494
+#: BatteryStatsWindow.vala:500
 msgid "2%"
 msgstr ""
 
-#: BatteryStatsWindow.vala:462
+#: BatteryStatsWindow.vala:468
 msgid "25 Aug 2015, 10:35:16 PM"
 msgstr ""
 
-#: BatteryStatsWindow.vala:476
+#: BatteryStatsWindow.vala:482
 msgid "8700 mV"
 msgstr ""
 
@@ -49,7 +59,7 @@ msgstr ""
 msgid "App config saved"
 msgstr ""
 
-#: BatteryStatsWindow.vala:144
+#: BatteryStatsWindow.vala:150
 msgid "Application Info"
 msgstr ""
 
@@ -105,7 +115,7 @@ msgstr ""
 msgid "Documenters"
 msgstr ""
 
-#: BatteryStatsWindow.vala:124 BatteryStatsWindow.vala:126
+#: BatteryStatsWindow.vala:130 BatteryStatsWindow.vala:132
 #: DonationWindow.vala:36
 msgid "Donate"
 msgstr ""
@@ -123,7 +133,7 @@ msgstr ""
 msgid "Donations"
 msgstr ""
 
-#: BatteryStatsWindow.vala:108
+#: BatteryStatsWindow.vala:114
 msgid "Enable logging"
 msgstr ""
 
@@ -131,11 +141,11 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: Utility.vala:1733
+#: Utility.vala:1738
 msgid "Failed to set ownership"
 msgstr ""
 
-#: BatteryStatsWindow.vala:142
+#: BatteryStatsWindow.vala:148
 msgid "Info"
 msgstr ""
 

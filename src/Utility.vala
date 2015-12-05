@@ -1594,6 +1594,11 @@ namespace TeeJee.System{
 		}
 	}
 
+	public bool check_if_path_is_mounted_on_tmpfs(string path){
+		int status = Posix.system("df --type=tmpfs '%s' > /dev/null".printf(path));
+		return (status == 0);
+	}
+	
 	public const string RC_LOCAL_FILE = "/etc/rc.local";
 
 	//admin access needed

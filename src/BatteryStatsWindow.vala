@@ -72,6 +72,12 @@ public class BatteryStatsWindow : Window {
 	}
 
 	public void init_window () {
+		if (check_if_path_is_mounted_on_tmpfs("/var/spool")){
+			string msg = _("/var/spool on your system is mounted in memory (tmpfs)!!\n\n/var/spool should never be mounted in tmpfs as the user's cron jobs are stored here along with other system files. If you have done this to reduce writes to your SSD, please undo it by editing your /etc/fstab file. This application will not work till this is corrected.");
+			gtk_messagebox("System Issue",msg,this,true);
+			exit(1);
+		}
+		
 		title = "Aptik Battery Monitor" + " v" + AppVersion;
 		window_position = WindowPosition.CENTER;
 		resizable = true;
@@ -88,10 +94,10 @@ public class BatteryStatsWindow : Window {
 
 		init_stats();
 
-		show_all();
-
 		//TODO: Should start if not already running
 
+		show_all();
+		
 		timer_refresh = Timeout.add(30 * 1000, timer_refresh_graph);
 	}
 
@@ -298,7 +304,7 @@ public class BatteryStatsWindow : Window {
 				context.set_line_width (1);
 				Gdk.cairo_set_source_rgba (context, color_default);
 
-				//draw X-axis marker and label for stat -----------------
+				//draw X-axis ticks and time label for stat -----------------
 
 				if (((stat.date.get_minute() % 10) == 0) && (stat.date.get_second() < 30)) {
 					//draw X-axis markers
