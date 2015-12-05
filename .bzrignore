@@ -1,0 +1,7 @@
+src/aptik-battery-monitor
+src/aptik-battery-monitor-gtk
+src/aptik-battery-bar
+installer/amd64
+installer/i386
+installer/*.deb
+installer/*.run

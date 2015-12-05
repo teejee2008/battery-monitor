@@ -1595,7 +1595,7 @@ namespace TeeJee.System{
 	}
 
 	public bool check_if_path_is_mounted_on_tmpfs(string path){
-		int status = Posix.system("df --type=tmpfs '%s' > /dev/null".printf(path));
+		int status = Posix.system("df --type=tmpfs '%s' > /dev/null 2>&1".printf(path));
 		return (status == 0);
 	}
 	
