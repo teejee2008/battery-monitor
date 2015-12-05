@@ -48,7 +48,10 @@ public class BatteryStatsWindow : Window {
 	private Label lbl_voltage_val;
 	private Label lbl_cpu_val;
 	private Label lbl_discharge_val;
-
+	private Label lbl_cycle_summary_val;
+	private Label lbl_cycle_summary_life_val;
+	private Label lbl_cycle_summary_remaining_val;
+	
 	BatteryStat stat_current;
 	int X_INTERVAL = 5;
 	int X_OFFSET = 30;
@@ -97,6 +100,8 @@ public class BatteryStatsWindow : Window {
 		//TODO: Should start if not already running
 
 		show_all();
+
+		timer_refresh_graph();
 		
 		timer_refresh = Timeout.add(30 * 1000, timer_refresh_graph);
 	}
@@ -202,7 +207,7 @@ public class BatteryStatsWindow : Window {
 		vbox_main.add(sw_graph);
 
 		App.read_battery_stats();
-
+		
 		drawing_area.add_events(Gdk.EventMask.BUTTON_PRESS_MASK);
 
 		drawing_area.button_press_event.connect((event) => {
@@ -214,21 +219,9 @@ public class BatteryStatsWindow : Window {
 
 				if (Math.fabsf((float)(stat.graph_x - event.x)) < X_INTERVAL) {
 					stat_current = stat;
-					lbl_date_val.label = stat.date.format("%d %b %Y, %I:%M %p"); //%F %H:%M:%S
-					//lbl_charge_val.label = "%ld, %ld".printf(stat.charge_now, BatteryStat.batt_charge_full());
-					lbl_charge_val.label = "%0.2f%%, %0.0f mAh, %0.2f Wh".printf(
-					                           stat.charge_percent(),
-					                           stat.charge_in_mah(),
-					                           stat.charge_in_wh()
-					                       );
-					lbl_voltage_val.label = "%0.2f V".printf(stat.voltage());
-					lbl_cpu_val.label = "%0.2f %%".printf(stat.cpu_percent());
-					if (stat_prev != null) {
-						double rate = (stat_prev.charge_percent() - stat.charge_percent()) * 2 * 60;
-						double estimated = 100 / rate;
-						lbl_discharge_val.label = "%0.2f%/hr, %0.1f hrs".printf(rate, estimated);
-					}
+					update_info_stats(stat,stat_prev);
 				}
+				
 				stat_prev = stat;
 			}
 			redraw_graph_area();
@@ -456,6 +449,7 @@ public class BatteryStatsWindow : Window {
 		});
 	}
 
+
 	public void init_stats() {
 		hbox_stats_line1 = new Box (Orientation.HORIZONTAL, 6);
 		//hbox_stats_line1.margin = 6;
@@ -490,7 +484,7 @@ public class BatteryStatsWindow : Window {
 		lbl_discharge.set_use_markup(true);
 		hbox_stats_line2.add(lbl_discharge);
 
-		lbl_discharge_val = new Label(_("17.58%/hr, 8:10 hrs"));
+		lbl_discharge_val = new Label(_("17.58 % per hr, 8:10 hrs"));
 		hbox_stats_line2.add(lbl_discharge_val);
 
 		var lbl_cpu = new Label("<b>" + ("CPU") + ":</b>");
@@ -509,6 +503,32 @@ public class BatteryStatsWindow : Window {
 		lbl_voltage_val.label = "%0.2f V".printf(0.0);
 		lbl_cpu_val.label = "%0.2f %%".printf(0.0);
 		lbl_discharge_val.label = "00.00%/hr, 0.0 hrs";
+
+
+		var hbox_stats_line3 = new Box (Orientation.HORIZONTAL, 6);
+		//hbox_stats_line3.margin = 6;
+		vbox_main.add (hbox_stats_line3);
+
+		var lbl_cycle_summary = new Label("<b>" + ("[This Cycle] Used") + ":</b>");
+		lbl_cycle_summary.set_use_markup(true);
+		hbox_stats_line3.add(lbl_cycle_summary);
+
+		lbl_cycle_summary_val = new Label(_("Used 00.00 % in 0h 0m @ 0.0 % per hour"));
+		hbox_stats_line3.add(lbl_cycle_summary_val);
+
+		var lbl_cycle_summary_life = new Label("<b>" + ("Life") + ":</b>");
+		lbl_cycle_summary_life.set_use_markup(true);
+		hbox_stats_line3.add(lbl_cycle_summary_life);
+
+		lbl_cycle_summary_life_val = new Label(_("0h 0m"));
+		hbox_stats_line3.add(lbl_cycle_summary_life_val);
+
+		var lbl_cycle_summary_remaining = new Label("<b>" + ("Remaining") + ":</b>");
+		lbl_cycle_summary_remaining.set_use_markup(true);
+		hbox_stats_line3.add(lbl_cycle_summary_remaining);
+
+		lbl_cycle_summary_remaining_val = new Label(_("0h 0m"));
+		hbox_stats_line3.add(lbl_cycle_summary_remaining_val);
 	}
 
 	public bool timer_refresh_graph() {
@@ -519,16 +539,62 @@ public class BatteryStatsWindow : Window {
 
 		if (chk_enable.active) {
 			App.read_battery_stats();
-			redraw_graph_area();
+			select_latest_stat();
+			update_info_current_cycle();
 		}
 
 		return true;
 	}
-
+	private void select_latest_stat(){
+		var stat0 = App.battery_stats_list[App.battery_stats_list.size - 1];
+		var stat1 = App.battery_stats_list[App.battery_stats_list.size - 2];
+		stat_current = stat0;
+		redraw_graph_area();
+		update_info_stats(stat0,stat1);
+	}
+	
 	private void redraw_graph_area() {
 		drawing_area.queue_draw_area(0, 0,
 		                             drawing_area.get_allocated_width(),
 		                             drawing_area.get_allocated_height());
+	}
+			
+	private void update_info_stats(BatteryStat stat, BatteryStat stat_prev){
+		lbl_date_val.label = stat.date.format("%d %b %Y, %I:%M %p"); //%F %H:%M:%S
+		//lbl_charge_val.label = "%ld, %ld".printf(stat.charge_now, BatteryStat.batt_charge_full());
+		lbl_charge_val.label = "%0.2f %%, %0.0f mAh, %0.2f Wh".printf(
+								   stat.charge_percent(),
+								   stat.charge_in_mah(),
+								   stat.charge_in_wh()
+							   );
+		lbl_voltage_val.label = "%0.2f V".printf(stat.voltage());
+		lbl_cpu_val.label = "%0.2f %%".printf(stat.cpu_percent());
+		if (stat_prev != null) {
+			double rate = (stat_prev.charge_percent() - stat.charge_percent()) * 2 * 60;
+			double estimated = 100 / rate;
+			lbl_discharge_val.label = "%0.2f %% per hr, %0.1f hrs".printf(rate, estimated);
+		}
+	}
+	
+	private void update_info_current_cycle(){
+		var stat_first = App.battery_stats_list[0];
+		var stat_current = App.battery_stats_list[App.battery_stats_list.size - 1];
+		var drop = stat_first.charge_percent() - stat_current.charge_percent();
+		int mins = (int)(App.battery_stats_list.size * 0.5);
+		
+		lbl_cycle_summary_val.label = "%0.2f %% in %dh %dm @ %0.1f %% per hour".printf(
+			drop,
+			mins / 60,
+			mins % 60,
+			drop / (mins / 60.0)
+		);
+
+		double drop_per_min = drop / (mins * 1.0);
+		int total_mins = (int) (100.0 / drop_per_min);
+		int remaining_mins = (int) (stat_current.charge_percent() / drop_per_min);
+		
+		lbl_cycle_summary_life_val.label = "%dh %dm".printf(total_mins / 60, total_mins % 60);
+		lbl_cycle_summary_remaining_val.label = "%dh %dm".printf(remaining_mins / 60, remaining_mins % 60);
 	}
 }
 

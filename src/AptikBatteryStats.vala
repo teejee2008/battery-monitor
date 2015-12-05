@@ -37,9 +37,6 @@ using TeeJee.System;
 using TeeJee.Misc;
 
 public class AptikBatteryStats : GLib.Object{
-
-	public bool print_stats = false;
-
 	public static int main (string[] args) {
 		set_locale();
 
@@ -50,20 +47,26 @@ public class AptikBatteryStats : GLib.Object{
 		App = new Main(args,false);
 
 		var console =  new AptikBatteryStats();
-		bool is_success = console.parse_arguments(args);
+		console.parse_arguments(args);
 
-		if (console.print_stats){
+		if (App.print_stats){
 			stdout.printf("Logging stats to file: '%s'\n\n".printf(Main.BATT_STATS_CACHE_FILE));
 		}
-		
-		while(true){
-			App.log_battery_stats(console.print_stats);
-			sleep(Main.BATT_STATS_LOG_INTERVAL * 1000);
-		}
-		
-		App.exit_app();
 
-		return (is_success) ? 0 : 1;
+		App.read_battery_stats();
+
+		if (App.command == "print_log"){
+			App.print_log_file();
+			exit(0);
+		}
+		else{
+			while(true){
+				App.log_battery_stats(App.print_stats);
+				sleep(Main.BATT_STATS_LOG_INTERVAL * 1000);
+			}
+		}
+
+		return 0;
 	}
 
 	private static void set_locale(){
@@ -80,8 +83,9 @@ public class AptikBatteryStats : GLib.Object{
 		msg += "\n";
 		msg += _("Options") + ":\n";
 		msg += "\n";
-		msg += "  --print    " + _("Print stats to standard output") + "\n";
-		msg += "  --h[elp]   " + _("Show all options") + "\n";
+		msg += "  --print      " + _("Print stats to standard output") + "\n";
+		msg += "  --print-log  " + _("Print stats from log file sand quit") + "\n";
+		msg += "  --h[elp]     " + _("Show all options") + "\n";
 		msg += "\n";
 		return msg;
 	}
@@ -96,7 +100,10 @@ public class AptikBatteryStats : GLib.Object{
 					LOG_DEBUG = true;
 					break;
 				case "--print":
-					print_stats = true;
+					App.print_stats = true;
+					break;
+				case "--print-log":
+					App.command = "print_log";
 					break;
 				case "--help":
 				case "--h":

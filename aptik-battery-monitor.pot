@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aptik-battery-monitor 1.6\n"
 "Report-Msgid-Bugs-To: teejee2008@gmail.com\n"
-"POT-Creation-Date: 2015-12-05 13:30+0530\n"
+"POT-Creation-Date: 2015-12-05 17:49+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: BatteryStatsWindow.vala:179
+#: BatteryStatsWindow.vala:184
 msgid " A Battery Monitoring Utility for Laptops"
 msgstr ""
 
-#: BatteryStatsWindow.vala:76
+#: BatteryStatsWindow.vala:79
 msgid ""
 "/var/spool on your system is mounted in memory (tmpfs)!!\n"
 "\n"
@@ -31,35 +31,40 @@ msgid ""
 "application will not work till this is corrected."
 msgstr ""
 
-#: BatteryStatsWindow.vala:475
+#: BatteryStatsWindow.vala:523 BatteryStatsWindow.vala:530
+msgid "0h 0m"
+msgstr ""
+
+#: BatteryStatsWindow.vala:487
+#, c-format
+msgid "17.58 % per hr, 8:10 hrs"
+msgstr ""
+
+#: BatteryStatsWindow.vala:469
 msgid "17.58%, 6200 mAh, 57.14 Wh"
 msgstr ""
 
-#: BatteryStatsWindow.vala:493
-msgid "17.58%/hr, 8:10 hrs"
-msgstr ""
-
-#: BatteryStatsWindow.vala:500
+#: BatteryStatsWindow.vala:494
 msgid "2%"
 msgstr ""
 
-#: BatteryStatsWindow.vala:468
+#: BatteryStatsWindow.vala:462
 msgid "25 Aug 2015, 10:35:16 PM"
 msgstr ""
 
-#: BatteryStatsWindow.vala:482
+#: BatteryStatsWindow.vala:476
 msgid "8700 mV"
 msgstr ""
 
-#: Main.vala:193
+#: Main.vala:196
 msgid "App config loaded"
 msgstr ""
 
-#: Main.vala:171
+#: Main.vala:174
 msgid "App config saved"
 msgstr ""
 
-#: BatteryStatsWindow.vala:150
+#: BatteryStatsWindow.vala:155
 msgid "Application Info"
 msgstr ""
 
@@ -81,7 +86,7 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: Main.vala:136
+#: Main.vala:139
 msgid "Commands listed below are not available on this system"
 msgstr ""
 
@@ -115,7 +120,7 @@ msgstr ""
 msgid "Documenters"
 msgstr ""
 
-#: BatteryStatsWindow.vala:130 BatteryStatsWindow.vala:132
+#: BatteryStatsWindow.vala:135 BatteryStatsWindow.vala:137
 #: DonationWindow.vala:36
 msgid "Donate"
 msgstr ""
@@ -133,7 +138,7 @@ msgstr ""
 msgid "Donations"
 msgstr ""
 
-#: BatteryStatsWindow.vala:114
+#: BatteryStatsWindow.vala:119
 msgid "Enable logging"
 msgstr ""
 
@@ -145,11 +150,11 @@ msgstr ""
 msgid "Failed to set ownership"
 msgstr ""
 
-#: BatteryStatsWindow.vala:148
+#: BatteryStatsWindow.vala:153
 msgid "Info"
 msgstr ""
 
-#: Main.vala:89
+#: Main.vala:92
 msgid "Missing Dependencies"
 msgstr ""
 
@@ -161,11 +166,11 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: AptikBatteryStats.vala:81 AptikBatteryStatsGtk.vala:100
+#: AptikBatteryStats.vala:84 AptikBatteryStatsGtk.vala:100
 msgid "Options"
 msgstr ""
 
-#: Main.vala:137
+#: Main.vala:140
 msgid "Please install required packages and try running Aptik again"
 msgstr ""
 
@@ -173,7 +178,11 @@ msgstr ""
 msgid "Print debug information"
 msgstr ""
 
-#: AptikBatteryStats.vala:83
+#: AptikBatteryStats.vala:87
+msgid "Print stats from log file sand quit"
+msgstr ""
+
+#: AptikBatteryStats.vala:86
 msgid "Print stats to standard output"
 msgstr ""
 
@@ -181,7 +190,7 @@ msgstr ""
 msgid "Send Email"
 msgstr ""
 
-#: AptikBatteryStats.vala:84 AptikBatteryStatsGtk.vala:103
+#: AptikBatteryStats.vala:88 AptikBatteryStatsGtk.vala:103
 msgid "Show all options"
 msgstr ""
 
@@ -189,7 +198,7 @@ msgstr ""
 msgid "Stopped"
 msgstr ""
 
-#: AptikBatteryStats.vala:79 AptikBatteryStatsGtk.vala:98
+#: AptikBatteryStats.vala:82 AptikBatteryStatsGtk.vala:98
 msgid "Syntax"
 msgstr ""
 
@@ -205,6 +214,11 @@ msgstr ""
 
 #: AptikBatteryStatsGtk.vala:85
 msgid "Unknown option"
+msgstr ""
+
+#: BatteryStatsWindow.vala:516
+#, c-format
+msgid "Used 00.00 % in 0h 0m @ 0.0 % per hour"
 msgstr ""
 
 #: DonationWindow.vala:88

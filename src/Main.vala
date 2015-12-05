@@ -59,15 +59,18 @@ public class Main : GLib.Object {
 	public string user_home = "";
 	public int user_uid = -1;
 
+	public bool print_stats = false;
+	public string command = "";
+	
 	public string temp_dir = "";
 	public string backup_dir = "";
 	public string share_dir = "/usr/share";
 	public string app_conf_path = "";
 
 	public Gee.ArrayList<BatteryStat> battery_stats_list;
+	public BatteryStat stat_current;
 	public BatteryStat stat_prev;
 	public BatteryStat stat_prev2;
-	public BatteryStat stat_prev3;
 
 	public Main(string[] args, bool _gui_mode) {
 
@@ -217,51 +220,18 @@ public class Main : GLib.Object {
 			// get stats ----------------------
 			
 			var stat = new BatteryStat.read_from_sys();
-
-			// create or open log file -------------
-
+			battery_stats_list.add(stat);
+			stat_current = stat;
+			
+			//create or open log
 			var file = File.new_for_path(BATT_STATS_CACHE_FILE);
 			if (!file.query_exists()) {
 				create_empty_log_file();
 			}
 			
-			// archive log file when battery drops after removing from charger ----------------------
+			check_and_rotate_log(true);
 
-			if ((stat_prev != null) && (stat_prev2 != null)) {
-
-				//check if charge levels for [stat_prev2, stat_prev, stat] are like
-				//[ 79.80,  80.00, 79.50] - increase and then decrease, or like
-				//[100.00, 100.00, 99.70] - same values and then decrease
-
-				if((stat.charge_percent() < stat_prev.charge_percent())
-				        && 	(   (stat_prev.charge_percent() > stat_prev2.charge_percent())
-				                || (stat_prev2.charge_percent() == stat_prev.charge_percent())
-				            )
-				) {
-					var date_label = (new DateTime.now_local()).format("%F_%H-%M-%S");
-					var archive = File.new_for_path(BATT_STATS_CACHE_FILE + "." + date_label);
-					file.move(archive, FileCopyFlags.NONE);
-					create_empty_log_file();
-
-					if (print_stats) {
-						stdout.printf("\n[Removed from charger]\nLevels: %5.2f%%, %5.2f%%, %5.2f%%\n".printf(stat_prev2.charge_percent(),stat_prev.charge_percent(),stat.charge_percent()));
-						stdout.printf("Archived: '%s'\n".printf(archive.get_path()));
-						
-						stdout.printf("Logging stats to file: '%s'\n\n".printf(BATT_STATS_CACHE_FILE));
-					}
-				}
-
-				if ((stat.charge_percent() > stat_prev.charge_percent())
-					&& (stat_prev.charge_percent() < stat_prev2.charge_percent()))
-				{
-					if (print_stats) {
-						stdout.printf("\n[Charging]\n\n");
-					}
-				}
-			}
-
-			// log stats ---------------------------------
-
+			//log stats
 			var fos = file.append_to (FileCreateFlags.NONE);
 			var dos = new DataOutputStream (fos);
 			dos.put_string(stat.to_delimited_string());
@@ -269,16 +239,67 @@ public class Main : GLib.Object {
 				stdout.printf(stat.to_friendly_string());
 			}
 
-			// rotate references to previous stats ----------------
-			
+			//rotate references
 			stat_prev2 = stat_prev;
-			stat_prev = stat;
+			stat_prev = stat_current;
 		}
 		catch (Error e) {
 			log_error (e.message);
 		}
 	}
 
+	public bool check_and_rotate_log(bool show_messages = true){
+		// rotates log file when battery drops after removing from charger
+		
+		bool rotated = false;
+		
+		if ((stat_prev != null) && (stat_prev2 != null)) {
+
+			//check if charge levels for [stat_prev2, stat_prev, stat] are like
+			//[ 79.80,  80.00, 79.50] - increase and then decrease, or like
+			//[100.00, 100.00, 99.70] - same values and then decrease
+	
+			if((stat_current.charge_percent() < stat_prev.charge_percent())
+					&& 	(   (stat_prev.charge_percent() > stat_prev2.charge_percent())
+							|| (stat_prev2.charge_percent() == stat_prev.charge_percent())
+						))
+			{
+				// create or open log ------------
+				var file = File.new_for_path(BATT_STATS_CACHE_FILE);
+				if (!file.query_exists()) {
+					create_empty_log_file();
+				}
+				var date_label = (new DateTime.now_local()).format("%F_%H-%M-%S");
+				var archive = File.new_for_path(BATT_STATS_CACHE_FILE + "." + date_label);
+					
+				try{
+					file.move(archive, FileCopyFlags.NONE);
+					create_empty_log_file();
+					rotated = true;
+				}
+				catch(Error e){
+					log_error (e.message);
+				}
+				
+				if (print_stats && show_messages) {
+					stdout.printf("\n[Removed from charger]\nLevels: %5.2f%%, %5.2f%%, %5.2f%%\n".printf(stat_prev2.charge_percent(),stat_prev.charge_percent(),stat_current.charge_percent()));
+					stdout.printf("Archived: '%s'\n".printf(archive.get_path()));
+					stdout.printf("Logging stats to file: '%s'\n\n".printf(BATT_STATS_CACHE_FILE));
+				}
+			}
+
+			if ((stat_current.charge_percent() > stat_prev.charge_percent())
+				&& (stat_prev.charge_percent() < stat_prev2.charge_percent()))
+			{
+				if (print_stats && show_messages) {
+					stdout.printf("\n[Charging]\n\n");
+				}
+			}
+		}
+
+		return rotated;
+	}
+	
 	private void create_empty_log_file() {
 		try {
 			var file = File.new_for_path(BATT_STATS_CACHE_FILE);
@@ -314,8 +335,26 @@ public class Main : GLib.Object {
 				while ((line = dis.read_line (null)) != null) {
 					var stat = new BatteryStat.from_delimited_string(line);
 					battery_stats_list.add(stat);
+
+					//stat_current = stat;
+					//check_and_rotate_log(false);
+					
+					// update references
+					//stat_prev2 = stat_prev;
+					//stat_prev = stat;
 				}
 
+				
+				if (battery_stats_list.size >= 1){
+					stat_current = battery_stats_list[battery_stats_list.size - 1];
+				}
+				if (battery_stats_list.size >= 2){
+					stat_prev = battery_stats_list[battery_stats_list.size - 2];
+				}
+				if (battery_stats_list.size >= 3){
+					stat_prev2 = battery_stats_list[battery_stats_list.size - 3];
+				}
+				
 				log_debug("read_battery_stats: %s".printf(timer_elapsed_string(timer)));
 			}
 			else {
@@ -327,6 +366,31 @@ public class Main : GLib.Object {
 		}
 	}
 
+	public void print_log_file(){
+		BatteryStat stat_last = null;
+		foreach (BatteryStat stat in App.battery_stats_list){
+			if ((stat_last != null)
+				&& (stat_last.date.add_seconds(Main.BATT_STATS_LOG_INTERVAL + 1).compare(stat.date) < 0))
+			{
+				stdout.printf(string.nfill(79, '-') + "\n");
+				
+				var diff = stat.date.difference(stat_last.date);
+				
+				var hr = (int64) (diff / (1000000.0 * 60 * 60));
+				diff = (int64) (diff % (1000000.0 * 60 * 60));
+				var min = (int64) (diff / (1000000.0 * 60));
+				diff = (int64) (diff % (1000000.0 * 60));
+				var sec = (int64) (diff / (1000000.0));
+
+				stdout.printf("Gap: %02lld:%02lld:%02lld\n".printf(hr,min,sec));
+				stdout.printf(string.nfill(79, '-') + "\n");
+			}
+			
+			stdout.printf(stat.to_friendly_string());
+			stat_last = stat;
+		}
+	}
+	
 	public bool is_logging_enabled() {
 		return (crontab_search(STARTUP_COMMAND_LINE_CRON).length > 0);
 	}
