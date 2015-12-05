@@ -216,9 +216,8 @@ public class BatteryCycle : GLib.Object{
 
 	public string to_delimited_string(){
 		var txt = date.to_utc().to_unix().to_string() + "|";
-		txt += total_drop.to_string() + "|";
-		txt += total_mins.to_string() + "|";
-		txt += "\n";
+		txt += "%.0f|".printf(total_drop * 1000);
+		txt += "%.0f\n".printf(total_mins * 1000);
 		return txt;
 	}
 

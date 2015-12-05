@@ -221,18 +221,20 @@ public class Main : GLib.Object {
 			// get stats ----------------------
 			
 			var stat = new BatteryStat.read_from_sys();
-			battery_stats_list.add(stat);
 			stat_current = stat;
 			
 			//create or open log
 			var file = File.new_for_path(BATT_STATS_CACHE_FILE);
 			if (!file.query_exists()) {
 				create_empty_log_file(BATT_STATS_CACHE_FILE);
+				battery_stats_list.clear();
 			}
-			
-			check_and_rotate_log(true);
 
-			//log stats
+			//check if log needs rotation
+			check_and_rotate_log();
+
+			//add entry to log
+			battery_stats_list.add(stat);
 			var fos = file.append_to (FileCreateFlags.NONE);
 			var dos = new DataOutputStream (fos);
 			dos.put_string(stat.to_delimited_string());
@@ -247,6 +249,65 @@ public class Main : GLib.Object {
 		catch (Error e) {
 			log_error (e.message);
 		}
+	}
+
+	public bool check_and_rotate_log(){
+		// rotates log file when battery drops after removing from charger
+		
+		bool rotated = false;
+		
+		if ((stat_prev != null) && (stat_prev2 != null)) {
+
+			//check if charge levels for [stat_prev2, stat_prev, stat] are like
+			//[ 79.80,  80.00, 79.50] - increase and then decrease, or like
+			//[100.00, 100.00, 99.70] - same values and then decrease
+	
+			if((stat_current.charge_percent() < stat_prev.charge_percent())
+					&& 	(   (stat_prev.charge_percent() > stat_prev2.charge_percent())
+							|| (stat_prev2.charge_percent() == stat_prev.charge_percent())
+						))
+			{
+
+				if (print_stats) {
+					stdout.printf("\n[Removed from charger]\n\n");
+				}
+				
+				log_battery_cycle_summary();
+				
+				// create or open log ------------
+				var file = File.new_for_path(BATT_STATS_CACHE_FILE);
+				if (!file.query_exists()) {
+					create_empty_log_file(BATT_STATS_CACHE_FILE);
+					battery_stats_list.clear();
+				}
+				var date_label = (new DateTime.now_local()).format("%F_%H-%M-%S");
+				var archive = File.new_for_path(BATT_STATS_CACHE_FILE + "." + date_label);
+					
+				try{
+					file.move(archive, FileCopyFlags.NONE);
+					create_empty_log_file(BATT_STATS_CACHE_FILE);
+					rotated = true;
+				}
+				catch(Error e){
+					log_error (e.message);
+				}
+				
+				if (print_stats) {
+					stdout.printf("Archived: '%s'\n".printf(archive.get_path()));
+					stdout.printf("Logging stats to file: '%s'\n\n".printf(BATT_STATS_CACHE_FILE));
+				}
+			}
+
+			if ((stat_current.charge_percent() > stat_prev.charge_percent())
+				&& (stat_prev.charge_percent() < stat_prev2.charge_percent()))
+			{
+				if (print_stats) {
+					stdout.printf("\n[Charging]\n\n");
+				}
+			}
+		}
+
+		return rotated;
 	}
 
 	public void log_battery_cycle_summary(){
@@ -265,67 +326,13 @@ public class Main : GLib.Object {
 			var dos = new DataOutputStream (fos);
 			dos.put_string(cycle.to_delimited_string());
 			if (print_stats) {
-				stdout.printf(cycle.to_friendly_string());
+				stdout.printf("Logging summary to file: '%s'\n".printf(BATT_STATS_HIST_FILE));
+				stdout.printf(cycle.to_friendly_string() + "\n");
 			}
 		}
 		catch (Error e) {
 			log_error (e.message);
 		}
-	}
-	
-	public bool check_and_rotate_log(bool show_messages = true){
-		// rotates log file when battery drops after removing from charger
-		
-		bool rotated = false;
-		
-		if ((stat_prev != null) && (stat_prev2 != null)) {
-
-			//check if charge levels for [stat_prev2, stat_prev, stat] are like
-			//[ 79.80,  80.00, 79.50] - increase and then decrease, or like
-			//[100.00, 100.00, 99.70] - same values and then decrease
-	
-			if((stat_current.charge_percent() < stat_prev.charge_percent())
-					&& 	(   (stat_prev.charge_percent() > stat_prev2.charge_percent())
-							|| (stat_prev2.charge_percent() == stat_prev.charge_percent())
-						))
-			{
-
-				log_battery_cycle_summary();
-				
-				// create or open log ------------
-				var file = File.new_for_path(BATT_STATS_CACHE_FILE);
-				if (!file.query_exists()) {
-					create_empty_log_file(BATT_STATS_CACHE_FILE);
-				}
-				var date_label = (new DateTime.now_local()).format("%F_%H-%M-%S");
-				var archive = File.new_for_path(BATT_STATS_CACHE_FILE + "." + date_label);
-					
-				try{
-					file.move(archive, FileCopyFlags.NONE);
-					create_empty_log_file(BATT_STATS_CACHE_FILE);
-					rotated = true;
-				}
-				catch(Error e){
-					log_error (e.message);
-				}
-				
-				if (print_stats && show_messages) {
-					stdout.printf("\n[Removed from charger]\nLevels: %5.2f%%, %5.2f%%, %5.2f%%\n".printf(stat_prev2.charge_percent(),stat_prev.charge_percent(),stat_current.charge_percent()));
-					stdout.printf("Archived: '%s'\n".printf(archive.get_path()));
-					stdout.printf("Logging stats to file: '%s'\n\n".printf(BATT_STATS_CACHE_FILE));
-				}
-			}
-
-			if ((stat_current.charge_percent() > stat_prev.charge_percent())
-				&& (stat_prev.charge_percent() < stat_prev2.charge_percent()))
-			{
-				if (print_stats && show_messages) {
-					stdout.printf("\n[Charging]\n\n");
-				}
-			}
-		}
-
-		return rotated;
 	}
 	
 	private void create_empty_log_file(string file_path) {
