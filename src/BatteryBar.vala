@@ -37,7 +37,8 @@ using TeeJee.Misc;
 public class BatteryBar : Window {
 
 	private Gtk.DrawingArea bar;
-
+	uint timer_refresh = 0;
+	
 	public static int main (string[] args) {
 		set_locale();
 
@@ -102,13 +103,37 @@ public class BatteryBar : Window {
 		color_blue_200.parse("#90CAF9");
 		color_blue_200.alpha = 1.0;
 		
-		var color_blue_500 = Gdk.RGBA();
-		color_blue_500.parse("#2196F3");
-		color_blue_500.alpha = 1.0;
+		var color_green_300 = Gdk.RGBA();
+		color_green_300.parse("#81C784");
+		color_green_300.alpha = 1.0;
 
+		var color_yellow_300 = Gdk.RGBA();
+		color_yellow_300.parse("#FFF176");
+		color_yellow_300.alpha = 1.0;
+		
+		var color_red_300 = Gdk.RGBA();
+		color_red_300.parse("#E57373");
+		color_red_300.alpha = 1.0;
+		
+		Gdk.RGBA color_bar = color_green_300;
+		
 		bar.draw.connect ((context) => {
 			int w = bar.get_allocated_width();
 			int h = bar.get_allocated_height();
+
+			double charge_level = BatteryStat.batt_charge_percent();
+			int x_level = (int) ((w * charge_level) / 100.00);
+			bar.set_tooltip_markup("<span size='xx-large'>Battery: %.2f %%</span>".printf(charge_level));
+			
+			if (charge_level >= 60){
+				color_bar = color_green_300;
+			}
+			else if (charge_level >= 20){
+				color_bar = color_yellow_300;
+			}
+			else{
+				color_bar = color_red_300;
+			}
 			
 			Gdk.cairo_set_source_rgba (context, color_black);
 			context.set_line_width (1);
@@ -116,14 +141,31 @@ public class BatteryBar : Window {
 			context.rectangle(0, 0, w, h);
 			context.fill();
 
-			Gdk.cairo_set_source_rgba (context, color_blue_200);
+			Gdk.cairo_set_source_rgba (context, color_bar);
 			context.set_line_width (1);
 
-			context.rectangle(0, 1, w/2, h);
+			context.rectangle(0, 1, x_level, h);
 			context.fill();
 			
 			return true;
 		});
+
+		timer_refresh = Timeout.add(30 * 1000, timer_refresh_bar);
+	}
+
+	public bool timer_refresh_bar() {
+		//if (timer_pkg_info > 0){
+		//	Source.remove(timer_pkg_info);
+		//	timer_pkg_info = 0;
+		//}
+		redraw_bar();
+		
+		return true;
+	}
+	
+	private void redraw_bar() {
+		bar.queue_draw_area(0, 0, bar.get_allocated_width(),
+		                          bar.get_allocated_height());
 	}
 }
 

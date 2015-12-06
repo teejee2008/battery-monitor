@@ -38,7 +38,7 @@ using TeeJee.Misc;
 public Main App;
 public const string AppName = "Aptik Battery Monitor";
 public const string AppShortName = "aptik-battery-monitor";
-public const string AppVersion = "1.0.2";
+public const string AppVersion = "2.0";
 public const string AppAuthor = "Tony George";
 public const string AppAuthorEmail = "teejeetech@gmail.com";
 

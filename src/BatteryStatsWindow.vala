@@ -546,11 +546,13 @@ public class BatteryStatsWindow : Window {
 		Gtk.Frame frame_averages = new Gtk.Frame ("<b>Averages:</b>");
 		(frame_averages.label_widget as Gtk.Label).use_markup = true;
 		vbox_main.add (frame_averages);
+
+		var vbox_stats_avg = new Box (Orientation.VERTICAL, 6);
+		vbox_stats_avg.margin = 6;
+		frame_averages.add (vbox_stats_avg);
 		
 		var hbox_stats_line3 = new Box (Orientation.HORIZONTAL, 6);
-		hbox_stats_line3.margin = 6;
-		//hbox_stats_line3.override_background_color(StateFlags.NORMAL,color_red_100);
-		frame_averages.add (hbox_stats_line3);
+		vbox_stats_avg.add (hbox_stats_line3);
 
 		var lbl_cycle_summary = new Label("<b>" + ("Used") + ":</b>");
 		lbl_cycle_summary.set_use_markup(true);
@@ -559,19 +561,25 @@ public class BatteryStatsWindow : Window {
 		lbl_cycle_summary_val = new Label(_("Used 00.00 % in 0h 0m @ 0.0 % per hour"));
 		hbox_stats_line3.add(lbl_cycle_summary_val);
 
-		var lbl_cycle_summary_life = new Label("<b>" + ("Life") + ":</b>");
+		// line4 --------------------------------------------
+		
+		var hbox_stats_line4 = new Box (Orientation.HORIZONTAL, 6);
+		//hbox_stats_line4.margin = 6;
+		vbox_stats_avg.add (hbox_stats_line4);
+		
+		var lbl_cycle_summary_life = new Label("<b>" + ("Battery Life") + ":</b>");
 		lbl_cycle_summary_life.set_use_markup(true);
-		hbox_stats_line3.add(lbl_cycle_summary_life);
+		hbox_stats_line4.add(lbl_cycle_summary_life);
 
 		lbl_cycle_summary_life_val = new Label(_("0h 0m"));
-		hbox_stats_line3.add(lbl_cycle_summary_life_val);
+		hbox_stats_line4.add(lbl_cycle_summary_life_val);
 
 		var lbl_cycle_summary_remaining = new Label("<b>" + ("Remaining") + ":</b>");
 		lbl_cycle_summary_remaining.set_use_markup(true);
-		hbox_stats_line3.add(lbl_cycle_summary_remaining);
+		hbox_stats_line4.add(lbl_cycle_summary_remaining);
 
 		lbl_cycle_summary_remaining_val = new Label(_("0h 0m"));
-		hbox_stats_line3.add(lbl_cycle_summary_remaining_val);
+		hbox_stats_line4.add(lbl_cycle_summary_remaining_val);
 	}
 
 	public bool timer_refresh_graph() {

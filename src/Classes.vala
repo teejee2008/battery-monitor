@@ -38,26 +38,20 @@ using TeeJee.Misc;
 public class BatteryStat : GLib.Object{
 	public DateTime date;
 	public long charge_now = 0;
-	//public long charge_full = 0;
-	//public long charge_full_design = 0;
-	//public long charge_percent = 0;
 	public long voltage_now = 0;
 	public long cpu_usage = 0;
 
 	public long graph_x = 0;
 
-	public static string BATT_STATS_CHARGE_NOW         = "/sys/class/power_supply/BAT0/charge_now";
-	public static string BATT_STATS_CHARGE_FULL        = "/sys/class/power_supply/BAT0/charge_full";
-	public static string BATT_STATS_CHARGE_FULL_DESIGN = "/sys/class/power_supply/BAT0/charge_full_design";
-	public static string BATT_STATS_VOLTAGE_NOW        = "/sys/class/power_supply/BAT0/voltage_now";
-	public static string BATT_STATS_STATUS             = "/sys/class/power_supply/BAT0/status";
+	public static const string BATT_STATS_CHARGE_NOW         = "/sys/class/power_supply/BAT0/charge_now";
+	public static const string BATT_STATS_CHARGE_FULL        = "/sys/class/power_supply/BAT0/charge_full";
+	public static const string BATT_STATS_CHARGE_FULL_DESIGN = "/sys/class/power_supply/BAT0/charge_full_design";
+	public static const string BATT_STATS_VOLTAGE_NOW        = "/sys/class/power_supply/BAT0/voltage_now";
+	public static const string BATT_STATS_STATUS             = "/sys/class/power_supply/BAT0/status";
 
 	public BatteryStat.read_from_sys(){
 		this.date = new DateTime.now_local();
 		this.charge_now = batt_charge_now();
-		//this.charge_full = batt_charge_full();
-		//this.charge_full_design = batt_charge_full_design();
-		//this.charge_percent = (long) ((charge_now / batt_charge_full() * 1.00) * 1000);
 		this.voltage_now = batt_voltage_now();
 		this.cpu_usage = (long) (ProcStats.get_cpu_usage() * 1000);
 	}
@@ -70,9 +64,6 @@ public class BatteryStat : GLib.Object{
 			this.charge_now = long.parse(arr[1]);
 			this.voltage_now = long.parse(arr[2]);
 			this.cpu_usage = long.parse(arr[3]);
-
-
-			//log_msg("%ld".printf(this.charge_percent));
 		}
 	}
 
@@ -119,6 +110,10 @@ public class BatteryStat : GLib.Object{
 		return (cpu_usage / 1000.00);
 	}
 
+	public static double batt_charge_percent(){
+		return (((batt_charge_now() * 1.00) / batt_charge_full()) * 100);
+	}
+	
 	public static long batt_charge_now(){
 		string val = read_sys_stat_file(BATT_STATS_CHARGE_NOW);
 		if (val.length == 0) { return 0; }
