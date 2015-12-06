@@ -161,6 +161,24 @@ public class BatteryStatsWindow : Window {
 		lbl_spacer.hexpand = true;
 		hbox_top_line1.add(lbl_spacer);
 
+		//btn_settings
+		var btn_settings = new Gtk.Button.from_stock ("gtk-missing-image");
+		btn_settings.label = _("Settings");
+		//btn_settings.label = "";
+		btn_settings.set_tooltip_text (_("Settings"));
+		//btn_settings.image = get_shared_icon("gnome-settings","config.svg",16);
+		//btn_settings.always_show_image = true;
+		//btn_settings.image_position = PositionType.RIGHT;
+		hbox_top_line1.add(btn_settings);
+
+		btn_settings.clicked.connect(() => {
+			var dialog = new SettingsWindow();
+			dialog.set_transient_for(this);
+			dialog.show_all();
+			dialog.run();
+			dialog.destroy();
+		});
+		
 		//btn_donate
 		var btn_donate = new Gtk.Button.from_stock ("gtk-missing-image");
 		btn_donate.label = _("Donate");

@@ -17,7 +17,7 @@ all:
 	valac -X -D'GETTEXT_PACKAGE="${app_name}"' --Xcc="-lm" -X -Wl,-rpath,/usr/share/${app_name}/libs --thread "Main.vala" "Classes.vala" "Utility.vala" "AptikBatteryStats.vala" "DonationWindow.vala" "AboutWindow.vala" -o "aptik-battery-monitor" --pkg glib-2.0 --pkg gio-unix-2.0 --pkg posix --pkg gtk+-3.0 --pkg gee-0.8 --pkg libsoup-2.4 --pkg json-glib-1.0
 
 	#aptik-battery-monitor-gtk
-	valac -X -D'GETTEXT_PACKAGE="${app_name}"' --Xcc="-lm" -X -Wl,-rpath,/usr/share/${app_name}/libs --thread "Main.vala" "Classes.vala" "Utility.vala" "AptikBatteryStatsGtk.vala" "BatteryStatsWindow.vala" "DonationWindow.vala" "AboutWindow.vala" -o "aptik-battery-monitor-gtk" --pkg glib-2.0 --pkg gio-unix-2.0 --pkg posix --pkg gtk+-3.0 --pkg gee-0.8 --pkg libsoup-2.4 --pkg json-glib-1.0
+	valac -X -D'GETTEXT_PACKAGE="${app_name}"' --Xcc="-lm" -X -Wl,-rpath,/usr/share/${app_name}/libs --thread "Main.vala" "Classes.vala" "Utility.vala" "AptikBatteryStatsGtk.vala" "BatteryStatsWindow.vala" "DonationWindow.vala" "AboutWindow.vala" "SettingsWindow.vala" -o "aptik-battery-monitor-gtk" --pkg glib-2.0 --pkg gio-unix-2.0 --pkg posix --pkg gtk+-3.0 --pkg gee-0.8 --pkg libsoup-2.4 --pkg json-glib-1.0
 
 	#aptik-battery-bar
 	valac -X -D'GETTEXT_PACKAGE="${app_name}"' --Xcc="-lm" -X -Wl,-rpath,/usr/share/${app_name}/libs --thread "Main.vala" "Classes.vala" "Utility.vala" "BatteryBar.vala" -o "aptik-battery-bar" --pkg glib-2.0 --pkg gio-unix-2.0 --pkg posix --pkg gtk+-3.0 --pkg gee-0.8 --pkg libsoup-2.4 --pkg json-glib-1.0
@@ -46,7 +46,8 @@ install:
 	install -m 0755 ${app_name} "$(DESTDIR)$(bindir)"
 	install -m 0755 ${app_name}-gtk "$(DESTDIR)$(bindir)"
 	install -m 0755 ${app_name}-uninstall "$(DESTDIR)$(bindir)"
-
+	install -m 0755 aptik-battery-bar "$(DESTDIR)$(bindir)"
+	
 	#shared files
 	cp -dpr --no-preserve=ownership -t "$(DESTDIR)$(sharedir)/${app_name}" ./share/${app_name}/*
 	chmod --recursive 0755 $(DESTDIR)$(sharedir)/${app_name}/*
@@ -69,6 +70,7 @@ uninstall:
 	rm -f "$(DESTDIR)$(bindir)/${app_name}"
 	rm -f "$(DESTDIR)$(bindir)/${app_name}-gtk"
 	rm -f "$(DESTDIR)$(bindir)/${app_name}-uninstall"
+	rm -f "$(DESTDIR)$(bindir)/aptik-battery-bar"
 
 	#shared files
 	rm -rf "$(DESTDIR)$(sharedir)/${app_name}"

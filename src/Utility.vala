@@ -728,7 +728,7 @@ namespace TeeJee.ProcessManagement{
 		int ret_val;
 
 		try{
-			cmd = "pgrep -lx '%s'".printf(proc_name);
+			cmd = "pgrep -f '%s'".printf(proc_name);
 			Process.spawn_command_line_sync(cmd, out std_out, out std_err, out ret_val);
 		}
 		catch (Error e) {
