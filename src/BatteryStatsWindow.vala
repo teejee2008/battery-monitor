@@ -310,6 +310,7 @@ public class BatteryStatsWindow : Window {
 			BatteryStat stat_prev = null;
 			int count_24_hours = 2880;
 
+			int x_interval_counter = 0;
 			foreach(var stat in App.battery_stats_list) {
 				if (stat.date == null) {
 					continue;
@@ -326,27 +327,11 @@ public class BatteryStatsWindow : Window {
 				x += X_INTERVAL;
 				stat.graph_x = x;
 
-				//------ BEGIN CONTEXT -------------------------------------------------
-				context.set_line_width (1);
-				Gdk.cairo_set_source_rgba (context, color_default);
-
-				//draw X-axis ticks and time label for stat -----------------
-
-				if (((stat.date.get_minute() % 10) == 0) && (stat.date.get_second() < 30)) {
-					//draw X-axis markers
-					context.move_to(x, y0 - 2);
-					context.line_to(x, y0 + 2);
-					//draw X-axis labels
-					context.move_to (x - 15, h - Y_OFFSET + 20);
-					context.show_text(stat.date.format("%I:%M %p"));
-				}
-
-				context.stroke ();
-				//------ END CONTEXT ---------------------------------------------------
-
 				if (stat_prev != null) {
 					if (stat_prev.date.add_seconds(Main.BATT_STATS_LOG_INTERVAL + 1).compare(stat.date) < 0) {
 
+						//draw double-vertical lines to indicate time gap
+						
 						//------ BEGIN CONTEXT -------------------------------------------
 						context.set_line_width (0.5);
 						Gdk.cairo_set_source_rgba (context, color_default);
@@ -423,6 +408,31 @@ public class BatteryStatsWindow : Window {
 					//------ END CONTEXT ---------------------------------------------
 				}
 
+				//------ BEGIN CONTEXT -------------------------------------------------
+				context.set_line_width (1);
+				Gdk.cairo_set_source_rgba (context, color_default);
+
+				//draw X-axis ticks and time label for stat -----------------
+
+				x_interval_counter++;
+				
+				if (((stat.date.get_minute() % 10) == 0) && (stat.date.get_second() < 30)) {
+					//draw X-axis tick
+					context.move_to(x, y0 - 2);
+					context.line_to(x, y0 + 2);
+					
+					if (x_interval_counter >= 20){
+						//draw time on X-axis tick
+						context.move_to (x - 15, h - Y_OFFSET + 20);
+						context.show_text(stat.date.format("%I:%M %p"));
+					}
+
+					x_interval_counter = 0;
+				}
+
+				context.stroke ();
+				//------ END CONTEXT ---------------------------------------------------
+				
 				stat_prev = stat;
 				if (stat_current == null) {
 					stat_current = stat;

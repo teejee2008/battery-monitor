@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aptik-battery-monitor 1.6\n"
 "Report-Msgid-Bugs-To: teejee2008@gmail.com\n"
-"POT-Creation-Date: 2015-12-06 23:34+0530\n"
+"POT-Creation-Date: 2015-12-11 19:49+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,28 +31,28 @@ msgid ""
 "application will not work till this is corrected."
 msgstr ""
 
-#: BatteryStatsWindow.vala:592 BatteryStatsWindow.vala:599
+#: BatteryStatsWindow.vala:602 BatteryStatsWindow.vala:609
 msgid "0h 0m"
 msgstr ""
 
-#: BatteryStatsWindow.vala:542
+#: BatteryStatsWindow.vala:552
 #, c-format
 msgid "17.58 % per hr, 8:10 hrs"
 msgstr ""
 
-#: BatteryStatsWindow.vala:523
+#: BatteryStatsWindow.vala:533
 msgid "17.58%, 6200 mAh, 57.14 Wh"
 msgstr ""
 
-#: BatteryStatsWindow.vala:549
+#: BatteryStatsWindow.vala:559
 msgid "2%"
 msgstr ""
 
-#: BatteryStatsWindow.vala:511
+#: BatteryStatsWindow.vala:521
 msgid "25 Aug 2015, 10:35:16 PM"
 msgstr ""
 
-#: BatteryStatsWindow.vala:530
+#: BatteryStatsWindow.vala:540
 msgid "8700 mV"
 msgstr ""
 
@@ -225,7 +225,7 @@ msgstr ""
 msgid "Unknown option"
 msgstr ""
 
-#: BatteryStatsWindow.vala:579
+#: BatteryStatsWindow.vala:589
 #, c-format
 msgid "Used 00.00 % in 0h 0m @ 0.0 % per hour"
 msgstr ""
