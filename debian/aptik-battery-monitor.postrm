@@ -1,0 +1,15 @@
+#!/bin/sh
+
+#DEBHELPER#
+
+set -e
+
+#remove cron entry
+rm -f /etc/cron.d/aptik-battery-monitor
+
+pgrep --full --exact '/usr/bin/aptik-battery-monitor' > /dev/null
+if [ $? -eq 0 ]; then
+	#stop monitor
+	killall aptik-battery-monitor
+	echo "Stopped 'aptik-battery-monitor'"
+fi
