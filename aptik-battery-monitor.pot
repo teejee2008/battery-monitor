@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aptik-battery-monitor 1.6\n"
 "Report-Msgid-Bugs-To: teejee2008@gmail.com\n"
-"POT-Creation-Date: 2015-12-12 11:43+0530\n"
+"POT-Creation-Date: 2015-12-12 17:43+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,20 +31,20 @@ msgid ""
 "application will not work till this is corrected."
 msgstr ""
 
-#: BatteryStatsWindow.vala:561
+#: BatteryStatsWindow.vala:579
 msgid "0.0%"
 msgstr ""
 
-#: BatteryStatsWindow.vala:522 BatteryStatsWindow.vala:531
-#: BatteryStatsWindow.vala:541 BatteryStatsWindow.vala:551
+#: BatteryStatsWindow.vala:540 BatteryStatsWindow.vala:549
+#: BatteryStatsWindow.vala:559 BatteryStatsWindow.vala:569
 msgid "0h 0m"
 msgstr ""
 
-#: Main.vala:202
+#: Main.vala:196
 msgid "App config loaded"
 msgstr ""
 
-#: Main.vala:180
+#: Main.vala:174
 msgid "App config saved"
 msgstr ""
 
@@ -62,7 +62,7 @@ msgstr ""
 msgid "Authors"
 msgstr ""
 
-#: BatteryStatsWindow.vala:527
+#: BatteryStatsWindow.vala:545
 msgid "Average Life"
 msgstr ""
 
@@ -70,7 +70,7 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: BatteryStatsWindow.vala:519
+#: BatteryStatsWindow.vala:537
 msgid "Battery"
 msgstr ""
 
@@ -78,7 +78,7 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: Main.vala:145
+#: Main.vala:139
 msgid "Commands listed below are not available on this system"
 msgstr ""
 
@@ -142,7 +142,7 @@ msgstr ""
 msgid "Info"
 msgstr ""
 
-#: Main.vala:98
+#: Main.vala:92
 msgid "Missing Dependencies"
 msgstr ""
 
@@ -158,11 +158,11 @@ msgstr ""
 msgid "Options"
 msgstr ""
 
-#: BatteryStatsWindow.vala:557
+#: BatteryStatsWindow.vala:575
 msgid "Per Hour"
 msgstr ""
 
-#: Main.vala:146
+#: Main.vala:140
 msgid "Please install required packages and try running Aptik again"
 msgstr ""
 
@@ -178,7 +178,7 @@ msgstr ""
 msgid "Print stats to standard output"
 msgstr ""
 
-#: BatteryStatsWindow.vala:537
+#: BatteryStatsWindow.vala:555
 msgid "Remaining"
 msgstr ""
 
@@ -212,7 +212,7 @@ msgstr ""
 msgid "Third Party Tools"
 msgstr ""
 
-#: BatteryStatsWindow.vala:547
+#: BatteryStatsWindow.vala:565
 msgid "To Full Charge"
 msgstr ""
 

@@ -17,18 +17,20 @@ long_line_behaviour=1
 long_line_column=80
 
 [files]
-current_page=8
-FILE_NAME_0=272;Make;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2Fmakefile;0;4
-FILE_NAME_1=5083;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FBatteryStatsWindow.vala;0;4
+current_page=10
+FILE_NAME_0=1718;Make;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2Fmakefile;0;4
+FILE_NAME_1=8082;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FBatteryStatsWindow.vala;0;4
 FILE_NAME_2=0;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FAboutWindow.vala;0;4
 FILE_NAME_3=0;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FAptikBatteryStats.vala;0;4
 FILE_NAME_4=594;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FAptikBatteryStatsGtk.vala;0;4
 FILE_NAME_5=0;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FBatteryBar.vala;0;4
 FILE_NAME_6=6004;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FClasses.vala;0;4
 FILE_NAME_7=0;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FDonationWindow.vala;0;4
-FILE_NAME_8=1656;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FMain.vala;0;4
-FILE_NAME_9=0;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FSettingsWindow.vala;0;4
-FILE_NAME_10=18706;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FUtility.vala;0;4
+FILE_NAME_8=1826;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FMain.vala;0;4
+FILE_NAME_9=1827;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FSettingsWindow.vala;0;4
+FILE_NAME_10=243;Sh;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fdebian%2Faptik-battery-monitor.postinst;0;4
+FILE_NAME_11=0;Sh;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fdebian%2Faptik-battery-monitor.prerm;0;4
+FILE_NAME_12=0;None;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fdebian%2Fchangelog;0;4
 
 [VTE]
 last_dir=/media/teejee/f0d933c0-b510-470e-a0ad-a4d42db19453/Dropbox/projects/linux

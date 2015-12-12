@@ -252,24 +252,42 @@ public class BatteryStatsWindow : Window {
 		
 		drawing_area.add_events(Gdk.EventMask.BUTTON_PRESS_MASK);
 
-		drawing_area.button_press_event.connect((event) => {
-			BatteryStat stat_prev = null;
+		/*drawing_area.button_press_event.connect((event) => {
+			redraw_graph_area();
+			return true;
+		});*/
+
+		//this.add_events(Gdk.EventMask.POINTER_MOTION_MASK);
+		drawing_area.add_events(Gdk.EventMask.POINTER_MOTION_MASK);
+		
+		drawing_area.motion_notify_event.connect((event)=>{
+			string msg = "";
+			BatteryStat stat_last = null;
 			foreach(var stat in App.battery_stats_list) {
 				if (stat.date == null) {
 					continue;
 				}
 
 				if (Math.fabsf((float)(stat.graph_x - event.x)) < X_INTERVAL) {
-					stat_current = stat;
-					update_info_stats(stat,stat_prev);
+					msg += "Date: %s\n".printf(stat.date.format("%d %b %Y, %I:%M %p"));
+					msg += "Battery: %0.2f %%, %0.0f mAh, %0.2f Wh, %0.2f V\n".printf(
+								   stat.charge_percent(),
+								   stat.charge_in_mah(),
+								   stat.charge_in_wh(),
+								   stat.voltage()
+							   );
+					msg += "CPU: %0.2f %%\n".printf(stat.cpu_percent());
+					break;
 				}
 				
-				stat_prev = stat;
+				stat_last = stat;
 			}
-			redraw_graph_area();
+
+			drawing_area.set_tooltip_text(msg);
+			
 			return true;
 		});
-			
+		
 		drawing_area.draw.connect ((context) => {
 			//weak Gtk.StyleContext style_context = drawing_area.get_style_context ();
 			//var color_default = style_context.get_color (0);
