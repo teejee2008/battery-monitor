@@ -6,3 +6,5 @@ set -e
 
 mkdir -p /var/log/aptik-battery-monitor  
 chmod a+rwx /var/log/aptik-battery-monitor
+echo '@reboot root /usr/bin/aptik-battery-monitor &' > /etc/cron.d/aptik-battery-monitor
+/usr/bin/aptik-battery-monitor &

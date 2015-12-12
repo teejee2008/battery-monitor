@@ -245,6 +245,10 @@ public class BatteryCycle : GLib.Object{
 	public string remaining_time_string(){
 		return "%.0fh %.0fm".printf(remaining_mins / 60, remaining_mins % 60);
 	}
+
+	public static string mins_to_string(double mins){
+		return "%.0fh %.0fm".printf(mins / 60, mins % 60);
+	}
 }
 
 

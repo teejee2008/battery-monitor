@@ -55,7 +55,7 @@ public class Main : GLib.Object {
 	public static string CMD_MONITOR_CRON = "@reboot /usr/bin/aptik-battery-monitor &";
 
 	public static string CMD_BAR = "/usr/bin/aptik-battery-bar &";
-	public static string CMD_BAR_CRON = "@reboot /usr/bin/aptik-battery-bar &";
+	public static string CMD_BAR_CRON = "@reboot sleep 20s && /usr/bin/aptik-battery-bar";
 	
 	public static int BATT_STATS_LOG_INTERVAL = 30;
 	public static double BATT_STATS_ARCHIVE_LEVEL = 99.00;
@@ -436,22 +436,41 @@ public class Main : GLib.Object {
 	}
 
 	public void set_battery_monitoring_status_cron(bool enabled) {
+		string proc_name = "aptik-battery-monitor";
+		string command = "nohup /usr/bin/%s".printf(proc_name);
+		
 		if (enabled) {
 			if (!is_logging_enabled()){
 				crontab_add(CMD_MONITOR_CRON);
+				log_msg("Added crontab entry for '%s'".printf(proc_name));
+			}
+			else{
+				log_msg("Crontab entry exists for '%s'".printf(proc_name));
 			}
 			
-			if (!process_is_running_by_name("aptik-battery-monitor")) {
-				execute_command_script_async(CMD_MONITOR);
+			if (!process_is_running_by_name(proc_name)) {
+				execute_command_script_async(command);
+				log_msg("Started '%s'".printf(proc_name));
+			}
+			else{
+				log_msg("'%s' is running".printf(proc_name));
 			}
 		}
 		else {
 			if (is_logging_enabled()){
-				crontab_remove("aptik-battery-monitor"); //user short name as search string for removal
+				crontab_remove(proc_name); //user short name as search string for removal
+				log_msg("Removed crontab entry for '%s'".printf(proc_name));
+			}
+			else{
+				log_msg("Crontab entry does not exist for '%s'".printf(proc_name));
 			}
 
-			if (process_is_running_by_name("aptik-battery-monitor")) {
-				command_kill("aptik-battery-monitor", "aptik-battery-monitor");
+			if (process_is_running_by_name(proc_name)) {
+				command_kill(proc_name, proc_name, true);
+				log_msg("Killed process '%s'".printf(proc_name));
+			}
+			else{
+				log_msg("'%s' is not running".printf(proc_name));
 			}
 		}
 	}
@@ -461,22 +480,41 @@ public class Main : GLib.Object {
 	}
 	
 	public void set_battery_bar_status_cron(bool enabled) {
+		string proc_name = "aptik-battery-bar";
+		string command = "nohup /usr/bin/%s".printf(proc_name);
+		
 		if (enabled) {
 			if (!is_battery_bar_enabled()){
 				crontab_add(CMD_BAR_CRON);
+				log_msg("Added crontab entry for '%s'".printf(proc_name));
+			}
+			else{
+				log_msg("Crontab entry exists for '%s'".printf(proc_name));
 			}
 			
-			if (!process_is_running_by_name("aptik-battery-bar")) {
-				execute_command_script_async(CMD_BAR);
+			if (!process_is_running_by_name(proc_name)) {
+				execute_command_script_async(command);
+				log_msg("Started '%s'".printf(proc_name));
+			}
+			else{
+				log_msg("'%s' is running".printf(proc_name));
 			}
 		}
 		else {
 			if (is_logging_enabled()){
-				crontab_remove("aptik-battery-bar"); //user short name as search string for removal
+				crontab_remove(proc_name); //user short name as search string for removal
+				log_msg("Removed crontab entry for '%s'".printf(proc_name));
+			}
+			else{
+				log_msg("Crontab entry does not exist for '%s'".printf(proc_name));
 			}
 
-			if (process_is_running_by_name("aptik-battery-bar")) {
-				command_kill("aptik-battery-bar", "aptik-battery-bar");
+			if (process_is_running_by_name(proc_name)) {
+				command_kill(proc_name, proc_name, true);
+				log_msg("Killed process '%s'".printf(proc_name));
+			}
+			else{
+				log_msg("'%s' is not running".printf(proc_name));
 			}
 		}
 	}
