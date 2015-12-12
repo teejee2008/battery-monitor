@@ -36,8 +36,6 @@ using TeeJee.Misc;
 
 public class BatteryStatsWindow : Window {
 	private Box vbox_main;
-	private Box hbox_stats_line1;
-	private Box hbox_stats_line2;
 	private Box hbox_top_line1;
 
 	private Gtk.DrawingArea drawing_area;
@@ -517,8 +515,6 @@ public class BatteryStatsWindow : Window {
 		grid_main.margin_bottom = 6;
 		frame_main.add(grid_main);
 
-		int row = -1;
-
 		//percent
 		lbl_percent = new Label(_("Battery"));
 		grid_main.attach(lbl_percent, 0, 1, 1, 1);
@@ -625,9 +621,7 @@ public class BatteryStatsWindow : Window {
 		var stat_first = App.battery_stats_list[0];
 		var stat_prev = App.battery_stats_list[App.battery_stats_list.size - 2];
 		var stat_current = App.battery_stats_list[App.battery_stats_list.size - 1];
-		var drop = stat_first.charge_percent() - stat_current.charge_percent();
-		int mins = (int)(App.battery_stats_list.size * 0.5);
-		
+
 		lbl_stats_line_used.label = "Used: " + cycle.used_string();
 		
 		lbl_percent_val.label = format_label("%.2f%%".printf(stat_current.charge_percent()));
