@@ -4,7 +4,7 @@
 
 set -e
 
-#/etc/init.d/aptik-battery-monitor stop
+/etc/init.d/aptik-battery-monitor stop
 
 #remove cron entry
 #rm -f /etc/cron.d/aptik-battery-monitor

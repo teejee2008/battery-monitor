@@ -37,6 +37,7 @@ install:
 	mkdir -p "$(DESTDIR)$(sharedir)/${app_name}"
 	mkdir -p "$(DESTDIR)$(sharedir)/pixmaps"
 	mkdir -p "$(DESTDIR)$(logdir)/aptik-battery-monitor"
+	mkdir -p "$(DESTDIR)/etc/init.d"
 	#mkdir -p "$(DESTDIR)$(localedir)/it_IT/LC_MESSAGES"
 	#mkdir -p "$(DESTDIR)$(localedir)/ru_RU/LC_MESSAGES"
 	#mkdir -p "$(DESTDIR)$(localedir)/ko_KO/LC_MESSAGES"
@@ -58,6 +59,9 @@ install:
 	#app icon
 	install -m 0755 ./share/pixmaps/${app_name}.svg "$(DESTDIR)$(sharedir)/pixmaps/"
 
+	#service
+	install -m 0755 ${app_name}-service "$(DESTDIR)/etc/init.d/${app_name}"
+	 
 	#translations
 	#msgfmt --check --verbose -o "$(DESTDIR)$(localedir)/it_IT/LC_MESSAGES/${app_name}.mo" ../po/${app_name}-it.po
 	#msgfmt --check --verbose -o "$(DESTDIR)$(localedir)/pt_BR/LC_MESSAGES/${app_name}.mo" ../po/${app_name}-pt.po
@@ -81,5 +85,8 @@ uninstall:
 	#app icon
 	rm -f "$(DESTDIR)$(sharedir)/pixmaps/${app_name}.svg"
 
+	#service
+	rm -f "$(DESTDIR)/etc/init.d/${app_name}"
+	
 	#translations
 	rm -f $(DESTDIR)$(localedir)/*/LC_MESSAGES/${app_name}.mo
