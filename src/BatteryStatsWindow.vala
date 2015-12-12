@@ -636,7 +636,7 @@ public class BatteryStatsWindow : Window {
 		var cycle = new BatteryCycle();
 		cycle.calculate_stats(App.battery_stats_list);
 			
-		var stat_first = App.battery_stats_list[0];
+		//var stat_first = App.battery_stats_list[0];
 		var stat_prev = App.battery_stats_list[App.battery_stats_list.size - 2];
 		var stat_current = App.battery_stats_list[App.battery_stats_list.size - 1];
 

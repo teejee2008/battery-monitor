@@ -45,7 +45,8 @@ public class AptikBatteryStats : GLib.Object{
 		init_tmp();
 
 		App = new Main(args,false);
-
+		App.check_for_multiple_instances();
+		
 		var console =  new AptikBatteryStats();
 		console.parse_arguments(args);
 

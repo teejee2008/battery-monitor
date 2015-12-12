@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aptik-battery-monitor 1.6\n"
 "Report-Msgid-Bugs-To: teejee2008@gmail.com\n"
-"POT-Creation-Date: 2015-12-12 20:29+0530\n"
+"POT-Creation-Date: 2015-12-12 21:47+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,11 +40,11 @@ msgstr ""
 msgid "0h 0m"
 msgstr ""
 
-#: Main.vala:196
+#: Main.vala:206
 msgid "App config loaded"
 msgstr ""
 
-#: Main.vala:174
+#: Main.vala:184
 msgid "App config saved"
 msgstr ""
 
@@ -52,7 +52,7 @@ msgstr ""
 msgid "Application Info"
 msgstr ""
 
-#: Main.vala:295
+#: Main.vala:305
 #, c-format
 msgid "Archived"
 msgstr ""
@@ -84,7 +84,7 @@ msgstr ""
 msgid "CPU"
 msgstr ""
 
-#: Main.vala:304
+#: Main.vala:314
 #, c-format
 msgid "Charging"
 msgstr ""
@@ -93,7 +93,7 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: Main.vala:139
+#: Main.vala:149
 msgid "Commands listed below are not available on this system"
 msgstr ""
 
@@ -101,7 +101,7 @@ msgstr ""
 msgid "Credits"
 msgstr ""
 
-#: Utility.vala:1543 Utility.vala:1572
+#: Utility.vala:1624 Utility.vala:1653
 msgid "Crontab is empty"
 msgstr ""
 
@@ -153,11 +153,11 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: Utility.vala:1738
+#: Utility.vala:1819
 msgid "Failed to set ownership"
 msgstr ""
 
-#: Main.vala:387
+#: Main.vala:397
 msgid "File not found"
 msgstr ""
 
@@ -165,12 +165,12 @@ msgstr ""
 msgid "Info"
 msgstr ""
 
-#: AptikBatteryStats.vala:53 Main.vala:296
+#: AptikBatteryStats.vala:54 Main.vala:306
 #, c-format
 msgid "Logging stats to file"
 msgstr ""
 
-#: Main.vala:328
+#: Main.vala:338
 #, c-format
 msgid "Logging summary to file"
 msgstr ""
@@ -179,7 +179,7 @@ msgstr ""
 msgid "Missing Dependencies"
 msgstr ""
 
-#: Utility.vala:1108
+#: Utility.vala:1189
 msgid "Missing Icon"
 msgstr ""
 
@@ -187,7 +187,7 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: AptikBatteryStats.vala:84 AptikBatteryStatsGtk.vala:100
+#: AptikBatteryStats.vala:85 AptikBatteryStatsGtk.vala:100
 msgid "Options"
 msgstr ""
 
@@ -195,7 +195,7 @@ msgstr ""
 msgid "Per Hour"
 msgstr ""
 
-#: Main.vala:140
+#: Main.vala:150
 msgid "Please install the required packages"
 msgstr ""
 
@@ -203,11 +203,11 @@ msgstr ""
 msgid "Print debug information"
 msgstr ""
 
-#: AptikBatteryStats.vala:87
+#: AptikBatteryStats.vala:88
 msgid "Print stats from log file sand quit"
 msgstr ""
 
-#: AptikBatteryStats.vala:86
+#: AptikBatteryStats.vala:87
 msgid "Print stats to standard output"
 msgstr ""
 
@@ -215,7 +215,7 @@ msgstr ""
 msgid "Remaining"
 msgstr ""
 
-#: Main.vala:271
+#: Main.vala:281
 #, c-format
 msgid "Removed from charger"
 msgstr ""
@@ -229,7 +229,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: AptikBatteryStats.vala:88 AptikBatteryStatsGtk.vala:103
+#: AptikBatteryStats.vala:89 AptikBatteryStatsGtk.vala:103
 msgid "Show all options"
 msgstr ""
 
@@ -241,7 +241,7 @@ msgstr ""
 msgid "Stopped"
 msgstr ""
 
-#: AptikBatteryStats.vala:82 AptikBatteryStatsGtk.vala:98
+#: AptikBatteryStats.vala:83 AptikBatteryStatsGtk.vala:98
 msgid "Syntax"
 msgstr ""
 
@@ -273,4 +273,14 @@ msgstr ""
 
 #: Utility.vala:100
 msgid "Warning"
+msgstr ""
+
+#: Utility.vala:992
+#, c-format
+msgid "[Error] Another instance of this process is already running"
+msgstr ""
+
+#: Utility.vala:998
+#, c-format
+msgid "[Warning] Removed invalid lock file"
 msgstr ""

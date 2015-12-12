@@ -122,6 +122,16 @@ public class Main : GLib.Object {
 		//BATT_STATS_CACHE_FILE = "%s/.local/log/aptik-battery-monitor/stats.log".printf(user_home);
 	}
 
+	public void check_for_multiple_instances(){
+		var app_lock = new ApplicationLock("aptik-battery-monitor", false);
+		if (app_lock.another_instance_is_running()){
+			exit(0);
+		}
+		else{
+			app_lock.create_lock();
+		}
+	}
+	
 	public bool check_dependencies(out string msg) {
 		msg = "";
 

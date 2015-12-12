@@ -960,6 +960,87 @@ namespace TeeJee.ProcessManagement{
 	    }
 	}
 
+	
+	public class ApplicationLock{
+		string pid_current = "";
+		string app_name = "";
+		bool gui_mode = false;
+		
+		public ApplicationLock(string _app_name, bool _gui_mode){
+			app_name = _app_name;
+			gui_mode = _gui_mode;
+			pid_current = ((long)Posix.getpid()).to_string();
+		}
+
+		public string lock_file{
+			owned get {
+				return "/var/run/lock/%s.lock".printf(app_name);
+			}
+		}
+		
+		public bool another_instance_is_running(){
+			try{
+				var file = File.new_for_path (lock_file);
+				if (file.query_exists()) {
+					var dis = new DataInputStream (file.read());
+					string line;
+					
+					if ((line = dis.read_line (null)) != null) {
+						long pid = long.parse(line.strip());
+						
+						if (process_is_running(pid)){
+							stderr.printf(_("[Error] Another instance of this process is already running") + " (PID=%ld)\n".printf(pid));
+							stderr.flush();
+							
+							return true;
+						}
+						else{
+							stderr.printf(_("[Warning] Removed invalid lock file") + ": '%s'\n".printf(lock_file));
+							stderr.flush();
+						
+							file.delete();
+							return false;
+						}
+					}
+
+					dis.close();
+				}
+				
+				return false;
+			}
+			catch (Error e) {
+				stderr.printf (e.message);
+				stderr.flush();
+				return false;
+			}
+		}
+		
+		public void create_lock(){
+			try{
+				var file = File.new_for_path (lock_file);
+				var fs = file.create (FileCreateFlags.REPLACE_DESTINATION);
+				var dos = new DataOutputStream (fs);
+				dos.put_string (pid_current);
+				dos.close();
+			}
+			catch (Error e) {
+				log_error (e.message);
+			}
+		}
+		
+		public void remove_lock(){
+			try{
+				var file = File.new_for_path (lock_file);
+				if (file.query_exists()) {
+					file.delete();
+				}
+			}
+			catch (Error e) {
+				log_error (e.message);
+			}
+		}
+	}
+
 }
 
 namespace TeeJee.GtkHelper{
