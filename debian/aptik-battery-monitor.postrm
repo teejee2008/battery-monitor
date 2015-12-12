@@ -13,3 +13,5 @@ if [ $? -eq 0 ]; then
 	killall aptik-battery-monitor
 	echo "Stopped 'aptik-battery-monitor'"
 fi
+
+exit 0

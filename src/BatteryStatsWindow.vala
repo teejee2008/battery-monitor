@@ -39,18 +39,8 @@ public class BatteryStatsWindow : Window {
 	private Box hbox_stats_line1;
 	private Box hbox_stats_line2;
 	private Box hbox_top_line1;
-	//private CheckButton chk_enable;
 
 	private Gtk.DrawingArea drawing_area;
-
-	//private Label lbl_date_val;
-	//private Label lbl_charge_val;
-	//private Label lbl_voltage_val;
-	//private Label lbl_cpu_val;
-	//private Label lbl_discharge_val;
-	//private Label lbl_cycle_summary_val;
-	//private Label lbl_cycle_summary_life_val;
-	//private Label lbl_cycle_summary_remaining_val;
 
 	private Label lbl_stats_line_batt;
 	private Label lbl_stats_line_used;
@@ -161,18 +151,6 @@ public class BatteryStatsWindow : Window {
 		hbox_top_line1 = new Box (Orientation.HORIZONTAL, 6);
 		//hbox_stats_line1.margin = 6;
 		vbox_main.add (hbox_top_line1);
-
-		/*
-		chk_enable = new CheckButton.with_label (_("Enable logging"));
-		//chk_enable.margin_left = 6;
-		hbox_top_line1.add(chk_enable);
-
-		chk_enable.active = (App.is_logging_enabled());
-
-		chk_enable.clicked.connect (() => {
-			App.set_battery_monitoring_status_cron(chk_enable.active);
-		});
-		*/
 
 		var lbl_spacer = new Label("");
 		lbl_spacer.hexpand = true;
@@ -527,117 +505,7 @@ public class BatteryStatsWindow : Window {
 		lbl_stats_line_used.xalign = (float) 0.0;
 		vbox_stats_line.add(lbl_stats_line_used);
 
-		/*
-		
-		
-		var vbox_stats_selected = new Box (Orientation.VERTICAL, 6);
-		vbox_stats_selected.margin = 6;
-		vbox_stats_selected.hexpand = true;
-		hbox_stats_and_icon.add (vbox_stats_selected);
-
-
-		
-		// date -------------------------------------------------
-		
-		var hbox_stats_date = new Box (Orientation.HORIZONTAL, 6);
-		vbox_stats_selected.add (hbox_stats_date);
-
-		var lbl_date = new Label("<b>" + ("Date") + ":</b>");
-		lbl_date.set_use_markup(true);
-		hbox_stats_date.add(lbl_date);
-
-		lbl_date_val = new Label(_("25 Aug 2015, 10:35:16 PM"));
-		hbox_stats_date.add(lbl_date_val);
-
-		// line1 ------------------------------------------------
-		
-		hbox_stats_line1 = new Box (Orientation.HORIZONTAL, 6);
-		vbox_stats_selected.add (hbox_stats_line1);
-
-		var lbl_charge = new Label("<b>" + ("Charge") + ":</b>");
-		lbl_charge.set_use_markup(true);
-		hbox_stats_line1.add(lbl_charge);
-
-		lbl_charge_val = new Label(_("17.58%, 6200 mAh, 57.14 Wh"));
-		hbox_stats_line1.add(lbl_charge_val);
-
-		var lbl_voltage = new Label("<b>" + ("Voltage") + ":</b>");
-		lbl_voltage.set_use_markup(true);
-		hbox_stats_line1.add(lbl_voltage);
-
-		lbl_voltage_val = new Label(_("8700 mV"));
-		hbox_stats_line1.add(lbl_voltage_val);
-
-		// line2 ------------------------------------------------
-		
-		hbox_stats_line2 = new Box (Orientation.HORIZONTAL, 6);
-		vbox_stats_selected.add (hbox_stats_line2);
-
-		var lbl_discharge = new Label("<b>" + ("Usage") + ":</b>");
-		lbl_discharge.set_use_markup(true);
-		hbox_stats_line2.add(lbl_discharge);
-
-		lbl_discharge_val = new Label(_("00.00 % per hr"));
-		hbox_stats_line2.add(lbl_discharge_val);
-
-		var lbl_cpu = new Label("<b>" + ("CPU") + ":</b>");
-		lbl_cpu.set_use_markup(true);
-		hbox_stats_line2.add(lbl_cpu);
-
-		lbl_cpu_val = new Label(_("2%"));
-		hbox_stats_line2.add(lbl_cpu_val);
-
-		//TODO: Show values in color
-		//TODO: Show legends
-
-		//show empty values
-		lbl_date_val.label = (new DateTime.now_local()).format("%d %b %Y, %I:%M %p"); //%F %H:%M:%S
-		lbl_charge_val.label = "%0.2f%%, %0.0f mAh, %0.2f Wh".printf(0.0, 0.0, 0.0);
-		lbl_voltage_val.label = "%0.2f V".printf(0.0);
-		lbl_cpu_val.label = "%0.2f %%".printf(0.0);
-		lbl_discharge_val.label = "00.00%/hr, 0.0 hrs";
-
-		// line3 ------------------------------------------------
-				
-		Gtk.Frame frame_averages = new Gtk.Frame ("<b>Averages:</b>");
-		(frame_averages.label_widget as Gtk.Label).use_markup = true;
-		vbox_main.add (frame_averages);
-
-		var vbox_stats_avg = new Box (Orientation.VERTICAL, 6);
-		vbox_stats_avg.margin = 6;
-		frame_averages.add (vbox_stats_avg);
-		
-		var hbox_stats_line3 = new Box (Orientation.HORIZONTAL, 6);
-		vbox_stats_avg.add (hbox_stats_line3);
-
-		var lbl_cycle_summary = new Label("<b>" + ("Used") + ":</b>");
-		lbl_cycle_summary.set_use_markup(true);
-		hbox_stats_line3.add(lbl_cycle_summary);
-
-		lbl_cycle_summary_val = new Label(_("Used 00.00 % in 0h 0m @ 0.0 % per hour"));
-		hbox_stats_line3.add(lbl_cycle_summary_val);
-
-		// line4 --------------------------------------------
-		
-		var hbox_stats_line4 = new Box (Orientation.HORIZONTAL, 6);
-		//hbox_stats_line4.margin = 6;
-		vbox_stats_avg.add (hbox_stats_line4);
-		
-		var lbl_cycle_summary_life = new Label("<b>" + ("Battery Life") + ":</b>");
-		lbl_cycle_summary_life.set_use_markup(true);
-		hbox_stats_line4.add(lbl_cycle_summary_life);
-
-		lbl_cycle_summary_life_val = new Label(_("0h 0m"));
-		hbox_stats_line4.add(lbl_cycle_summary_life_val);
-
-		var lbl_cycle_summary_remaining = new Label("<b>" + ("Remaining") + ":</b>");
-		lbl_cycle_summary_remaining.set_use_markup(true);
-		hbox_stats_line4.add(lbl_cycle_summary_remaining);
-
-		lbl_cycle_summary_remaining_val = new Label(_("0h 0m"));
-		hbox_stats_line4.add(lbl_cycle_summary_remaining_val);
-*/
-
+		//frame_main
 		Gtk.Frame frame_main = new Gtk.Frame ("");
 		//(frame_main.label_widget as Gtk.Label).use_markup = true;
 		vbox_main.add (frame_main);
@@ -715,7 +583,7 @@ public class BatteryStatsWindow : Window {
 		//	Source.remove(timer_pkg_info);
 		//	timer_pkg_info = 0;
 		//}
-		//App.set_battery_monitoring_status_cron(true);
+
 		App.read_battery_stats();
 		select_latest_stat();
 		update_info_current_cycle();
@@ -740,23 +608,12 @@ public class BatteryStatsWindow : Window {
 	}
 			
 	private void update_info_stats(BatteryStat stat, BatteryStat stat_prev){
-		//lbl_date_val.label = stat.date.format("%d %b %Y, %I:%M %p"); //%F %H:%M:%S
-		//lbl_charge_val.label = "%ld, %ld".printf(stat.charge_now, BatteryStat.batt_charge_full());
-
 		lbl_stats_line_batt.label = "Battery: %0.2f %%, %0.0f mAh, %0.2f Wh, %0.2f V".printf(
 								   stat.charge_percent(),
 								   stat.charge_in_mah(),
 								   stat.charge_in_wh(),
 								   stat.voltage()
 							   );
-		//lbl_voltage_val.label = "%0.2f V".printf(stat.voltage());
-		//lbl_cpu_val.label = "%0.2f %%".printf(stat.cpu_percent());
-		
-		//if (stat_prev != null) {
-		//double rate = (stat_prev.charge_percent() - stat.charge_percent()) * 2 * 60;
-		//	double estimated = 100 / rate;
-			//lbl_discharge_val.label = "%0.2f %% per hr".printf(rate);			
-		//}
 	}
 	
 	private void update_info_current_cycle(){
@@ -773,9 +630,6 @@ public class BatteryStatsWindow : Window {
 		
 		lbl_stats_line_used.label = "Used: " + cycle.used_string();
 		
-		//lbl_cycle_summary_life_val.label = cycle.battery_life_string();
-		//lbl_cycle_summary_remaining_val.label = cycle.remaining_time_string();
-
 		lbl_percent_val.label = format_label("%.2f%%".printf(stat_current.charge_percent()));
 		
 		if (BatteryStat.is_charging()){

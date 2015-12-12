@@ -21,3 +21,5 @@ fi
 #start
 /usr/bin/aptik-battery-monitor &
 "Started 'aptik-battery-monitor'"
+
+exit 0

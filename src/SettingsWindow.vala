@@ -64,11 +64,11 @@ public class SettingsWindow : Dialog {
 		//switch_show_bar
 		switch_show_bar = new Gtk.Switch();
 		switch_show_bar.halign = Align.END;
-		switch_show_bar.active = App.is_battery_bar_enabled();
+		//switch_show_bar.active = App.is_battery_bar_enabled();
 		hbox_show_bar.add(switch_show_bar);
 
 		switch_show_bar.notify["active"].connect(() => {
-			App.set_battery_bar_status_cron(switch_show_bar.active);
+			//App.set_battery_bar_status_cron(switch_show_bar.active);
 		});
 
 		var hbox_action = (Box) get_action_area();

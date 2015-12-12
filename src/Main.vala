@@ -375,16 +375,8 @@ public class Main : GLib.Object {
 				while ((line = dis.read_line (null)) != null) {
 					var stat = new BatteryStat.from_delimited_string(line);
 					battery_stats_list.add(stat);
-
-					//stat_current = stat;
-					//check_and_rotate_log(false);
-					
-					// update references
-					//stat_prev2 = stat_prev;
-					//stat_prev = stat;
 				}
 
-				
 				if (battery_stats_list.size >= 1){
 					stat_current = battery_stats_list[battery_stats_list.size - 1];
 				}
@@ -428,94 +420,6 @@ public class Main : GLib.Object {
 			
 			stdout.printf(stat.to_friendly_string());
 			stat_last = stat;
-		}
-	}
-
-	public bool is_logging_enabled() {
-		return (crontab_search(CMD_MONITOR_CRON).length > 0);
-	}
-
-	public void set_battery_monitoring_status_cron(bool enabled) {
-		string proc_name = "aptik-battery-monitor";
-		string command = "nohup /usr/bin/%s".printf(proc_name);
-		
-		if (enabled) {
-			if (!is_logging_enabled()){
-				crontab_add(CMD_MONITOR_CRON);
-				log_msg("Added crontab entry for '%s'".printf(proc_name));
-			}
-			else{
-				log_msg("Crontab entry exists for '%s'".printf(proc_name));
-			}
-			
-			if (!process_is_running_by_name(proc_name)) {
-				execute_command_script_async(command);
-				log_msg("Started '%s'".printf(proc_name));
-			}
-			else{
-				log_msg("'%s' is running".printf(proc_name));
-			}
-		}
-		else {
-			if (is_logging_enabled()){
-				crontab_remove(proc_name); //user short name as search string for removal
-				log_msg("Removed crontab entry for '%s'".printf(proc_name));
-			}
-			else{
-				log_msg("Crontab entry does not exist for '%s'".printf(proc_name));
-			}
-
-			if (process_is_running_by_name(proc_name)) {
-				command_kill(proc_name, proc_name, true);
-				log_msg("Killed process '%s'".printf(proc_name));
-			}
-			else{
-				log_msg("'%s' is not running".printf(proc_name));
-			}
-		}
-	}
-
-	public bool is_battery_bar_enabled() {
-		return (crontab_search(CMD_BAR_CRON).length > 0);
-	}
-	
-	public void set_battery_bar_status_cron(bool enabled) {
-		string proc_name = "aptik-battery-bar";
-		string command = "nohup /usr/bin/%s".printf(proc_name);
-		
-		if (enabled) {
-			if (!is_battery_bar_enabled()){
-				crontab_add(CMD_BAR_CRON);
-				log_msg("Added crontab entry for '%s'".printf(proc_name));
-			}
-			else{
-				log_msg("Crontab entry exists for '%s'".printf(proc_name));
-			}
-			
-			if (!process_is_running_by_name(proc_name)) {
-				execute_command_script_async(command);
-				log_msg("Started '%s'".printf(proc_name));
-			}
-			else{
-				log_msg("'%s' is running".printf(proc_name));
-			}
-		}
-		else {
-			if (is_logging_enabled()){
-				crontab_remove(proc_name); //user short name as search string for removal
-				log_msg("Removed crontab entry for '%s'".printf(proc_name));
-			}
-			else{
-				log_msg("Crontab entry does not exist for '%s'".printf(proc_name));
-			}
-
-			if (process_is_running_by_name(proc_name)) {
-				command_kill(proc_name, proc_name, true);
-				log_msg("Killed process '%s'".printf(proc_name));
-			}
-			else{
-				log_msg("'%s' is not running".printf(proc_name));
-			}
 		}
 	}
 }
