@@ -137,7 +137,7 @@ public class Main : GLib.Object {
 
 		if (msg.length > 0) {
 			msg = _("Commands listed below are not available on this system") + ":\n\n" + msg + "\n";
-			msg += _("Please install required packages and try running Aptik again");
+			msg += _("Please install the required packages");
 			log_msg(msg);
 			return false;
 		}
@@ -268,7 +268,7 @@ public class Main : GLib.Object {
 			{
 
 				if (print_stats) {
-					stdout.printf("\n[Removed from charger]\n\n");
+					stdout.printf("\n[" + _("Removed from charger") + "]\n\n");
 				}
 				
 				log_battery_cycle_summary();
@@ -292,8 +292,8 @@ public class Main : GLib.Object {
 				}
 				
 				if (print_stats) {
-					stdout.printf("Archived: '%s'\n".printf(archive.get_path()));
-					stdout.printf("Logging stats to file: '%s'\n\n".printf(BATT_STATS_CACHE_FILE));
+					stdout.printf(_("Archived") + ": '%s'\n".printf(archive.get_path()));
+					stdout.printf(_("Logging stats to file") + ": '%s'\n\n".printf(BATT_STATS_CACHE_FILE));
 				}
 			}
 
@@ -301,7 +301,7 @@ public class Main : GLib.Object {
 				&& (stat_prev.charge_percent() < stat_prev2.charge_percent()))
 			{
 				if (print_stats) {
-					stdout.printf("\n[Charging]\n\n");
+					stdout.printf("\n[" + _("Charging") + "]\n\n");
 				}
 			}
 		}
@@ -325,7 +325,7 @@ public class Main : GLib.Object {
 			var dos = new DataOutputStream (fos);
 			dos.put_string(cycle.to_delimited_string());
 			if (print_stats) {
-				stdout.printf("Logging summary to file: '%s'\n".printf(BATT_STATS_HIST_FILE));
+				stdout.printf(_("Logging summary to file") + ": '%s'\n".printf(BATT_STATS_HIST_FILE));
 				stdout.printf(cycle.to_friendly_string() + "\n");
 			}
 		}
@@ -384,7 +384,7 @@ public class Main : GLib.Object {
 				log_debug("read_battery_stats: %s".printf(timer_elapsed_string(timer)));
 			}
 			else {
-				log_error ("File not found: %s".printf(BATT_STATS_CACHE_FILE));
+				log_error (_("File not found") + ": %s".printf(BATT_STATS_CACHE_FILE));
 			}
 		}
 		catch (Error e) {

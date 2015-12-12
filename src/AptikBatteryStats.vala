@@ -50,7 +50,7 @@ public class AptikBatteryStats : GLib.Object{
 		console.parse_arguments(args);
 
 		if (App.print_stats){
-			stdout.printf("Logging stats to file: '%s'\n\n".printf(Main.BATT_STATS_CACHE_FILE));
+			stdout.printf(_("Logging stats to file") + ": '%s'\n\n".printf(Main.BATT_STATS_CACHE_FILE));
 		}
 
 		App.read_battery_stats();

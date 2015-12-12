@@ -269,14 +269,14 @@ public class BatteryStatsWindow : Window {
 				}
 
 				if (Math.fabsf((float)(stat.graph_x - event.x)) < X_INTERVAL) {
-					msg += "Date: %s\n".printf(stat.date.format("%d %b %Y, %I:%M %p"));
-					msg += "Battery: %0.2f %%, %0.0f mAh, %0.2f Wh, %0.2f V\n".printf(
+					msg += _("Date") + ": %s\n".printf(stat.date.format("%d %b %Y, %I:%M %p"));
+					msg += _("Battery") + ": %0.2f %%, %0.0f mAh, %0.2f Wh, %0.2f V\n".printf(
 								   stat.charge_percent(),
 								   stat.charge_in_mah(),
 								   stat.charge_in_wh(),
 								   stat.voltage()
 							   );
-					msg += "CPU: %0.2f %%\n".printf(stat.cpu_percent());
+					msg += _("CPU") + ": %0.2f %%".printf(stat.cpu_percent());
 					break;
 				}
 				
@@ -622,7 +622,7 @@ public class BatteryStatsWindow : Window {
 	}
 			
 	private void update_info_stats(BatteryStat stat, BatteryStat stat_prev){
-		lbl_stats_line_batt.label = "Battery: %0.2f %%, %0.0f mAh, %0.2f Wh, %0.2f V".printf(
+		lbl_stats_line_batt.label = _("Battery") + ": %0.2f %%, %0.0f mAh, %0.2f Wh, %0.2f V".printf(
 								   stat.charge_percent(),
 								   stat.charge_in_mah(),
 								   stat.charge_in_wh(),
@@ -640,7 +640,7 @@ public class BatteryStatsWindow : Window {
 		var stat_prev = App.battery_stats_list[App.battery_stats_list.size - 2];
 		var stat_current = App.battery_stats_list[App.battery_stats_list.size - 1];
 
-		lbl_stats_line_used.label = "Used: " + cycle.used_string();
+		lbl_stats_line_used.label = _("Used") + ": " + cycle.used_string();
 		
 		lbl_percent_val.label = format_label("%.2f%%".printf(stat_current.charge_percent()));
 		
@@ -664,7 +664,7 @@ public class BatteryStatsWindow : Window {
 			}
 
 			if (estimated > 0){
-				lbl_rate_val.label = format_label("%0.2f%%".printf(rate));
+				lbl_rate_val.label = format_label("%0.2f%%".printf(rate * 60.0));
 			}
 			else{
 				lbl_rate_val.label = format_label("??");

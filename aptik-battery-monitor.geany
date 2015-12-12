@@ -17,9 +17,9 @@ long_line_behaviour=1
 long_line_column=80
 
 [files]
-current_page=10
+current_page=1
 FILE_NAME_0=1718;Make;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2Fmakefile;0;4
-FILE_NAME_1=8082;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FBatteryStatsWindow.vala;0;4
+FILE_NAME_1=7239;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FBatteryStatsWindow.vala;0;4
 FILE_NAME_2=0;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FAboutWindow.vala;0;4
 FILE_NAME_3=0;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FAptikBatteryStats.vala;0;4
 FILE_NAME_4=594;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FAptikBatteryStatsGtk.vala;0;4
