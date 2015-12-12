@@ -8,21 +8,6 @@ set -e
 mkdir -p /var/log/aptik-battery-monitor  
 chmod a+rwx /var/log/aptik-battery-monitor
 
+#start service
 /etc/init.d/aptik-battery-monitor start
 
-#add cron entry
-#echo '@reboot root /usr/bin/aptik-battery-monitor &' > /etc/cron.d/aptik-battery-monitor
-
-
-#pgrep --full --exact '/usr/bin/aptik-battery-monitor' > /dev/null
-#if [ $? -eq 0 ]; then
-#	#stop
-#	killall aptik-battery-monitor
-#	echo "Stopped 'aptik-battery-monitor'"
-#fi
-
-#start
-#/usr/bin/aptik-battery-monitor &
-#"Started 'aptik-battery-monitor'"
-
-#exit 0
