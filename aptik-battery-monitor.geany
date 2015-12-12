@@ -17,16 +17,16 @@ long_line_behaviour=1
 long_line_column=80
 
 [files]
-current_page=1
+current_page=8
 FILE_NAME_0=272;Make;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2Fmakefile;0;4
-FILE_NAME_1=5049;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FBatteryStatsWindow.vala;0;4
+FILE_NAME_1=5083;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FBatteryStatsWindow.vala;0;4
 FILE_NAME_2=0;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FAboutWindow.vala;0;4
 FILE_NAME_3=0;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FAptikBatteryStats.vala;0;4
 FILE_NAME_4=594;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FAptikBatteryStatsGtk.vala;0;4
 FILE_NAME_5=0;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FBatteryBar.vala;0;4
 FILE_NAME_6=6004;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FClasses.vala;0;4
 FILE_NAME_7=0;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FDonationWindow.vala;0;4
-FILE_NAME_8=12449;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FMain.vala;0;4
+FILE_NAME_8=1656;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FMain.vala;0;4
 FILE_NAME_9=0;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FSettingsWindow.vala;0;4
 FILE_NAME_10=18706;Vala;0;EUTF-8;1;1;1;%2Fhome%2Fteejee%2Fprojects%2Flinux%2Faptik-battery-monitor%2Fsrc%2FUtility.vala;0;4
 

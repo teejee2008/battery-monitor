@@ -715,7 +715,7 @@ public class BatteryStatsWindow : Window {
 		//	Source.remove(timer_pkg_info);
 		//	timer_pkg_info = 0;
 		//}
-		App.set_battery_monitoring_status_cron(true);
+		//App.set_battery_monitoring_status_cron(true);
 		App.read_battery_stats();
 		select_latest_stat();
 		update_info_current_cycle();

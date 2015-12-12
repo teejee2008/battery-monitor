@@ -430,7 +430,7 @@ public class Main : GLib.Object {
 			stat_last = stat;
 		}
 	}
-	
+
 	public bool is_logging_enabled() {
 		return (crontab_search(CMD_MONITOR_CRON).length > 0);
 	}
