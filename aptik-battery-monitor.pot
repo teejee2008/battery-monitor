@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aptik-battery-monitor 1.6\n"
 "Report-Msgid-Bugs-To: teejee2008@gmail.com\n"
-"POT-Creation-Date: 2015-12-12 21:47+0530\n"
+"POT-Creation-Date: 2015-12-13 07:26+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: BatteryStatsWindow.vala:226
+#: BatteryStatsWindow.vala:242
 msgid " A Battery Monitoring Utility for Laptops"
 msgstr ""
 
@@ -48,7 +48,7 @@ msgstr ""
 msgid "App config saved"
 msgstr ""
 
-#: BatteryStatsWindow.vala:197
+#: BatteryStatsWindow.vala:213
 msgid "Application Info"
 msgstr ""
 
@@ -75,12 +75,12 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: BatteryStatsWindow.vala:273 BatteryStatsWindow.vala:537
+#: BatteryStatsWindow.vala:289 BatteryStatsWindow.vala:537
 #: BatteryStatsWindow.vala:625
 msgid "Battery"
 msgstr ""
 
-#: BatteryStatsWindow.vala:279
+#: BatteryStatsWindow.vala:295
 msgid "CPU"
 msgstr ""
 
@@ -105,7 +105,7 @@ msgstr ""
 msgid "Crontab is empty"
 msgstr ""
 
-#: BatteryStatsWindow.vala:272
+#: BatteryStatsWindow.vala:288
 msgid "Date"
 msgstr ""
 
@@ -131,7 +131,7 @@ msgstr ""
 msgid "Documenters"
 msgstr ""
 
-#: BatteryStatsWindow.vala:177 BatteryStatsWindow.vala:179
+#: BatteryStatsWindow.vala:193 BatteryStatsWindow.vala:195
 #: DonationWindow.vala:36
 msgid "Donate"
 msgstr ""
@@ -161,7 +161,7 @@ msgstr ""
 msgid "File not found"
 msgstr ""
 
-#: BatteryStatsWindow.vala:195
+#: BatteryStatsWindow.vala:211
 msgid "Info"
 msgstr ""
 
@@ -224,7 +224,6 @@ msgstr ""
 msgid "Send Email"
 msgstr ""
 
-#: BatteryStatsWindow.vala:159 BatteryStatsWindow.vala:161
 #: SettingsWindow.vala:43
 msgid "Settings"
 msgstr ""

@@ -146,15 +146,31 @@ public class BatteryStatsWindow : Window {
 	}
 
 	public void init_header() {
-		hbox_top_line1 = new Box (Orientation.HORIZONTAL, 6);
-		//hbox_stats_line1.margin = 6;
-		vbox_main.add (hbox_top_line1);
+		Gtk.Frame frame_top = new Gtk.Frame ("");
+		//(frame_stats_line.label_widget as Gtk.Label).use_markup = true;
+		vbox_main.add (frame_top);
+
+		var grid_top = new Grid();
+		grid_top.set_column_spacing (6);
+		grid_top.set_row_spacing (6);
+		grid_top.margin_left = 12;
+		grid_top.margin_right = 6;
+		grid_top.margin_bottom = 6;
+		frame_top.add(grid_top);
+
+		lbl_stats_line_batt = new Label("");
+		lbl_stats_line_batt.xalign = (float) 0.0;
+		grid_top.attach(lbl_stats_line_batt, 0, 0, 1, 1);
+
+		lbl_stats_line_used = new Label("");
+		lbl_stats_line_used.xalign = (float) 0.0;
+		grid_top.attach(lbl_stats_line_used, 0, 1, 1, 1);
 
 		var lbl_spacer = new Label("");
 		lbl_spacer.hexpand = true;
-		hbox_top_line1.add(lbl_spacer);
+		grid_top.attach(lbl_spacer, 1, 0, 1, 1);
 
-		//btn_settings
+		/* //btn_settings
 		var btn_settings = new Gtk.Button.from_stock ("gtk-missing-image");
 		btn_settings.label = _("Settings");
 		//btn_settings.label = "";
@@ -170,17 +186,17 @@ public class BatteryStatsWindow : Window {
 			dialog.show_all();
 			dialog.run();
 			dialog.destroy();
-		});
+		});*/
 		
 		//btn_donate
 		var btn_donate = new Gtk.Button.from_stock ("gtk-missing-image");
 		btn_donate.label = _("Donate");
-		//btn_donate.label = "";
+		btn_donate.label = "";
 		btn_donate.set_tooltip_text (_("Donate"));
-		//btn_donate.image = get_shared_icon("donate","donate.svg",16);
-		//btn_donate.always_show_image = true;
-		//btn_donate.image_position = PositionType.RIGHT;
-		hbox_top_line1.add(btn_donate);
+		btn_donate.image = get_shared_icon("donate","donate.svg",24);
+		btn_donate.always_show_image = true;
+		btn_donate.image_position = PositionType.RIGHT;
+		grid_top.attach(btn_donate, 2, 0, 1, 2);
 
 		btn_donate.clicked.connect(() => {
 			var dialog = new DonationWindow();
@@ -193,12 +209,12 @@ public class BatteryStatsWindow : Window {
 		//btn_about
 		var btn_about = new Gtk.Button.from_stock ("gtk-about");
 		btn_about.label = _("Info");
-		//btn_about.label = "";
+		btn_about.label = "";
 		btn_about.set_tooltip_text (_("Application Info"));
-		//btn_about.image = get_shared_icon("gtk-about","help-info.svg",16);
-		//btn_about.always_show_image = true;
-		//btn_about.image_position = PositionType.RIGHT;
-		hbox_top_line1.add(btn_about);
+		btn_about.image = get_shared_icon("gtk-about","help-info.svg",24);
+		btn_about.always_show_image = true;
+		btn_about.image_position = PositionType.RIGHT;
+		grid_top.attach(btn_about, 3, 0, 1, 2);
 
 		btn_about.clicked.connect (btn_about_clicked);
 	}
@@ -504,23 +520,7 @@ public class BatteryStatsWindow : Window {
 	}
 
 	public void init_stats() {
-		Gtk.Frame frame_stats_line = new Gtk.Frame ("");
-		//(frame_stats_line.label_widget as Gtk.Label).use_markup = true;
-		vbox_main.add (frame_stats_line);
-
-		var vbox_stats_line = new Box (Orientation.VERTICAL, 6);
-		vbox_stats_line.margin_left = 6;
-		vbox_stats_line.margin_bottom = 6;
-		frame_stats_line.add (vbox_stats_line);
 		
-		lbl_stats_line_batt = new Label("");
-		lbl_stats_line_batt.xalign = (float) 0.0;
-		vbox_stats_line.add(lbl_stats_line_batt);
-
-		lbl_stats_line_used = new Label("");
-		lbl_stats_line_used.xalign = (float) 0.0;
-		vbox_stats_line.add(lbl_stats_line_used);
-
 		//frame_main
 		Gtk.Frame frame_main = new Gtk.Frame ("");
 		//(frame_main.label_widget as Gtk.Label).use_markup = true;
