@@ -184,11 +184,16 @@ if command -v apt-get >/dev/null 2>&1; then
 fi
 echo ""
 
+mkdir -p /var/log/${app_name}
+chmod a+rwx /var/log/${app_name}
+/etc/init.d/${app_name} start
+update-rc.d ${app_name} defaults
+
 MSG_INFO "Install completed."
 echo ""
 echo "******************************************************************"
 echo "Start ${app_fullname} using the shortcut in the Applications Menu"
-echo "or by running the command: sudo ${app_name}"
+echo "or by running the command: sudo ${app_name}-gtk"
 echo "If it fails to start, check and install the following packages:"
 echo "Required: ${generic_depends[@]}"
 echo "Optional: (none)"

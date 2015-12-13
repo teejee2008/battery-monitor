@@ -8,4 +8,4 @@ aptik-battery-monitor (2.0) trusty; urgency=low
   * Renamed package, project and binaries from 'aptik-bmon' to 'aptik-battery-monitor'
   * Updated UI
 
- -- Tony George <tony.george.kol@gmail.com>  Sat, 12 Dec 2015 10:00:00 +0530
+ -- Tony George <tony.george.kol@gmail.com>  Sat, 12 Dec 2015 14:00:00 +0530

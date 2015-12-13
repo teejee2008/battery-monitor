@@ -104,6 +104,8 @@ CD_PUSH
 CHECK_COLOR_SUPPORT
 RUN_AS_ADMIN
 
+/etc/init.d/${app_name} stop
+
 if [ ! -z "${app_name}" ]; then
 	rm -f  "/usr/bin/${app_name}"
 	rm -f  "/usr/bin/${app_name}-gtk"

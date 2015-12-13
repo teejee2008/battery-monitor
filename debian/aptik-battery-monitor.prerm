@@ -4,5 +4,5 @@
 
 set -e
 
-#start service
+#stop service
 /etc/init.d/aptik-battery-monitor stop

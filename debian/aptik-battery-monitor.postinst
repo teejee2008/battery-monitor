@@ -10,4 +10,4 @@ chmod a+rwx /var/log/aptik-battery-monitor
 
 #start service
 /etc/init.d/aptik-battery-monitor start
-sudo update-rc.d aptik-battery-monitor defaults
+update-rc.d aptik-battery-monitor defaults
