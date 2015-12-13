@@ -1,4 +1,4 @@
-aptik-battery-monitor (2.0) trusty; urgency=low
+aptik-battery-monitor (2.1) trusty; urgency=low
 
   * Rotate log file when laptop is removed from charger
   * Improved readability of console output
