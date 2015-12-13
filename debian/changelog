@@ -1,9 +1,11 @@
 aptik-battery-monitor (2.0) trusty; urgency=low
 
   * Rotate log file when laptop is removed from charger
-  * Display readable console output
-  * Remove admin access requirement
-  * Use cron for starting logging service
+  * Improved readability of console output
+  * Removed admin access requirement
+  * Added a service for logging statistics
   * Changed logging directory to /var/log/aptik-battery-monitor
+  * Renamed package, project and binaries from 'aptik-bmon' to 'aptik-battery-monitor'
+  * Updated UI
 
- -- Tony George <tony.george.kol@gmail.com>  Wed, 21 Oct 2015 10:00:00 +0530
+ -- Tony George <tony.george.kol@gmail.com>  Sat, 12 Dec 2015 10:00:00 +0530
