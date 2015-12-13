@@ -85,12 +85,6 @@ public class BatteryStatsWindow : Window {
 	}
 
 	public void init_window () {
-		if (check_if_path_is_mounted_on_tmpfs("/var/spool")){
-			string msg = _("/var/spool on your system is mounted in memory (tmpfs)!!\n\n/var/spool should never be mounted in tmpfs as the user's cron jobs are stored here along with other system files. If you have done this to reduce writes to your SSD, please undo it by editing your /etc/fstab file. This application will not work till this is corrected.");
-			gtk_messagebox("System Issue",msg,this,true);
-			exit(1);
-		}
-
 		define_colors();
 		
 		title = "Aptik Battery Monitor" + " v" + AppVersion;

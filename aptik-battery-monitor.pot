@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aptik-battery-monitor 1.6\n"
 "Report-Msgid-Bugs-To: teejee2008@gmail.com\n"
-"POT-Creation-Date: 2015-12-13 07:26+0530\n"
+"POT-Creation-Date: 2015-12-13 10:31+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: BatteryStatsWindow.vala:242
+#: BatteryStatsWindow.vala:236
 msgid " A Battery Monitoring Utility for Laptops"
 msgstr ""
 
-#: BatteryStatsWindow.vala:89
+#: Utility.vala:1685
 msgid ""
 "/var/spool on your system is mounted in memory (tmpfs)!!\n"
 "\n"
@@ -31,12 +31,12 @@ msgid ""
 "application will not work till this is corrected."
 msgstr ""
 
-#: BatteryStatsWindow.vala:579
+#: BatteryStatsWindow.vala:573
 msgid "0.0%"
 msgstr ""
 
-#: BatteryStatsWindow.vala:540 BatteryStatsWindow.vala:549
-#: BatteryStatsWindow.vala:559 BatteryStatsWindow.vala:569
+#: BatteryStatsWindow.vala:534 BatteryStatsWindow.vala:543
+#: BatteryStatsWindow.vala:553 BatteryStatsWindow.vala:563
 msgid "0h 0m"
 msgstr ""
 
@@ -48,7 +48,7 @@ msgstr ""
 msgid "App config saved"
 msgstr ""
 
-#: BatteryStatsWindow.vala:213
+#: BatteryStatsWindow.vala:207
 msgid "Application Info"
 msgstr ""
 
@@ -67,7 +67,7 @@ msgstr ""
 msgid "Authors"
 msgstr ""
 
-#: BatteryStatsWindow.vala:545
+#: BatteryStatsWindow.vala:539
 msgid "Average Life"
 msgstr ""
 
@@ -75,12 +75,12 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: BatteryStatsWindow.vala:289 BatteryStatsWindow.vala:537
-#: BatteryStatsWindow.vala:625
+#: BatteryStatsWindow.vala:283 BatteryStatsWindow.vala:531
+#: BatteryStatsWindow.vala:619
 msgid "Battery"
 msgstr ""
 
-#: BatteryStatsWindow.vala:295
+#: BatteryStatsWindow.vala:289
 msgid "CPU"
 msgstr ""
 
@@ -105,7 +105,7 @@ msgstr ""
 msgid "Crontab is empty"
 msgstr ""
 
-#: BatteryStatsWindow.vala:288
+#: BatteryStatsWindow.vala:282
 msgid "Date"
 msgstr ""
 
@@ -131,7 +131,7 @@ msgstr ""
 msgid "Documenters"
 msgstr ""
 
-#: BatteryStatsWindow.vala:193 BatteryStatsWindow.vala:195
+#: BatteryStatsWindow.vala:187 BatteryStatsWindow.vala:189
 #: DonationWindow.vala:36
 msgid "Donate"
 msgstr ""
@@ -153,7 +153,7 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: Utility.vala:1819
+#: Utility.vala:1838
 msgid "Failed to set ownership"
 msgstr ""
 
@@ -161,7 +161,7 @@ msgstr ""
 msgid "File not found"
 msgstr ""
 
-#: BatteryStatsWindow.vala:211
+#: BatteryStatsWindow.vala:205
 msgid "Info"
 msgstr ""
 
@@ -191,7 +191,7 @@ msgstr ""
 msgid "Options"
 msgstr ""
 
-#: BatteryStatsWindow.vala:575
+#: BatteryStatsWindow.vala:569
 msgid "Per Hour"
 msgstr ""
 
@@ -211,7 +211,7 @@ msgstr ""
 msgid "Print stats to standard output"
 msgstr ""
 
-#: BatteryStatsWindow.vala:555
+#: BatteryStatsWindow.vala:549
 msgid "Remaining"
 msgstr ""
 
@@ -249,7 +249,7 @@ msgstr ""
 msgid "Third Party Tools"
 msgstr ""
 
-#: BatteryStatsWindow.vala:565
+#: BatteryStatsWindow.vala:559
 msgid "To Full Charge"
 msgstr ""
 
@@ -262,7 +262,7 @@ msgstr ""
 msgid "Unknown option"
 msgstr ""
 
-#: BatteryStatsWindow.vala:643
+#: BatteryStatsWindow.vala:637
 msgid "Used"
 msgstr ""
 

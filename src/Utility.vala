@@ -1675,8 +1675,27 @@ namespace TeeJee.System{
 		}
 	}
 
-	public bool check_if_path_is_mounted_on_tmpfs(string path){
+	public bool check_if_path_is_mounted_on_tmpfs(
+		string path, bool show_msg, Gtk.Window? parent_window, bool exit_app)
+	{
 		int status = Posix.system("df --type=tmpfs '%s' > /dev/null 2>&1".printf(path));
+
+		if (status == 0){
+			if (show_msg){
+				string msg = _("/var/spool on your system is mounted in memory (tmpfs)!!\n\n/var/spool should never be mounted in tmpfs as the user's cron jobs are stored here along with other system files. If you have done this to reduce writes to your SSD, please undo it by editing your /etc/fstab file. This application will not work till this is corrected.");
+
+				if (parent_window != null){
+					gtk_messagebox("System Issue",msg,parent_window,true);
+				}
+				else{
+					log_error(msg);
+				}
+			}
+			if (exit_app){
+				exit(1);
+			}
+		}
+			
 		return (status == 0);
 	}
 	
