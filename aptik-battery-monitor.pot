@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aptik-battery-monitor 1.6\n"
 "Report-Msgid-Bugs-To: teejee2008@gmail.com\n"
-"POT-Creation-Date: 2015-12-13 21:50+0530\n"
+"POT-Creation-Date: 2015-12-14 19:40+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,11 +40,11 @@ msgstr ""
 msgid "0h 0m"
 msgstr ""
 
-#: Main.vala:206
+#: Main.vala:208
 msgid "App config loaded"
 msgstr ""
 
-#: Main.vala:184
+#: Main.vala:186
 msgid "App config saved"
 msgstr ""
 
@@ -52,7 +52,7 @@ msgstr ""
 msgid "Application Info"
 msgstr ""
 
-#: Main.vala:305
+#: Main.vala:307
 #, c-format
 msgid "Archived"
 msgstr ""
@@ -84,7 +84,7 @@ msgstr ""
 msgid "CPU"
 msgstr ""
 
-#: Main.vala:314
+#: Main.vala:316
 #, c-format
 msgid "Charging"
 msgstr ""
@@ -93,7 +93,7 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: Main.vala:149
+#: Main.vala:151
 msgid "Commands listed below are not available on this system"
 msgstr ""
 
@@ -157,7 +157,7 @@ msgstr ""
 msgid "Failed to set ownership"
 msgstr ""
 
-#: Main.vala:397
+#: Main.vala:399
 msgid "File not found"
 msgstr ""
 
@@ -165,12 +165,12 @@ msgstr ""
 msgid "Info"
 msgstr ""
 
-#: AptikBatteryStats.vala:54 Main.vala:306
+#: AptikBatteryStats.vala:54 Main.vala:308
 #, c-format
 msgid "Logging stats to file"
 msgstr ""
 
-#: Main.vala:338
+#: Main.vala:340
 #, c-format
 msgid "Logging summary to file"
 msgstr ""
@@ -195,7 +195,7 @@ msgstr ""
 msgid "Per Hour"
 msgstr ""
 
-#: Main.vala:150
+#: Main.vala:152
 msgid "Please install the required packages"
 msgstr ""
 
@@ -215,7 +215,7 @@ msgstr ""
 msgid "Remaining"
 msgstr ""
 
-#: Main.vala:281
+#: Main.vala:283
 #, c-format
 msgid "Removed from charger"
 msgstr ""

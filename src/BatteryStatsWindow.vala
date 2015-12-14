@@ -258,8 +258,6 @@ public class BatteryStatsWindow : Window {
 		sw_graph.add (drawing_area);
 		vbox_main.add(sw_graph);
 
-		App.read_battery_stats();
-		
 		drawing_area.add_events(Gdk.EventMask.BUTTON_PRESS_MASK);
 
 		/*drawing_area.button_press_event.connect((event) => {

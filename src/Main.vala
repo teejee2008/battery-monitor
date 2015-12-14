@@ -120,6 +120,8 @@ public class Main : GLib.Object {
 		user_uid = get_user_id(user_login);
 
 		//BATT_STATS_CACHE_FILE = "%s/.local/log/aptik-battery-monitor/stats.log".printf(user_home);
+
+		battery_stats_list = new Gee.ArrayList<BatteryStat>();
 	}
 
 	public void check_for_multiple_instances(){
