@@ -42,8 +42,6 @@ public class AptikBatteryStats : GLib.Object{
 
 		LOG_TIMESTAMP = false;
 
-		init_tmp();
-
 		App = new Main(args,false);
 		App.check_for_multiple_instances();
 		

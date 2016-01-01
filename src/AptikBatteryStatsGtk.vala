@@ -42,8 +42,6 @@ public class AptikBatteryStatsGtk : GLib.Object{
 
 		Gtk.init(ref args);
 
-		init_tmp();
-
 		App = new Main(args, true);
 		parse_arguments(args);
 

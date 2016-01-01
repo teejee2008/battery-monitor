@@ -76,6 +76,8 @@ public class Main : GLib.Object {
 
 		gui_mode = _gui_mode;
 
+		init_tmp();
+		
 		//config file
 		string home = Environment.get_home_dir();
 		app_conf_path = home + "/.config/aptik-battery-monitor.json";
