@@ -1,3 +1,12 @@
+aptik-battery-monitor (17.12) xenial; urgency=low
+
+  * Display battery health in dashboard
+  * Updated build scripts
+  * Added appdata file
+  * UI improvements
+
+ -- Tony George <tony.george.kol@gmail.com>  Sun, 10 Dec 2017 10:00:00 +0530
+ 
 aptik-battery-monitor (2.1) trusty; urgency=low
 
   * Rotate log file when laptop is removed from charger

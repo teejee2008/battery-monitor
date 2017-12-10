@@ -1,6 +1,6 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Tony George (teejee2008@gmail.com)
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the aptik-battery-monitor package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: aptik-battery-monitor 1.6\n"
 "Report-Msgid-Bugs-To: teejee2008@gmail.com\n"
-"POT-Creation-Date: 2016-01-01 18:22+0530\n"
+"POT-Creation-Date: 2017-12-10 18:57+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,190 +17,96 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: BatteryStatsWindow.vala:236
-msgid " A Battery Monitoring Utility for Laptops"
+#: DiskIndicator.vala:211
+msgid "About"
 msgstr ""
 
-#: Utility.vala:1685
-msgid ""
-"/var/spool on your system is mounted in memory (tmpfs)!!\n"
-"\n"
-"/var/spool should never be mounted in tmpfs as the user's cron jobs are "
-"stored here along with other system files. If you have done this to reduce "
-"writes to your SSD, please undo it by editing your /etc/fstab file. This "
-"application will not work till this is corrected."
+#: DiskIndicator.vala:871
+msgid "Disk Indicator for Linux"
 msgstr ""
 
-#: BatteryStatsWindow.vala:571
-msgid "0.0%"
-msgstr ""
-
-#: BatteryStatsWindow.vala:532 BatteryStatsWindow.vala:541
-#: BatteryStatsWindow.vala:551 BatteryStatsWindow.vala:561
-msgid "0h 0m"
-msgstr ""
-
-#: Main.vala:210
-msgid "App config loaded"
-msgstr ""
-
-#: Main.vala:188
-msgid "App config saved"
-msgstr ""
-
-#: BatteryStatsWindow.vala:207
-msgid "Application Info"
-msgstr ""
-
-#: Main.vala:309
+#: DiskIndicator.vala:470
 #, c-format
-msgid "Archived"
+msgid "Disk can be safely removed"
 msgstr ""
 
-#: AboutWindow.vala:330
-#, c-format
-msgid "Artists"
-msgstr ""
-
-#: AboutWindow.vala:314
-#, c-format
-msgid "Authors"
-msgstr ""
-
-#: BatteryStatsWindow.vala:537
-msgid "Average Life"
-msgstr ""
-
-#: AboutWindow.vala:285
-msgid "Back"
-msgstr ""
-
-#: BatteryStatsWindow.vala:281 BatteryStatsWindow.vala:529
-#: BatteryStatsWindow.vala:617
-msgid "Battery"
-msgstr ""
-
-#: BatteryStatsWindow.vala:287
-msgid "CPU"
-msgstr ""
-
-#: Main.vala:318
-#, c-format
-msgid "Charging"
-msgstr ""
-
-#: AboutWindow.vala:295
-msgid "Close"
-msgstr ""
-
-#: Main.vala:153
-msgid "Commands listed below are not available on this system"
-msgstr ""
-
-#: AboutWindow.vala:272 AboutWindow.vala:289
-msgid "Credits"
-msgstr ""
-
-#: Utility.vala:1624 Utility.vala:1653
-msgid "Crontab is empty"
-msgstr ""
-
-#: BatteryStatsWindow.vala:280
-msgid "Date"
-msgstr ""
-
-#: DonationWindow.vala:54
-msgid ""
-"Did you find this software useful?\n"
-"\n"
-"You can buy me a coffee or make a donation via PayPal to show your support. "
-"Or just drop me an email and say Hi. This application is completely free and "
-"will continue to remain that way. Your contributions will help in keeping "
-"this project alive and improving it further.\n"
-"\n"
-"Feel free to send me an email if you find any issues in this application or "
-"if you need any changes. Suggestions and feedback are always welcome.\n"
-"\n"
-"Thanks,\n"
-"Tony George\n"
-"(teejeetech@gmail.com)"
-msgstr ""
-
-#: AboutWindow.vala:346
-#, c-format
-msgid "Documenters"
-msgstr ""
-
-#: BatteryStatsWindow.vala:187 BatteryStatsWindow.vala:189
-#: DonationWindow.vala:36
+#: DiskIndicator.vala:220
 msgid "Donate"
 msgstr ""
 
-#: DonationWindow.vala:74
-msgid "Donate with Google Wallet"
+#: DiskIndicator.vala:774
+msgid "Encrypted Device"
 msgstr ""
 
-#: DonationWindow.vala:67
-msgid "Donate with PayPal"
-msgstr ""
-
-#: AboutWindow.vala:354
+#: DiskIndicator.vala:775
 #, c-format
-msgid "Donations"
+msgid "Enter passphrase to unlock '%s'"
 msgstr ""
 
-#: Utility.vala:100
-msgid "Error"
+#: DiskIndicator.vala:229
+msgid "Exit"
 msgstr ""
 
-#: Utility.vala:1838
-msgid "Failed to set ownership"
+#: DiskIndicator.vala:645
+msgid "Failed to lock"
 msgstr ""
 
-#: Main.vala:401
-msgid "File not found"
+#: DiskIndicator.vala:669
+msgid "Failed to unlock"
 msgstr ""
 
-#: BatteryStatsWindow.vala:205
-msgid "Info"
+#: DiskIndicator.vala:174
+msgid "ISO"
 msgstr ""
 
-#: AptikBatteryStats.vala:52 Main.vala:310
+#: DiskIndicator.vala:538
+#, c-format
+msgid "Is Mounted"
+msgstr ""
+
+#: DiskIndicator.vala:119
+msgid "Lock"
+msgstr ""
+
+#: DiskIndicator.vala:640
+#, c-format
+msgid "Locked"
+msgstr ""
+
+#: AptikBatteryStats.vala:52
 #, c-format
 msgid "Logging stats to file"
 msgstr ""
 
-#: Main.vala:342
+#: DiskIndicator.vala:82
+msgid "Mount"
+msgstr ""
+
+#: DiskIndicator.vala:694
+msgid "Mount ISO..."
+msgstr ""
+
+#: DiskIndicator.vala:531
 #, c-format
-msgid "Logging summary to file"
+msgid "Mounted"
 msgstr ""
 
-#: Main.vala:94
-msgid "Missing Dependencies"
+#: DiskIndicator.vala:722
+#, c-format
+msgid "Mounted ISO File"
 msgstr ""
 
-#: Utility.vala:1189
-msgid "Missing Icon"
+#: DiskIndicator.vala:587
+#, c-format
+msgid "Not mounted"
 msgstr ""
 
-#: DonationWindow.vala:95 SettingsWindow.vala:77
-msgid "OK"
+#: DiskIndicator.vala:47
+msgid "Open"
 msgstr ""
 
-#: AptikBatteryStats.vala:83 AptikBatteryStatsGtk.vala:98
+#: AptikBatteryStats.vala:83
 msgid "Options"
-msgstr ""
-
-#: BatteryStatsWindow.vala:567
-msgid "Per Hour"
-msgstr ""
-
-#: Main.vala:154
-msgid "Please install the required packages"
-msgstr ""
-
-#: AptikBatteryStatsGtk.vala:100
-msgid "Print debug information"
 msgstr ""
 
 #: AptikBatteryStats.vala:86
@@ -211,75 +117,52 @@ msgstr ""
 msgid "Print stats to standard output"
 msgstr ""
 
-#: BatteryStatsWindow.vala:547
-msgid "Remaining"
-msgstr ""
-
-#: Main.vala:285
-#, c-format
-msgid "Removed from charger"
-msgstr ""
-
-#: DonationWindow.vala:81
-msgid "Send Email"
-msgstr ""
-
-#: SettingsWindow.vala:43
+#: DiskIndicator.vala:193
 msgid "Settings"
 msgstr ""
 
-#: AptikBatteryStats.vala:87 AptikBatteryStatsGtk.vala:101
+#: AptikBatteryStats.vala:87
 msgid "Show all options"
 msgstr ""
 
-#: SettingsWindow.vala:61
-msgid "Show battery bar"
+#: DiskIndicator.vala:481
+msgid "Swap Device!"
 msgstr ""
 
-#: Utility.vala:837
-msgid "Stopped"
+#: DiskIndicator.vala:482
+msgid "Swap devices cannot be opened in file manager"
 msgstr ""
 
-#: AptikBatteryStats.vala:81 AptikBatteryStatsGtk.vala:96
+#: AptikBatteryStats.vala:81
 msgid "Syntax"
 msgstr ""
 
-#: AboutWindow.vala:322
+#: DiskIndicator.vala:568 DiskIndicator.vala:617
+msgid "System Device!"
+msgstr ""
+
+#: DiskIndicator.vala:569 DiskIndicator.vala:618
+msgid "System devices cannot be unmounted"
+msgstr ""
+
+#: DiskIndicator.vala:136
+msgid "Unlock"
+msgstr ""
+
+#: DiskIndicator.vala:664
 #, c-format
-msgid "Third Party Tools"
+msgid "Unlocked"
 msgstr ""
 
-#: BatteryStatsWindow.vala:557
-msgid "To Full Charge"
+#: DiskIndicator.vala:99
+msgid "Unmount"
 msgstr ""
 
-#: AboutWindow.vala:338
+#: DiskIndicator.vala:469 DiskIndicator.vala:581
 #, c-format
-msgid "Translators"
+msgid "Unmounted"
 msgstr ""
 
-#: AptikBatteryStatsGtk.vala:83
-msgid "Unknown option"
-msgstr ""
-
-#: BatteryStatsWindow.vala:635
-msgid "Used"
-msgstr ""
-
-#: DonationWindow.vala:88
-msgid "Visit Website"
-msgstr ""
-
-#: Utility.vala:100
-msgid "Warning"
-msgstr ""
-
-#: Utility.vala:992
-#, c-format
-msgid "[Error] Another instance of this process is already running"
-msgstr ""
-
-#: Utility.vala:998
-#, c-format
-msgid "[Warning] Removed invalid lock file"
+#: DiskIndicator.vala:155
+msgid "Usage"
 msgstr ""

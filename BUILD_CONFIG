@@ -1,0 +1,6 @@
+
+app_fullname="Aptik Battery Monitor"
+app_name="aptik-battery-monitor"
+pkg_name="aptik-battery-monitor"
+pkg_version=$(dpkg-parsechangelog --show-field Version)
+git_origin=""

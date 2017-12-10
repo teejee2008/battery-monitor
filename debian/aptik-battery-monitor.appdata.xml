@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 suve <veg@svgames.pl> -->
+<component type="desktop">
+	<id>aptik-battery-monitor.desktop</id>
+	<metadata_license>CC-BY-SA-3.0</metadata_license>
+	<project_license>GPL-3.0</project_license>
+	<name>Aptik Battery Monitor</name>
+	<summary>Battery Monitor for laptops</summary>
+	
+	<description>
+		<p>
+			Battery monitor for laptops. Displays detailed statistics for battery life, remaining capacity, and charge/discharge rate.
+		</p>
+	</description>
+
+	<screenshots>
+		<screenshot type="default">
+			<image>https://raw.githubusercontent.com/teejee2008/battery-monitor/master/images/discharging.png</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/teejee2008/battery-monitor/master/images/charging.png</image>
+		</screenshot>
+	</screenshots>
+	
+	<url type="homepage">https://github.com/teejee2008/battery-monitor</url>
+</component>
+

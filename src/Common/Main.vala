@@ -1,7 +1,7 @@
 /*
  * Main.vala
  *
- * Copyright 2015 Tony George <teejee2008@gmail.com>
+ * Copyright 2012-2017 Tony George <teejeetech@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ using TeeJee.Misc;
 public Main App;
 public const string AppName = "Aptik Battery Monitor";
 public const string AppShortName = "aptik-battery-monitor";
-public const string AppVersion = "2.1";
+public const string AppVersion = "17.12";
 public const string AppAuthor = "Tony George";
 public const string AppAuthorEmail = "teejeetech@gmail.com";
 

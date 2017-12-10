@@ -1,7 +1,7 @@
 /*
  * BatteryStatsWindow.vala
  *
- * Copyright 2015 Tony George <teejee2008@gmail.com>
+ * Copyright 2012-2017 Tony George <teejeetech@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,8 +35,8 @@ using TeeJee.System;
 using TeeJee.Misc;
 
 public class BatteryStatsWindow : Window {
+	
 	private Box vbox_main;
-	private Box hbox_top_line1;
 
 	private Gtk.DrawingArea drawing_area;
 
@@ -53,6 +53,8 @@ public class BatteryStatsWindow : Window {
 	private Label lbl_time_to_charge_val;
 	private Label lbl_rate;
 	private Label lbl_rate_val;
+	private Label lbl_health;
+	private Label lbl_health_val;
 	
 	private Gtk.Image img_battery_status;
 	
@@ -64,7 +66,7 @@ public class BatteryStatsWindow : Window {
 	uint timer_refresh = 0;
 
 	int def_width = 500;
-	int def_height = 450;
+	int def_height = 500;
 
 	private Gdk.RGBA color_white;
 	private Gdk.RGBA color_black;
@@ -113,6 +115,7 @@ public class BatteryStatsWindow : Window {
 	}
 
 	public void define_colors(){
+		
 		color_white = Gdk.RGBA();
 		color_white.parse("white");
 		color_white.alpha = 1.0;
@@ -140,6 +143,7 @@ public class BatteryStatsWindow : Window {
 	}
 
 	public void init_header() {
+		
 		Gtk.Frame frame_top = new Gtk.Frame ("");
 		//(frame_stats_line.label_widget as Gtk.Label).use_markup = true;
 		vbox_main.add (frame_top);
@@ -214,6 +218,7 @@ public class BatteryStatsWindow : Window {
 	}
 
 	private void btn_about_clicked () {
+		
 		var dialog = new AboutWindow();
 		dialog.set_transient_for (this);
 
@@ -234,7 +239,7 @@ public class BatteryStatsWindow : Window {
 
 		dialog.program_name = AppName;
 		dialog.comments = _(" A Battery Monitoring Utility for Laptops");
-		dialog.copyright = "Copyright © 2015 Tony George (%s)".printf(AppAuthorEmail);
+		dialog.copyright = "Copyright © 2012-2018 Tony George (%s)".printf(AppAuthorEmail);
 		dialog.version = AppVersion;
 		dialog.logo = get_app_icon(128);
 
@@ -247,6 +252,7 @@ public class BatteryStatsWindow : Window {
 	}
 
 	public void init_graph() {
+		
 		drawing_area = new Gtk.DrawingArea();
 		drawing_area.set_size_request(400, 200);
 		drawing_area.margin = 10;
@@ -311,13 +317,13 @@ public class BatteryStatsWindow : Window {
 			int h = drawing_area.get_allocated_height();
 
 			//int w_eff = w - X_OFFSET;
-			int h_eff = h - 2 * Y_OFFSET;
+			int h_eff = h - 2 * Y_OFFSET - 10;
 
 			//double pxw = (w_eff / 100.00);
 			double pxh = (h_eff / 100.00);
 
 			long x0 = X_OFFSET;
-			long y0 = h - Y_OFFSET;
+			long y0 = h - Y_OFFSET - 10;
 			long x100 = x0 + (stat_count * X_INTERVAL);
 			long y100 = Y_OFFSET;
 
@@ -372,7 +378,7 @@ public class BatteryStatsWindow : Window {
 						Gdk.cairo_set_source_rgba (context, color_default);
 
 						for (int p = 10; p <= 100; p += 10) {
-							long y_interval = (long) (h - Y_OFFSET - (p * pxh));
+							long y_interval = (long) (h - Y_OFFSET - 10 - (p * pxh));
 							//draw Y-axis lines
 							context.move_to(x_prev, y_interval);
 							context.line_to(x, y_interval);
@@ -390,7 +396,7 @@ public class BatteryStatsWindow : Window {
 						context.move_to (x_prev, y_prev);
 
 						y = (long) ((stat.charge_now * 100.00 * pxh) / BatteryStat.batt_charge_full());
-						y = h - Y_OFFSET - y;
+						y = h - Y_OFFSET - 10 - y;
 
 						context.line_to (x, y);
 
@@ -406,7 +412,7 @@ public class BatteryStatsWindow : Window {
 						context.move_to (x_prev, y_prev_cpu);
 
 						y_cpu = (long) (stat.cpu_percent() * pxh);
-						y_cpu = h - Y_OFFSET - y_cpu;
+						y_cpu = h - Y_OFFSET - 10 - y_cpu;
 						context.line_to (x, y_cpu);
 
 						y_prev_cpu = y_cpu;
@@ -442,7 +448,7 @@ public class BatteryStatsWindow : Window {
 					
 					if (x_interval_counter >= 20){
 						//draw time on X-axis tick
-						context.move_to (x - 15, h - Y_OFFSET + 20);
+						context.move_to (x - 15, h - Y_OFFSET - 10 + 20);
 						context.show_text(stat.date.format("%I:%M %p"));
 					}
 
@@ -485,7 +491,7 @@ public class BatteryStatsWindow : Window {
 			//draw Y-axis markers and labels ------------------------
 
 			for (int p = 10; p <= 100; p += 10) {
-				y = (long) (h - Y_OFFSET - (p * pxh));
+				y = (long) (h - Y_OFFSET - 10 - (p * pxh));
 
 				//draw Y-axis markers
 				context.move_to(x0 + 2, y);
@@ -521,70 +527,83 @@ public class BatteryStatsWindow : Window {
 		var grid_main = new Grid();
 		grid_main.set_column_spacing (18);
 		grid_main.set_row_spacing (6);
-		grid_main.margin_left = 12;
+		grid_main.margin_left = 18;
 		grid_main.margin_bottom = 6;
 		frame_main.add(grid_main);
 
+		int col = -1;
+
 		//percent
 		lbl_percent = new Label(_("Battery"));
-		grid_main.attach(lbl_percent, 0, 1, 1, 1);
+		grid_main.attach(lbl_percent, ++col, 1, 1, 1);
 
 		lbl_percent_val = new Label("<b>" + _("0h 0m") + "</b>");
 		lbl_percent_val.set_use_markup(true);
-		grid_main.attach(lbl_percent_val, 0, 0, 1, 1);
+		grid_main.attach(lbl_percent_val, col, 0, 1, 1);
 
 		//avg_life
 		lbl_avg_life = new Label(_("Average Life"));
 		lbl_avg_life.set_no_show_all(true);
-		grid_main.attach(lbl_avg_life, 1, 1, 1, 1);
+		grid_main.attach(lbl_avg_life, ++col, 1, 1, 1);
 
 		lbl_avg_life_val = new Label("<b>" + _("0h 0m") + "</b>");
 		lbl_avg_life_val.set_use_markup(true);
 		lbl_avg_life_val.set_no_show_all(true);
-		grid_main.attach(lbl_avg_life_val, 1, 0, 1, 1);
+		grid_main.attach(lbl_avg_life_val, col, 0, 1, 1);
 
 		//remaining
 		lbl_remaining = new Label(_("Remaining"));
 		lbl_remaining.set_no_show_all(true);
-		grid_main.attach(lbl_remaining, 2, 1, 1, 1);
+		grid_main.attach(lbl_remaining, ++col, 1, 1, 1);
 
 		lbl_remaining_val = new Label("<b>" + _("0h 0m") + "</b>");
 		lbl_remaining_val.set_use_markup(true);
 		lbl_remaining_val.set_no_show_all(true);
-		grid_main.attach(lbl_remaining_val, 2, 0, 1, 1);
+		grid_main.attach(lbl_remaining_val, col, 0, 1, 1);
 
 		//remaining_to_charge
 		lbl_time_to_charge = new Label(_("To Full Charge"));
 		lbl_time_to_charge.set_no_show_all(true);
-		grid_main.attach(lbl_time_to_charge, 3, 1, 1, 1);
+		grid_main.attach(lbl_time_to_charge, ++col, 1, 1, 1);
 
 		lbl_time_to_charge_val = new Label("<b>" + _("0h 0m") + "</b>");
 		lbl_time_to_charge_val.set_use_markup(true);
 		lbl_time_to_charge_val.set_no_show_all(true);
-		grid_main.attach(lbl_time_to_charge_val, 3, 0, 1, 1);
+		grid_main.attach(lbl_time_to_charge_val, col, 0, 1, 1);
 
 		//rate
 		lbl_rate = new Label(_("Per Hour"));
 		lbl_rate.set_no_show_all(true);
-		grid_main.attach(lbl_rate, 4, 1, 1, 1);
+		grid_main.attach(lbl_rate, ++col, 1, 1, 1);
 
 		lbl_rate_val = new Label("<b>" + _("0.0%") + "</b>");
 		lbl_rate_val.set_use_markup(true);
 		lbl_rate_val.set_no_show_all(true);
-		grid_main.attach(lbl_rate_val, 4, 0, 1, 1);
+		grid_main.attach(lbl_rate_val, col, 0, 1, 1);
+
+		//health
+		lbl_health = new Label(_("Health"));
+		lbl_health.set_no_show_all(true);
+		grid_main.attach(lbl_health, ++col, 1, 1, 1);
+
+		lbl_health_val = new Label("<b>" + _("0.0%") + "</b>");
+		lbl_health_val.set_use_markup(true);
+		lbl_health_val.set_no_show_all(true);
+		grid_main.attach(lbl_health_val, col, 0, 1, 1);
 
 		//spacer 
 		var lbl_spacer = new Label("");
 		lbl_spacer.hexpand = true;
-		grid_main.attach(lbl_spacer, 5, 0, 1, 2);
+		grid_main.attach(lbl_spacer, ++col, 0, 1, 2);
 		
 		//battery icon
 		img_battery_status = get_shared_icon("notification-battery-060", "notification-battery-060.png", 80);
 		img_battery_status.margin_right = 5;
-		grid_main.attach(img_battery_status, 6, 0, 1, 2);
+		grid_main.attach(img_battery_status, ++col, 0, 1, 2);
 	}
 
 	public bool timer_refresh_graph() {
+		
 		//if (timer_pkg_info > 0){
 		//	Source.remove(timer_pkg_info);
 		//	timer_pkg_info = 0;
@@ -598,6 +617,7 @@ public class BatteryStatsWindow : Window {
 	}
 
 	private void select_latest_stat(){
+		
 		if (App.battery_stats_list.size >= 2){
 			var stat0 = App.battery_stats_list[App.battery_stats_list.size - 1];
 			var stat1 = App.battery_stats_list[App.battery_stats_list.size - 2];
@@ -623,6 +643,7 @@ public class BatteryStatsWindow : Window {
 	}
 	
 	private void update_info_current_cycle(){
+		
 		if (App.battery_stats_list.size < 2){ return; }
 		
 		var cycle = new BatteryCycle();
@@ -634,7 +655,7 @@ public class BatteryStatsWindow : Window {
 
 		lbl_stats_line_used.label = _("Used") + ": " + cycle.used_string();
 		
-		lbl_percent_val.label = format_label("%.2f%%".printf(stat_current.charge_percent()));
+		lbl_percent_val.label = format_label("%.0f%%".printf(stat_current.charge_percent()));
 		
 		if (BatteryStat.is_charging()){
 
@@ -644,6 +665,7 @@ public class BatteryStatsWindow : Window {
 			lbl_remaining.visible = lbl_remaining_val.visible = false;
 			lbl_time_to_charge.visible = lbl_time_to_charge_val.visible = true;
 			lbl_rate.visible = lbl_rate_val.visible = true;
+			lbl_health.visible = lbl_health_val.visible = true;
 			
 			double rate = (stat_current.charge_percent() - stat_prev.charge_percent()) * 2;
 			double estimated = (100 - stat_current.charge_percent()) / rate;
@@ -656,20 +678,29 @@ public class BatteryStatsWindow : Window {
 			}
 
 			if (estimated > 0){
-				lbl_rate_val.label = format_label("%0.2f%%".printf(rate * 60.0));
+				lbl_rate_val.label = format_label("+%0.0f%%".printf(rate * 60.0));
 			}
 			else{
 				lbl_rate_val.label = format_label("??");
 			}
+
+			if (BatteryStat.batt_health() > 0){
+				lbl_health_val.label = format_label("%0.0f%%".printf(BatteryStat.batt_health()));
+			}
+			else{
+				lbl_health_val.label = format_label("??");
+			}
 		}
 		else{
+			
 			//discharging ------------------------------
 			
 			lbl_avg_life.visible = lbl_avg_life_val.visible = true;
 			lbl_remaining.visible = lbl_remaining_val.visible = true;
 			lbl_time_to_charge.visible = lbl_time_to_charge_val.visible = false;
 			lbl_rate.visible = lbl_rate_val.visible = true;
-
+			lbl_health.visible = lbl_health_val.visible = true;
+			
 			double rate = (stat_prev.charge_percent() - stat_current.charge_percent()) * 2;
 			double estimated = 100 / rate;
 
@@ -683,11 +714,18 @@ public class BatteryStatsWindow : Window {
 			}
 
 			if (rate > 0){
-				lbl_rate_val.label = format_label("%0.2f%%".printf(cycle.drop_per_min * 60.0));
+				lbl_rate_val.label = format_label("-%0.0f%%".printf(cycle.drop_per_min * 60.0));
 			}
 			else{
 				lbl_rate_val.label = format_label("??");
-			}
+			}	
+		}
+
+		if (BatteryStat.batt_health() > 0){
+			lbl_health_val.label = format_label("%0.0f%%".printf(BatteryStat.batt_health()));
+		}
+		else{
+			lbl_health_val.label = format_label("??");
 		}
 	}
 
@@ -696,6 +734,7 @@ public class BatteryStatsWindow : Window {
 	}
 	
 	private void update_battery_status_icon(){
+		
 		var icon_name = "notification-battery";
 
 		var stat = new BatteryStat.read_from_sys();
