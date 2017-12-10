@@ -43,7 +43,7 @@ if [ -e release/postinst.sh ]; then
     cp -pv --no-preserve=ownership release/postinst.sh release/${arch}/postinst.sh
 fi
 
-sanity --generate --base-path release/${arch} --out-path release --arch ${arch}
+sanity --generate --base-path release/${arch} --out-path release --arch ${arch} --xz
 
 if [ $? -ne 0 ]; then cd "$backup"; echo "Failed"; exit 1; fi
 

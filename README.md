@@ -12,11 +12,9 @@ Battery Monitor is a utility to monitor the battery life of laptops. It displays
 
 
 
+**Black line** in the graph displays battery level at a particular time.
+
 **Red line** in the graph displays CPU usage. CPU usage is usually high if battery is discharging rapidly.
-
-**Average life** is the overall battery life of the laptop, i.e. average time taken to go from 100% to 0% .
-
-
 
 *Charging - Displays charge rate and time remaining*
 
@@ -28,8 +26,8 @@ Battery Monitor is a utility to monitor the battery life of laptops. It displays
 
 Ubuntu, Linux Mint, Elementary OS, etc.
 
-Packages are available in the Launchpad PPA for supported Ubuntu releases.
-Run the following commands in a terminal window:  
+Packages are available in the Launchpad PPA for current Ubuntu releases.
+Run following commands in a terminal window to install from PPA:
 
 ```sh
 sudo add-apt-repository -y ppa:teejee2008/ppa
@@ -37,11 +35,11 @@ sudo apt-get update
 sudo apt-get install aptik-battery-monitor
 ```
 
-DEB and RUN packages are available on [Releases](https://github.com/teejee2008/battery-monitor/releases) page for older Ubuntu releases which have reached end-of-life.
+Debian packages are available on the [Releases](https://github.com/teejee2008/battery-monitor/releases) page for older Ubuntu releases which have reached end-of-life.
 
 #### Other Linux Distributions
 
-Download the .RUN installer from [Releases](https://github.com/teejee2008/battery-monitor/releases) page and execute it in a terminal window: 
+Binary installers are available on the [Releases](https://github.com/teejee2008/battery-monitor/releases) page. Download the 32-bit or 64-bit installer and execute from terminal window:
 
 ```sh
 sudo sh ./aptik-battery-monitor*amd64.run # 64-bit, or
